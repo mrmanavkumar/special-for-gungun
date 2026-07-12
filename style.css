@@ -243,3 +243,149 @@ position:relative;
 
 width:95%;
 max-width:450
+/* ==========================
+   ROSE
+========================== */
+
+.rose{
+
+position:absolute;
+
+top:-50px;
+
+font-size:22px;
+
+animation:roseFall linear forwards;
+
+opacity:.9;
+
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+@keyframes giftFloat{
+
+0%,100%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+}
+
+@keyframes blink{
+
+50%{
+opacity:.4;
+}
+
+}
+
+@keyframes countZoom{
+
+0%{
+transform:scale(.5);
+opacity:0;
+}
+
+50%{
+transform:scale(1.2);
+opacity:1;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+@keyframes fadeZoom{
+
+0%{
+
+transform:scale(.7);
+
+opacity:0;
+
+}
+
+100%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes bookOpen{
+
+0%{
+
+transform:translateX(-120%);
+
+opacity:0;
+
+}
+
+100%{
+
+transform:translateX(0);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes starsBlink{
+
+0%{
+
+opacity:.08;
+
+}
+
+100%{
+
+opacity:.22;
+
+}
+
+}
+
+@keyframes roseFall{
+
+0%{
+
+transform:
+translateY(-40px)
+rotate(0deg);
+
+opacity:0;
+
+}
+
+20%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:
+translateY(110vh)
+rotate(360deg);
+
+opacity:0;
+
+}
+
+}
