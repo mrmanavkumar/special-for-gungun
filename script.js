@@ -121,8 +121,11 @@ function startSequence() {
 messageSec.classList.remove('hidden');
 
 setTimeout(()=>{
-    messageSec.classList.add('show-message');
-},100);
+    messageSec.classList.add('show-message');},100);
+    setTimeout(() => {
+    typeWriterEffect();
+}, 1500);
+
                         }, 2000);
 
                     }, 15000);
@@ -132,4 +135,31 @@ setTimeout(()=>{
         }, 1000);
 
     }, 1200); // Shaking box delay
+}
+async function typeWriterEffect() {
+
+    const scrollBox = document.querySelector(".scroll-letter");
+    const items = document.querySelectorAll(".letter-text h3, .letter-text p");
+
+    for (const item of items) {
+
+        const text = item.innerHTML;
+        item.innerHTML = "";
+
+        for (let i = 0; i < text.length; i++) {
+
+            item.innerHTML += text.charAt(i);
+
+            scrollBox.scrollTo({
+                top: scrollBox.scrollHeight,
+                behavior: "smooth"
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 35));
+        }
+
+        // Har paragraph ke baad rukega
+        await new Promise(resolve => setTimeout(resolve, 1800));
+    }
+
 }
