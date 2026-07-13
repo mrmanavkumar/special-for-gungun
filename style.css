@@ -111,3 +111,13 @@ animation: messageFadeIn 2s ease forwards;
         transform:scale(1);
     }
 }
+@keyframes messageFadeIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
