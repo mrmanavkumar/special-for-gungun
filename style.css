@@ -22,12 +22,25 @@ canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index
 @keyframes wobbleBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
 
 /* Template (Curves Increased) */
-.template-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
-.template-img { 
-    width: 100%; max-height: 450px; object-fit: contain; 
-    border-radius: 40px; /* Curve yahan badha diya hai */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-    border: 5px solid rgba(255, 255, 255, 0.1); /* Halka frame */
+.template-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    transition:opacity 2s ease;
+}
+
+.template-img{
+    width:95%;
+    max-width:370px;
+    height:560px;
+    object-fit:cover;
+
+    border:none;
+    border-radius:45px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
 /* Message Page (Longer & Better Look) */
