@@ -1,114 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday Gungun ❤️</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Gift 🌹</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- 🌌 Stars -->
+    <!-- Stars Background (Humesha peeche rahega) -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
 
-<div class="stars"></div>
+    <!-- Canvas for Floating Rose Petals & Hearts -->
+    <canvas id="effectCanvas"></canvas>
 
-<!-- ❤️ Hearts -->
+    <div class="container">
+        
+        <!-- STEP 1: Gift Box -->
+        <div id="giftBox" class="gift-box" onclick="startGiftSequence()">
+            <div class="ribbon"></div>
+            <div class="gift-text">Tap to Open Gift 🎁</div>
+        </div>
 
-<div id="hearts"></div>
+        <!-- STEP 2: Countdown Screen -->
+        <div id="countdownScreen" class="countdown-screen hidden">
+            <div id="countdownNumber">3</div>
+        </div>
 
-<!-- 🌹 Rose Petals -->
-
-<div id="roseContainer"></div>
-
-<!-- 🎁 Gift Screen -->
-
-<div id="giftScreen">
-
-<div class="gift-box" onclick="openGift()">
-
-<img src="gift.png" alt="Gift">
-
-</div>
-
-<h2 class="tap-text">
-
-🎁 Tap The Gift 🎁
-
-</h2>
-
-</div>
-
-<!-- ⏳ Countdown -->
-
-<div id="countdownScreen">
-
-<h1 id="countdownText">
-
-3
-
-</h1>
-
-</div>
-
-<!-- 🎉 Birthday Screen -->
-
-<div id="surprise">
-
-<div class="birthday-wrapper">
-
-<h1 class="birthday-title">
-
-🎉 Happy Birthday 🎉
-
-</h1>
-
-<img
-src="birthday-template.png"
-class="birthday-template"
-alt="Birthday">
-
-</div>
-
-</div>
-  <!-- 💌 Final Letter -->
-
-<div id="finalMessage">
-
-    <div class="letter">
-
-        <img src="sketch.png" class="sketch" alt="Sketch">
-
-        <h2>❤️ Happy Birthday Gungun ❤️</h2>
-
-        <div id="messageBox">
-
-            <p id="messageText"></p>
-
+        <!-- STEP 3 & 4: Letter Container (Sketch builds inside this as Watermark) -->
+        <div id="magicalContent" class="magical-zone hidden">
+            <div class="letter-scroll-box">
+                <!-- Watermark Sketch Image -->
+                <div class="watermark-bg">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="Sketch Watermark">
+                </div>
+                
+                <!-- Scrollable Content -->
+                <div class="letter-text">
+                    <h3>Dear [Name], ❤️</h3>
+                    <p>Aapke is special din par main bas yeh kehna chahta/chahti hoon ki aap meri zindagi ka sabse khoobsurat hissa ho.</p>
+                    <p>Zindagi mein bohot se log aate hain aur chale jaate hain, par aapki jagah koi nahi le sakta. Aapki muskurahat meri sabse badi khushi hai.</p>
+                    <p>May your day be filled with endless love, laughter, and pure happiness. Aap jahan bhi raho, humesha haste muskurate raho. 🌹</p>
+                    <p>Mera yeh chota sa tohfa sirf aapke liye hai. Happy Birthday once again! ❤️ ✨</p>
+                </div>
+            </div>
         </div>
 
     </div>
 
-</div>
-
-<!-- Audio -->
-
-<audio id="countdown" preload="auto">
-
-    <source src="countdown.mp3" type="audio/mpeg">
-
-</audio>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
