@@ -164,3 +164,6 @@ item.innerHTML = "";
     }
 
 }
+window.onerror = function(message, source, line, col, error) {
+    alert("JS Error: " + message + " (Line: " + line + ")");
+};
