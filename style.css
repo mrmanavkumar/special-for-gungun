@@ -1,141 +1,38 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background-color: #0b0214; height: 100vh; display: flex; justify-content: center; align-items: center; color: white; overflow: hidden; font-family: 'Georgia', serif; }
 
-body {
-    background-color: #0b0214;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-
-/* Background Stars */
-.stars, .twinkling {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    display: block;
-}
+.stars, .twinkling { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .stars { background: #000 url('https://i.imgur.com/Y4v9Z0Z.png') repeat top center; z-index: 0; }
-.twinkling {
-    background: transparent url('https://i.imgur.com/76g9W6Z.png') repeat top center;
-    z-index: 1;
-    animation: move-twink-back 200s linear infinite;
-}
-@keyframes move-twink-back {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 5000px; }
-}
+.twinkling { background: transparent url('https://i.imgur.com/76g9W6Z.png') repeat top center; z-index: 1; animation: move-twink-back 200s linear infinite; }
+@keyframes move-twink-back { from { background-position: 0 0; } to { background-position: -10000px 5000px; } }
 
-canvas {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 2;
-    pointer-events: none;
-}
+canvas { position: absolute; z-index: 2; pointer-events: none; }
+.container { z-index: 3; text-align: center; width: 90%; max-width: 400px; }
 
-.container {
-    z-index: 3;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-}
+/* Box Shake */
+.gift-img { width: 150px; cursor: pointer; transition: 0.3s; }
+.shake-anim { animation: shakeBox 0.5s ease-in-out infinite; }
+@keyframes shakeBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
 
-/* Gift Box & Shake Animation */
-.gift-box {
-    width: 140px;
-    height: 140px;
-    background: #d63031;
-    position: relative;
-    margin: 0 auto;
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.gift-box.shake {
-    animation: shakeBox 0.5s ease-in-out finite;
-}
-@keyframes shakeBox {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-10px) rotate(-5deg); }
-    40%, 80% { transform: translateX(10px) rotate(5deg); }
-}
-.ribbon { position: absolute; background: #ffeaa7; width: 20px; height: 100%; }
-.ribbon::before { content: ''; position: absolute; background: #ffeaa7; width: 140px; height: 20px; top: 60px; left: -60px; }
-.gift-text { position: absolute; bottom: -40px; font-size: 16px; color: #ffeaa7; width: 200px; left: -30px; font-weight: bold; }
-
-/* Countdown */
-.countdown-screen {
-    font-size: 80px;
-    font-weight: bold;
-    color: #ff7675;
-    animation: pulseNum 1s ease-in-out infinite;
-}
-@keyframes pulseNum {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.8); opacity: 0.5; }
-}
-
-/* Premium Scrollable Letter with Watermark */
-.magical-zone {
-    opacity: 0;
-    animation: fadeInTemplate 2s ease-out forwards;
-}
-@keyframes fadeInTemplate {
-    to { opacity: 1; }
-}
-
-.letter-scroll-box {
-    position: relative;
-    background: linear-gradient(135deg, #fff5f5, #ffffff);
-    color: #2d3436;
-    height: 380px; /* Mobile screen ke liye perfect standard size */
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    border-left: 8px solid #ff7675;
-    overflow-y: auto; /* Dheere dheere scroll karne ke liye */
-    padding: 25px;
-    text-align: left;
-}
-
-/* Watermark Image */
-.watermark-bg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 85%;
-    opacity: 0.12; /* Ekdum halka watermark taaki text saaf dikhe */
-    pointer-events: none;
-    z-index: 1;
-}
-.watermark-bg img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-.letter-text {
-    position: relative;
-    z-index: 2; /* Text hamesha watermark ke upar rahega */
-}
-.letter-text h3 { color: #d63031; margin-bottom: 15px; font-size: 20px; }
-.letter-text p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
-
+/* Transitions */
 .hidden { display: none !important; }
+.template-style { width: 100%; opacity: 0; transition: opacity 2s; }
+.fade-in { opacity: 1 !important; }
+.fade-out { opacity: 0 !important; }
 
-/* Mobile View Adjustments */
-@media (max-width: 480px) {
-    .letter-scroll-box { height: 320px; padding: 15px; }
-    .letter-text h3 { font-size: 18px; }
-    .letter-text p { font-size: 14px; }
+/* Letter Styles */
+.scroll-letter {
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 25px;
+    border-radius: 15px;
+    height: 400px;
+    overflow-y: auto;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-left: 8px solid #d63031;
 }
+.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.15; z-index: 1; pointer-events: none; }
+.watermark-bg img { width: 100%; }
+.letter-text { position: relative; z-index: 2; line-height: 1.6; }
