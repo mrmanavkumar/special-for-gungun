@@ -3,102 +3,73 @@ const ctx = canvas.getContext('2d');
 let animationActive = false;
 let particles = [];
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+// Resize Canvas
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
 
 class Particle {
     constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = -20;
-        this.size = Math.random() * 12 + 8;
-        this.speedY = Math.random() * 1.5 + 0.8; // Slow falling speed as requested
-        this.speedX = Math.sin(Math.random() * 2) * 0.5;
-        this.type = Math.random() > 0.4 ? 'petal' : 'heart';
-        this.rotation = Math.random() * 360;
-        this.rotationSpeed = Math.random() * 1 - 0.5;
+        this.x = Math.random() * canvas.width; this.y = -20;
+        this.size = Math.random() * 10 + 5;
+        this.speedY = Math.random() * 1 + 0.5;
+        this.type = Math.random() > 0.5 ? 'petal' : 'heart';
     }
-    update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.rotation += this.rotationSpeed;
-        if (this.y > canvas.height) {
-            this.y = -20;
-            this.x = Math.random() * canvas.width;
-        }
-    }
+    update() { this.y += this.speedY; if (this.y > canvas.height) this.y = -20; }
     draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        if (this.type === 'petal') {
-            ctx.fillStyle = '#ff7675';
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, Math.PI * 2);
-            ctx.fill();
-        } else {
-            ctx.fillStyle = '#d63031';
-            ctx.beginPath();
-            ctx.moveTo(0, 0 - this.size / 4);
-            ctx.bezierCurveTo(0 - this.size / 2, 0 - this.size, 0 - this.size, 0 - this.size / 4, 0, 0 + this.size / 1.5);
-            ctx.bezierCurveTo(0 + this.size, 0 - this.size / 4, 0 + this.size / 2, 0 - this.size, 0, 0 - this.size / 4);
-            ctx.fill();
-        }
-        ctx.restore();
+        ctx.fillStyle = this.type === 'petal' ? '#ff7675' : '#d63031';
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
     }
 }
 
-function animate() {
-    if (!animationActive) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
-}
-
-// Full Orchestrated Sequence
-function startGiftSequence() {
+function startSequence() {
     const giftBox = document.getElementById('giftBox');
-    const countdownScreen = document.getElementById('countdownScreen');
-    const countdownNumber = document.getElementById('countdownNumber');
-    const magicalContent = document.getElementById('magicalContent');
+    const countdown = document.getElementById('countdownScreen');
+    const num = document.getElementById('countdownNumber');
+    const template = document.getElementById('templateImg');
+    const messageBox = document.getElementById('messageBox');
+    const audio = document.getElementById('countdownAudio');
 
-    // 1. Box shakes first
-    giftBox.classList.add('shake');
-
+    // 1. Shake
+    giftBox.classList.add('shake-anim');
     setTimeout(() => {
-        // Hide box, show countdown
         giftBox.classList.add('hidden');
-        countdownScreen.classList.remove('hidden');
+        countdown.classList.remove('hidden');
+        audio.play();
 
-        // 2. Start Countdown Timer (3, 2, 1)
+        // 2. Countdown
         let count = 3;
-        let counterInterval = setInterval(() => {
+        let timer = setInterval(() => {
             count--;
-            if (count > 0) {
-                countdownNumber.innerText = count;
-            } else {
-                clearInterval(counterInterval);
-                countdownScreen.classList.add('hidden');
-
-                // 3. Start Rose Petals Falling (Will run continuously)
+            if (count > 0) num.innerText = count;
+            else {
+                clearInterval(timer);
+                countdown.classList.add('hidden');
+                
+                // 3. Template Fade In
+                template.classList.remove('hidden');
+                setTimeout(() => template.classList.add('fade-in'), 100);
+                
+                // Start Roses
                 animationActive = true;
-                for (let i = 0; i < 40; i++) {
-                    particles.push(new Particle());
+                setInterval(() => { if(animationActive) particles.push(new Particle()); }, 200);
+                function render() {
+                    if(!animationActive) return;
+                    ctx.clearRect(0,0, canvas.width, canvas.height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    requestAnimationFrame(render);
                 }
-                animate();
+                render();
 
-                // 4. Wait for 15 seconds while roses fall, then show Letter + Sketch Watermark
+                // 4. Fade Out Template, Show Message
                 setTimeout(() => {
-                    magicalContent.classList.remove('hidden');
-                }, 15000); // 15 Seconds Delay
+                    template.classList.add('fade-out');
+                    setTimeout(() => {
+                        template.classList.add('hidden');
+                        messageBox.classList.remove('hidden');
+                    }, 2000);
+                }, 5000); // 5 seconds template rahega
             }
         }, 1000);
-
-    }, 600); // Shake duration before disappearance
-}
+    }, 2000); // Shake 2 sec
+                            }
