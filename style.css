@@ -63,10 +63,6 @@ animation: messageFadeIn 2s ease forwards;
 
 .watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.1; z-index: 1; pointer-events: none; }
 .letter-text { position: relative; z-index: 2; line-height: 1.8; }
-.letter-text h3,
-.letter-text p{
-    visibility:hidden;
-}
 .letter-text h3 { color: #8b0000; margin-bottom: 15px; font-size: 24px; font-weight: bold; border-bottom: 1px solid #dcdcdc; padding-bottom: 5px;}
 .letter-text p { font-size: 16px; margin-bottom: 15px; font-weight: 500; }
 .highlight-bday { color: #8b0000; font-weight: bold; font-size: 19px !important; margin-top: 20px; }
