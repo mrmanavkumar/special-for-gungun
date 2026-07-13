@@ -117,7 +117,12 @@ function startSequence() {
                         // Final Message Reveal (Watermark + Scroll)
                         setTimeout(() => {
                             templateSec.classList.add('hidden');
-                            messageSec.classList.remove('hidden');
+
+messageSec.classList.remove('hidden');
+
+setTimeout(()=>{
+    messageSec.classList.add('show-message');
+},100);
                         }, 2000);
 
                     }, 15000);
