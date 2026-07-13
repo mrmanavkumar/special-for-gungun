@@ -1,198 +1,104 @@
-function openGift(){
+const canvas = document.getElementById('effectCanvas');
+const ctx = canvas.getContext('2d');
+let animationActive = false;
+let particles = [];
 
-    document.getElementById("giftScreen").style.display="none";
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-    const countdownScreen=document.getElementById("countdownScreen");
-    const countdownText=document.getElementById("countdownText");
-
-    countdownScreen.style.display="flex";
-
-    let count=3;
-
-    countdownText.innerHTML=count;
-
-    const timer=setInterval(()=>{
-
-        count--;
-
-        if(count>0){
-
-            countdownText.innerHTML=count;
-
-        }else{
-
-            clearInterval(timer);
-
-            countdownText.innerHTML="🎉 Happy Birthday 🎉";
-
-            setTimeout(()=>{
-
-                countdownScreen.style.display="none";
-
-                document.getElementById("surprise").style.display="flex";
-
-                startHearts();
-
-                startRoses();
-
-                setTimeout(()=>{
-
-                    document.getElementById("surprise").style.display="none";
-
-                    document.getElementById("finalMessage").style.display="flex";
-
-                    typeMessage();
-
-                },5000);
-
-            },2000);
-
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20;
+        this.size = Math.random() * 12 + 8;
+        this.speedY = Math.random() * 1.5 + 0.8; // Slow falling speed as requested
+        this.speedX = Math.sin(Math.random() * 2) * 0.5;
+        this.type = Math.random() > 0.4 ? 'petal' : 'heart';
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 1 - 0.5;
+    }
+    update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+        if (this.y > canvas.height) {
+            this.y = -20;
+            this.x = Math.random() * canvas.width;
         }
-
-    },1000);
-  function typeMessage(){
-
-const text=`Gungun,
-
-Main bas yehi dua karta hu ki tum hamesha khush raho...
-
-Kyuki tum sach me happiness deserve karti ho. ❤️
-
-Chahe waqt badal gaya ho...
-Chahe humari rahein alag ho gayi ho...
-
-Lekin tum hamesha meri life ka ek bahut special part rahogi.
-
-Main bas itna chahta hu ki tum apni life me bahut aage badho,
-khub haso,
-khush raho,
-aur apne har sapne ko pura karo. ✨
-
-Happy Birthday Gungun 🎂❤️
-
-— MANAV`;
-
-const box=document.getElementById("messageText");
-
-box.innerHTML="";
-
-let i=0;
-
-const typing=setInterval(()=>{
-
-box.innerHTML+=text.charAt(i);
-
-i++;
-
-if(i>=text.length){
-
-clearInterval(typing);
-
+    }
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        if (this.type === 'petal') {
+            ctx.fillStyle = '#ff7675';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            ctx.fillStyle = '#d63031';
+            ctx.beginPath();
+            ctx.moveTo(0, 0 - this.size / 4);
+            ctx.bezierCurveTo(0 - this.size / 2, 0 - this.size, 0 - this.size, 0 - this.size / 4, 0, 0 + this.size / 1.5);
+            ctx.bezierCurveTo(0 + this.size, 0 - this.size / 4, 0 + this.size / 2, 0 - this.size, 0, 0 - this.size / 4);
+            ctx.fill();
+        }
+        ctx.restore();
+    }
 }
 
-},45);
-
+function animate() {
+    if (!animationActive) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
 }
 
-function startHearts(){
+// Full Orchestrated Sequence
+function startGiftSequence() {
+    const giftBox = document.getElementById('giftBox');
+    const countdownScreen = document.getElementById('countdownScreen');
+    const countdownNumber = document.getElementById('countdownNumber');
+    const magicalContent = document.getElementById('magicalContent');
 
-setInterval(()=>{
+    // 1. Box shakes first
+    giftBox.classList.add('shake');
 
-const heart=document.createElement("div");
+    setTimeout(() => {
+        // Hide box, show countdown
+        giftBox.classList.add('hidden');
+        countdownScreen.classList.remove('hidden');
 
-heart.innerHTML="❤️";
+        // 2. Start Countdown Timer (3, 2, 1)
+        let count = 3;
+        let counterInterval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                countdownNumber.innerText = count;
+            } else {
+                clearInterval(counterInterval);
+                countdownScreen.classList.add('hidden');
 
-heart.style.position="fixed";
+                // 3. Start Rose Petals Falling (Will run continuously)
+                animationActive = true;
+                for (let i = 0; i < 40; i++) {
+                    particles.push(new Particle());
+                }
+                animate();
 
-heart.style.left=Math.random()*100+"vw";
+                // 4. Wait for 15 seconds while roses fall, then show Letter + Sketch Watermark
+                setTimeout(() => {
+                    magicalContent.classList.remove('hidden');
+                }, 15000); // 15 Seconds Delay
+            }
+        }, 1000);
 
-heart.style.bottom="-20px";
-
-heart.style.fontSize=(18+Math.random()*18)+"px";
-
-heart.style.transition="6s linear";
-
-heart.style.zIndex="999";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-
-heart.style.transform="translateY(-110vh)";
-
-heart.style.opacity="0";
-
-},100);
-
-setTimeout(()=>{
-
-heart.remove();
-
-},6000);
-
-},1800);
-
+    }, 600); // Shake duration before disappearance
 }
-
-}
-function startRoses(){
-
-setInterval(()=>{
-
-const rose=document.createElement("div");
-
-rose.className="rose";
-
-rose.innerHTML="🌹";
-
-rose.style.left=Math.random()*100+"vw";
-
-rose.style.animationDuration=(8+Math.random()*3)+"s";
-
-document.body.appendChild(rose);
-
-setTimeout(()=>{
-
-rose.remove();
-
-},11000);
-
-},3500);
-
-}
-
-// ✨ Stars Animation
-
-const stars=document.querySelector(".stars");
-
-let opacity=0.15;
-
-setInterval(()=>{
-
-opacity=opacity===0.15?0.25:0.15;
-
-stars.style.opacity=opacity;
-
-},3000);
-
-// Gift Hover Effect
-
-const gift=document.querySelector(".gift-box img");
-
-gift.addEventListener("touchstart",()=>{
-
-gift.style.transform="scale(1.05)";
-
-});
-
-gift.addEventListener("touchend",()=>{
-
-gift.style.transform="scale(1)";
-
-});
-
-// Scroll Letter Smooth
-
-const letter=document.querySelector(".letter");
-
-letter.style.scrollBehavior="smooth";
