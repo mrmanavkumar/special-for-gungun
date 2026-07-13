@@ -1,635 +1,172 @@
-/* ==========================
-   RESET
-========================== */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+/* Base Style & Romantic Birthday Vibe Background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,
-body{
-
-width:100%;
-height:100%;
-
-overflow:hidden;
-
-font-family:'Poppins',sans-serif;
-
-background:#000;
-
+body {
+    background: radial-gradient(circle, #3d1229, #160424, #05000c);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
 }
 
-/* ==========================
-   STARS
-========================== */
-
-#stars{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background:
-radial-gradient(circle,#ffffff 1px,transparent 1px);
-
-background-size:45px 45px;
-
-opacity:.15;
-
-z-index:1;
-
+/* Twinkling Background Effect */
+.stars, .twinkling {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+}
+.stars { background: #000 url('https://i.imgur.com/Y4v9Z0Z.png') repeat top center; z-index: 0; }
+.twinkling {
+    background: transparent url('https://i.imgur.com/76g9W6Z.png') repeat top center;
+    z-index: 1;
+    animation: move-twink-back 200s linear infinite;
+}
+@keyframes move-twink-back {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 5000px; }
 }
 
-/* ==========================
-   HEARTS
-========================== */
-
-#hearts{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-pointer-events:none;
-
-overflow:hidden;
-
-z-index:2;
-
+canvas {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none;
 }
 
-/* ==========================
-   ROSES
-========================== */
-
-#roseContainer{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-pointer-events:none;
-
-overflow:hidden;
-
-z-index:3;
-
+.container {
+    z-index: 3;
+    text-align: center;
+    width: 90%;
+    max-width: 380px;
+    position: relative;
 }
 
-/* ==========================
-   GIFT SCREEN
-========================== */
+.hidden { display: none !important; }
 
-#giftScreen{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-display:flex;
-
-justify-content:center;
-align-items:center;
-
-flex-direction:column;
-
-background:
-linear-gradient(135deg,#ffdde1,#ee9ca7);
-
-z-index:999;
-
+/* Gift Box Area */
+.gift-box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.gift-circle-bg {
+    background: radial-gradient(circle, rgba(214,48,49,0.4) 0%, rgba(0,0,0,0) 70%);
+    padding: 30px;
+    border-radius: 50%;
+}
+.gift-img {
+    width: 140px;
+    height: auto;
+    cursor: pointer;
+}
+.shake {
+    animation: wobbleBox 0.5s ease-in-out infinite;
+}
+@keyframes wobbleBox {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-8deg) scale(1.05); }
+    75% { transform: rotate(8deg) scale(1.05); }
+}
+.tap-text {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #ffeaa7;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 234, 167, 0.5);
 }
 
-#giftBox img{
-
-width:210px;
-
-cursor:pointer;
-
-transition:.4s;
-
-animation:giftFloat 2.5s infinite ease-in-out;
-
+/* 3. Countdown Number Styling */
+#countdownNumber {
+    font-size: 90px;
+    font-weight: bold;
+    color: #ff7675;
+    text-shadow: 0 0 20px rgba(255, 118, 117, 0.6);
 }
 
-#giftBox img:hover{
-
-transform:scale(1.05);
-
+/* 4. Happy Birthday Screen (Optimized for Mobile Screens) */
+.bday-text {
+    font-size: 42px;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    color: #fab1a0;
+    text-shadow: 2px 4px 15px rgba(214, 48, 49, 0.8), 0 0 5px #fff;
+    font-weight: 900;
 }
 
-#giftScreen h2{
-
-margin-top:25px;
-
-font-size:28px;
-
-font-weight:700;
-
-color:white;
-
-text-shadow:0 0 18px rgba(255,255,255,.8);
-
-animation:blink 1.2s infinite;
-
+/* 5. Template Layout with Curved Corners */
+.template-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+.template-img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 25px; /* Smooth curved corners */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+}
+.fade-out-effect {
+    opacity: 0 !important;
+    transition: opacity 2s ease-in-out !important;
 }
 
-/* ==========================
-   COUNTDOWN
-========================== */
-
-#countdownScreen{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-display:none;
-
-justify-content:center;
-align-items:center;
-
-background:#000;
-
-z-index:998;
-
+/* 6. Premium Scrollable Message Card */
+.scroll-letter {
+    background: rgba(255, 255, 255, 0.96);
+    color: #2d3436;
+    padding: 25px;
+    border-radius: 20px;
+    height: 420px;
+    overflow-y: auto; /* Enables scrolling for text */
+    position: relative;
+    text-align: left;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border-left: 8px solid #ff7675;
+    opacity: 0;
+    animation: finalReveal 1.5s ease-out forwards;
+}
+@keyframes finalReveal {
+    to { opacity: 1; }
 }
 
-#countText{
-
-font-size:120px;
-
-font-weight:700;
-
-color:white;
-
-text-shadow:
-0 0 20px #fff,
-0 0 40px #ff69b4;
-
-animation:countZoom .8s infinite;
-
+/* Watermark Layout using sketch.png */
+.watermark-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    opacity: 0.12; /* Halka texture watermark as requested */
+    pointer-events: none;
+    z-index: 1;
 }
-/* ==========================
-   BIRTHDAY SCREEN
-========================== */
-
-#birthdayScreen{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-display:none;
-
-justify-content:center;
-align-items:center;
-
-background:#000;
-
-padding:20px;
-
-z-index:997;
-
+.watermark-bg img {
+    width: 100%;
+    height: auto;
 }
 
-.birthdayCard{
-
-width:95%;
-max-width:430px;
-
-text-align:center;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(18px);
-
-border-radius:28px;
-
-padding:25px;
-
-border:1px solid rgba(255,255,255,.18);
-
-box-shadow:
-0 0 35px rgba(255,255,255,.12);
-
-animation:birthdayZoom 1s ease;
-
+.letter-text {
+    position: relative;
+    z-index: 2;
 }
-
-.birthdayCard h1{
-
-font-size:34px;
-
-color:#fff;
-
-margin-bottom:20px;
-
-text-shadow:
-0 0 20px #fff,
-0 0 40px #ff69b4;
-
-}
-
-#birthdayTemplate{
-
-width:100%;
-
-border-radius:18px;
-
-box-shadow:
-0 0 30px rgba(255,255,255,.25);
-
-}
-
-/* ==========================
-   LETTER SCREEN
-========================== */
-
-#letterScreen{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-display:none;
-
-justify-content:center;
-align-items:center;
-
-padding:18px;
-
-background:
-linear-gradient(180deg,#111,#000);
-
-z-index:996;
-
-}
-
-.letterCard{
-
-position:relative;
-
-width:95%;
-max-width:460px;
-
-height:82vh;
-
-overflow-y:auto;
-
-padding:28px;
-
-border-radius:22px;
-
-background:rgba(255,255,255,.10);
-
-backdrop-filter:blur(15px);
-
-border:1px solid rgba(255,255,255,.20);
-
-box-shadow:
-0 0 35px rgba(255,255,255,.12);
-
-animation:bookOpen 1s ease;
-
-}
-
-.letterCard h1{
-
-text-align:center;
-
-color:white;
-
-margin-bottom:25px;
-
-font-size:28px;
-
-}
-
-#messageContainer{
-
-color:white;
-
-font-size:18px;
-
-line-height:1.9;
-
-white-space:pre-line;
-
-}
-
-/* ==========================
-   SKETCH
-========================== */
-
-#sketch{
-
-position:absolute;
-
-top:50%;
-
-left:50%;
-
-transform:translate(-50%,-50%);
-
-width:230px;
-
-opacity:.05;
-
-pointer-events:none;
-
-}
-
-/* ==========================
-   MOBILE
-========================== */
-
-@media(max-width:600px){
-
-#giftBox img{
-
-width:180px;
-
-}
-
-#giftScreen h2{
-
-font-size:22px;
-
-}
-
-#countText{
-
-font-size:90px;
-
-}
-
-.birthdayCard h1{
-
-font-size:28px;
-
-}
-
-.letterCard{
-
-height:84vh;
-
-padding:22px;
-
-}
-
-#messageContainer{
-
-font-size:16px;
-
-}
-
-}
-/* ==========================
-   ROSE PETALS
-========================== */
-
-.rose{
-
-position:absolute;
-
-top:-60px;
-
-font-size:22px;
-
-opacity:.9;
-
-animation:roseFall linear forwards;
-
-}
-
-/* ==========================
-   HEART
-========================== */
-
-.heart{
-
-position:absolute;
-
-bottom:-40px;
-
-font-size:22px;
-
-opacity:.8;
-
-animation:heartFloat linear forwards;
-
-}
-
-/* ==========================
-   ANIMATIONS
-========================== */
-
-@keyframes giftFloat{
-
-0%,100%{
-
-transform:translateY(0);
-
-}
-
-50%{
-
-transform:translateY(-12px);
-
-}
-
-}
-
-@keyframes blink{
-
-50%{
-
-opacity:.4;
-
-}
-
-}
-
-@keyframes countZoom{
-
-0%{
-
-transform:scale(.5);
-
-opacity:0;
-
-}
-
-50%{
-
-transform:scale(1.25);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-}
-
-@keyframes birthdayZoom{
-
-0%{
-
-transform:scale(.7);
-
-opacity:0;
-
-}
-
-100%{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-}
-
-@keyframes bookOpen{
-
-0%{
-
-transform:translateX(-120%);
-
-opacity:0;
-
-}
-
-100%{
-
-transform:translateX(0);
-
-opacity:1;
-
-}
-
-}
-
-@keyframes roseFall{
-
-0%{
-
-transform:
-translateY(-50px)
-rotate(0deg);
-
-opacity:0;
-
-}
-
-20%{
-
-opacity:1;
-
-}
-
-100%{
-
-transform:
-translateY(110vh)
-rotate(360deg);
-
-opacity:0;
-
-}
-
-}
-
-@keyframes heartFloat{
-
-0%{
-
-transform:
-translateY(0)
-scale(.8);
-
-opacity:0;
-
-}
-
-20%{
-
-opacity:1;
-
-}
-
-100%{
-
-transform:
-translateY(-110vh)
-scale(1.3);
-
-opacity:0;
-
-}
-
-}
-
-@keyframes starsBlink{
-
-0%{
-
-opacity:.12;
-
-}
-
-100%{
-
-opacity:.25;
-
-}
-
-}
-
-/* Stars Animation */
-
-#stars{
-
-animation:starsBlink 3s infinite alternate;
-
+.letter-text h3 { color: #d63031; margin-bottom: 15px; font-size: 20px; font-weight: bold; }
+.letter-text p { font-size: 15px; line-height: 1.6; margin-bottom: 15px; font-weight: 500; }
+.highlight-bday { color: #d63031; font-weight: bold; font-size: 17px !important; margin-top: 20px; }
+.signature { font-weight: bold; color: #000; margin-top: 5px; }
+
+/* Responsive adjustments for tiny/regular smartphones */
+@media (max-width: 480px) {
+    .bday-text { font-size: 36px; }
+    .scroll-letter { height: 360px; padding: 20px; }
+    .letter-text p { font-size: 14px; }
 }
