@@ -8,58 +8,41 @@
 </head>
 <body>
 
-    <div class="stars"></div>
-    <div class="twinkling"></div>
     <canvas id="effectCanvas"></canvas>
     <audio id="countdownAudio" src="countdown.mp3"></audio>
 
     <div class="container">
         <!-- 1. Gift Box -->
-        <div id="giftBox" class="gift-box-wrapper" onclick="startSequence()">
-            <img src="gift.png" alt="Gift Box" class="gift-img">
-            <div class="gift-text">Tap to Open Gift 🎁</div>
+        <div id="giftSection">
+            <img src="gift.png" alt="Gift" id="giftBox" class="gift-img" onclick="startSequence()">
+            <p>Tap to Open 🎁</p>
         </div>
 
-        <!-- 2. Countdown -->
-        <div id="countdownScreen" class="hidden">
+        <!-- 2. Countdown & Birthday Greeting -->
+        <div id="greetingSection" class="hidden">
             <div id="countdownNumber">3</div>
+            <h1 id="bdayText" class="hidden">HAPPY BIRTHDAY! 🎂</h1>
         </div>
 
-        <!-- 3. Template (Fades in then out) -->
-        <img src="birthday-template.png" id="templateImg" class="hidden template-style">
+        <!-- 3. Template -->
+        <img src="birthday-template.png" id="templateImg" class="hidden template-img">
 
-        <!-- 4. Scrollable Letter (Message with Watermark) -->
-        <div id="messageBox" class="hidden scroll-letter">
-            <div class="watermark-bg">
-                <img src="sketch.png" alt="Sketch">
-            </div>
+        <!-- 4. Final Message -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div class="watermark-bg"><img src="sketch.png" alt="Sketch"></div>
             <div class="letter-text">
                 <h3>Gungun, ❤️</h3>
-                <p>Main bas yehi dua karta hu ki tum hamesha khush raho...<br>
-                Kyuki tum sach me happiness deserve karti ho. ❤️</p>
-                
-                <p>Chahe waqt badal gaya ho...<br>
-                Chahe humari rahein alag ho gayi ho...</p>
-                
+                <p>Main bas yehi dua karta hu ki tum hamesha khush raho...<br>Kyuki tum sach me happiness deserve karti ho. ❤️</p>
+                <p>Chahe waqt badal gaya ho...<br>Chahe humari rahein alag ho gayi ho...</p>
                 <p>Lekin tum hamesha meri life ka ek bahut special part rahogi.</p>
-                
-                <p>Main bas itna chahta hu ki tum apni life me bahut aage badho,<br>
-                khub haso, khush raho,<br>
-                aur apne har sapne ko pura karo. ✨</p>
-                
-                <p>Tumhari smile hamesha aise hi bani rahe...<br>
-                Aur tumhari zindagi me sirf khushiyan hi khushiyan aaye.</p>
-                
+                <p>Main bas itna chahta hu ki tum apni life me bahut aage badho, khub haso, khush raho, aur apne har sapne ko pura karo. ✨</p>
+                <p>Tumhari smile hamesha aise hi bani rahe...<br>Aur tumhari zindagi me sirf khushiyan hi khushiyan aaye.</p>
                 <p>May God bless you with endless happiness, success and love. 🌸</p>
-                
                 <p><strong>Happy Birthday Gungun 🎂❤️</strong></p>
-                
-                <p>Take care... Always.<br>
-                — MANAV ❤️</p>
+                <p>Take care... Always.<br>— MANAV ❤️</p>
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
