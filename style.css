@@ -121,3 +121,18 @@ animation: messageFadeIn 2s ease forwards;
         transform:translateY(0);
     }
 }
+.show-message{
+    animation:messageFadeIn 2s ease forwards;
+}
+
+@keyframes messageFadeIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
