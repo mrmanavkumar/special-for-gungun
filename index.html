@@ -3,50 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Gift 🌹</title>
+    <title>Special For Gungun ❤️</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Stars Background (Humesha peeche rahega) -->
     <div class="stars"></div>
     <div class="twinkling"></div>
-
-    <!-- Canvas for Floating Rose Petals & Hearts -->
     <canvas id="effectCanvas"></canvas>
+    <audio id="countdownAudio" src="countdown.mp3"></audio>
 
     <div class="container">
-        
-        <!-- STEP 1: Gift Box -->
-        <div id="giftBox" class="gift-box" onclick="startGiftSequence()">
-            <div class="ribbon"></div>
+        <!-- 1. Gift Box -->
+        <div id="giftBox" class="gift-box-wrapper" onclick="startSequence()">
+            <img src="gift.png" alt="Gift Box" class="gift-img">
             <div class="gift-text">Tap to Open Gift 🎁</div>
         </div>
 
-        <!-- STEP 2: Countdown Screen -->
-        <div id="countdownScreen" class="countdown-screen hidden">
+        <!-- 2. Countdown -->
+        <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">3</div>
         </div>
 
-        <!-- STEP 3 & 4: Letter Container (Sketch builds inside this as Watermark) -->
-        <div id="magicalContent" class="magical-zone hidden">
-            <div class="letter-scroll-box">
-                <!-- Watermark Sketch Image -->
-                <div class="watermark-bg">
-                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="Sketch Watermark">
-                </div>
+        <!-- 3. Template (Fades in then out) -->
+        <img src="birthday-template.png" id="templateImg" class="hidden template-style">
+
+        <!-- 4. Scrollable Letter (Message with Watermark) -->
+        <div id="messageBox" class="hidden scroll-letter">
+            <div class="watermark-bg">
+                <img src="sketch.png" alt="Sketch">
+            </div>
+            <div class="letter-text">
+                <h3>Gungun, ❤️</h3>
+                <p>Main bas yehi dua karta hu ki tum hamesha khush raho...<br>
+                Kyuki tum sach me happiness deserve karti ho. ❤️</p>
                 
-                <!-- Scrollable Content -->
-                <div class="letter-text">
-                    <h3>Dear [Name], ❤️</h3>
-                    <p>Aapke is special din par main bas yeh kehna chahta/chahti hoon ki aap meri zindagi ka sabse khoobsurat hissa ho.</p>
-                    <p>Zindagi mein bohot se log aate hain aur chale jaate hain, par aapki jagah koi nahi le sakta. Aapki muskurahat meri sabse badi khushi hai.</p>
-                    <p>May your day be filled with endless love, laughter, and pure happiness. Aap jahan bhi raho, humesha haste muskurate raho. 🌹</p>
-                    <p>Mera yeh chota sa tohfa sirf aapke liye hai. Happy Birthday once again! ❤️ ✨</p>
-                </div>
+                <p>Chahe waqt badal gaya ho...<br>
+                Chahe humari rahein alag ho gayi ho...</p>
+                
+                <p>Lekin tum hamesha meri life ka ek bahut special part rahogi.</p>
+                
+                <p>Main bas itna chahta hu ki tum apni life me bahut aage badho,<br>
+                khub haso, khush raho,<br>
+                aur apne har sapne ko pura karo. ✨</p>
+                
+                <p>Tumhari smile hamesha aise hi bani rahe...<br>
+                Aur tumhari zindagi me sirf khushiyan hi khushiyan aaye.</p>
+                
+                <p>May God bless you with endless happiness, success and love. 🌸</p>
+                
+                <p><strong>Happy Birthday Gungun 🎂❤️</strong></p>
+                
+                <p>Take care... Always.<br>
+                — MANAV ❤️</p>
             </div>
         </div>
-
     </div>
 
     <script src="script.js"></script>
