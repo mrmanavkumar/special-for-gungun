@@ -10,10 +10,9 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Dual Particle Logic: Roses drop down, Hearts rise up!
 class DualParticle {
     constructor(direction) {
-        this.direction = direction; // 'rose' (down) or 'heart' (up)
+        this.direction = direction;
         this.x = Math.random() * canvas.width;
         this.size = Math.random() * 10 + 6;
         this.speedY = direction === 'rose' ? (Math.random() * 1.2 + 0.5) : -(Math.random() * 1.2 + 0.5);
@@ -37,12 +36,10 @@ class DualParticle {
         ctx.save();
         ctx.beginPath();
         if (this.direction === 'rose') {
-            // Soft Rose Petals Pink/Red style
             ctx.fillStyle = '#ff7675';
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
         } else {
-            // Little Romantic Floating Hearts
             ctx.fillStyle = '#d63031';
             let d = this.size;
             ctx.translate(this.x, this.y);
@@ -65,7 +62,6 @@ function runEngine() {
     requestAnimationFrame(runEngine);
 }
 
-// Orchestrated Core Sequence Timelines
 function startSequence() {
     const giftSection = document.getElementById('giftSection');
     const giftBox = document.getElementById('giftBox');
@@ -74,19 +70,20 @@ function startSequence() {
     const bdayScreen = document.getElementById('bdayGreetingScreen');
     const templateSec = document.getElementById('templateSection');
     const messageSec = document.getElementById('messageSection');
-    const audio = document.getElementById('countdownAudio');
+    const countdownAudio = document.getElementById('countdownAudio');
+    const bgMusic = document.getElementById('bgMusic');
 
-    // Step 1: Click makes the Box Shake
+    // Box Shake Animation
     giftBox.classList.add('shake');
 
     setTimeout(() => {
         giftSection.classList.add('hidden');
         countdownScreen.classList.remove('hidden');
         
-        // Play countdown sound asset
-        audio.play().catch(err => console.log("Audio waiting for user click interaction: ", err));
+        // Countdown sound shuru
+        countdownAudio.play().catch(err => console.log("Audio play blocked initially", err));
 
-        // Step 2: Running Countdown 3 -> 2 -> 1
+        // Ticking 3 -> 2 -> 1
         let ticks = 3;
         let timer = setInterval(() => {
             ticks--;
@@ -96,37 +93,38 @@ function startSequence() {
                 clearInterval(timer);
                 countdownScreen.classList.add('hidden');
 
-                // Step 3: Flash HAPPY BIRTHDAY Text on Screen
+                // Happy Birthday Screen + Romantic Music Start!
                 bdayScreen.classList.remove('hidden');
+                bgMusic.play().catch(err => console.log("Background music blocked", err));
 
                 setTimeout(() => {
                     bdayScreen.classList.add('hidden');
 
-                    // Step 4: Fade in Template Image beautifully
+                    // Template Smooth Fade In
                     templateSec.classList.remove('hidden');
                     setTimeout(() => { templateSec.style.opacity = '1'; }, 50);
 
-                    // Trigger falling rose petals & rising hearts
+                    // Falling Roses & Rising Hearts
                     animationActive = true;
                     for (let i = 0; i < 25; i++) particles.push(new DualParticle('rose'));
                     for (let i = 0; i < 20; i++) particles.push(new DualParticle('heart'));
                     runEngine();
 
-                    // Step 5: Wait precisely 15 seconds with template, then fade out smoothly
+                    // 15 Seconds Template View Time
                     setTimeout(() => {
                         templateSec.classList.add('fade-out-effect');
 
-                        // Step 6: Reveal the scroll letter box with sketch watermark
+                        // Final Message Reveal (Watermark + Scroll)
                         setTimeout(() => {
                             templateSec.classList.add('hidden');
                             messageSec.classList.remove('hidden');
-                        }, 2000); // 2 seconds fade out buffer time
+                        }, 2000);
 
-                    }, 15000); // 15 Seconds Display Timer
+                    }, 15000);
 
-                }, 2500); // 2.5 seconds stay for Happy Birthday text
+                }, 2500); // Happy Birthday Screen stay duration
             }
         }, 1000);
 
-    }, 1200); // Box shaking time limit duration
+    }, 1200); // Shaking box delay
 }
