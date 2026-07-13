@@ -144,7 +144,8 @@ async function typeWriterEffect() {
     for (const item of items) {
 
         const text = item.innerHTML;
-        item.innerHTML = "";
+item.setAttribute("data-text", text);
+item.innerHTML = "";
 
         for (let i = 0; i < text.length; i++) {
 
