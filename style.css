@@ -57,7 +57,7 @@ background: transparent;
     text-align: left; 
     box-shadow: 0 25px 60px rgba(0,0,0,0.5); 
     border: boder:none;
-    opacity:0;
+    opacity:1;
 animation: messageFadeIn 2s ease forwards;
 }
 
