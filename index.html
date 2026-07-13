@@ -1,126 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday ❤️</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special For Gungun ❤️</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ⭐ Background Stars -->
+    <!-- Stars Background Layers -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
 
-<div id="stars"></div>
+    <!-- Canvas for Rose Petals (Top-to-Bottom) & Hearts (Bottom-to-Top) -->
+    <canvas id="effectCanvas"></canvas>
 
-<!-- ❤️ Floating Hearts -->
+    <!-- Countdown Sound Asset -->
+    <audio id="countdownAudio" src="countdown.mp3"></audio>
 
-<div id="hearts"></div>
+    <div class="container">
+        
+        <!-- STEP 1: Gift Box (Romantic Gradient Circle Background) -->
+        <div id="giftSection" class="gift-box-container">
+            <div class="gift-circle-bg">
+                <img src="gift.png" alt="Gift" id="giftBox" class="gift-img" onclick="startSequence()">
+            </div>
+            <p class="tap-text">Tap to Open 🎁</p>
+        </div>
 
-<!-- 🌹 Rose Petals -->
+        <!-- STEP 2: Countdown Screen -->
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">3</div>
+        </div>
 
-<div id="roseContainer"></div>
+        <!-- STEP 3: Mobile Responsive Happy Birthday Screen -->
+        <div id="bdayGreetingScreen" class="hidden">
+            <h1 class="bday-text">HAPPY<br>BIRTHDAY! 🎂</h1>
+        </div>
 
-<!-- 🎁 Gift Screen -->
+        <!-- STEP 4: Template (Curved Corners & Centered) -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img src="birthday-template.png" alt="Template" class="template-img">
+        </div>
 
-<div id="giftScreen">
-
-<div id="giftBox">
-
-<img src="gift.png" alt="Gift">
-
-</div>
-
-<h2>
-
-🎁 Tap The Gift 🎁
-
-</h2>
-
-</div>
-
-<!-- ⏳ Countdown -->
-
-<div id="countdownScreen">
-
-<h1 id="countText">
-
-3
-
-</h1>
-
-</div>
-
-<!-- 🎉 Happy Birthday Screen -->
-
-<div id="birthdayScreen">
-
-<div class="birthdayCard">
-
-<h1>
-
-🎉 Happy Birthday 🎉
-
-</h1>
-
-<img
-src="birthday-template.png"
-id="birthdayTemplate">
-
-</div>
-
-</div>
-<!-- 💌 Final Letter Screen -->
-
-<div id="letterScreen">
-
-    <div class="letterCard">
-
-        <!-- Sketch Watermark -->
-
-        <img
-            src="sketch.png"
-            id="sketch"
-            alt="Sketch">
-
-        <h1>
-            ❤️ Happy Birthday Gungun ❤️
-        </h1>
-
-        <div id="messageContainer">
-
-            <p id="messageText"></p>
-
+        <!-- STEP 5: Final Scrolling Message with Light Sketch Watermark -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div class="watermark-bg">
+                <img src="sketch.png" alt="Sketch">
+            </div>
+            <div class="letter-text">
+                <h3>Gungun, ❤️</h3>
+                <p>Main bas yehi dua karta hu ki tum hamesha khush raho...</p>
+                <p>Kyuki tum sach me happiness deserve karti ho. ❤️</p>
+                
+                <p>Chahe waqt badal gaya ho...<br>
+                Chahe humari rahein alag ho gayi ho...</p>
+                
+                <p>Lekin tum hamesha meri life ka ek bahut special part rahogi.</p>
+                
+                <p>Main bas itna chahta hu ki tum apni life me bahut aage badho,<br>
+                khub haso,<br>
+                khush raho,<br>
+                aur apne har sapne ko pura karo. ✨</p>
+                
+                <p>Tumhari smile hamesha aise hi bani rahe...<br>
+                Aur tumhari zindagi me sirf khushiyan hi khushiyan aaye.</p>
+                
+                <p>May God bless you with endless happiness, success and love. 🌸</p>
+                
+                <p class="highlight-bday">Happy Birthday Gungun 🎂❤️</p>
+                
+                <p>Take care... Always.</p>
+                <p class="signature">— MANAV ❤️</p>
+            </div>
         </div>
 
     </div>
 
-</div>
-
-<!-- ⏱️ Countdown Sound -->
-
-<audio id="countdownAudio" preload="auto">
-
-    <source src="countdown.mp3" type="audio/mpeg">
-
-</audio>
-
-<!-- JavaScript -->
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
