@@ -4,23 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special For Gungun ❤️</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 <body>
 
-    <!-- Stars Background Layers -->
     <div class="stars"></div>
-    <div class="twinkling"></div>
-
-    <!-- Canvas for Rose Petals (Top-to-Bottom) & Hearts (Bottom-to-Top) -->
     <canvas id="effectCanvas"></canvas>
 
-    <!-- Countdown Sound Asset -->
+    <!-- Audios (Dono Files Aapki) -->
     <audio id="countdownAudio" src="countdown.mp3"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" loop></audio> <!-- Naya Romantic Song -->
 
     <div class="container">
         
-        <!-- STEP 1: Gift Box (Romantic Gradient Circle Background) -->
+        <!-- STEP 1: Gift Box -->
         <div id="giftSection" class="gift-box-container">
             <div class="gift-circle-bg">
                 <img src="gift.png" alt="Gift" id="giftBox" class="gift-img" onclick="startSequence()">
@@ -33,17 +30,17 @@
             <div id="countdownNumber">3</div>
         </div>
 
-        <!-- STEP 3: Mobile Responsive Happy Birthday Screen -->
+        <!-- STEP 3: Happy Birthday Screen -->
         <div id="bdayGreetingScreen" class="hidden">
             <h1 class="bday-text">HAPPY<br>BIRTHDAY! 🎂</h1>
         </div>
 
-        <!-- STEP 4: Template (Curved Corners & Centered) -->
+        <!-- STEP 4: Template -->
         <div id="templateSection" class="hidden template-wrapper">
             <img src="birthday-template.png" alt="Template" class="template-img">
         </div>
 
-        <!-- STEP 5: Final Scrolling Message with Light Sketch Watermark -->
+        <!-- STEP 5: Message -->
         <div id="messageSection" class="hidden scroll-letter">
             <div class="watermark-bg">
                 <img src="sketch.png" alt="Sketch">
