@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Gungun ❤️</title>
+    <link rel="stylesheet" href="style.css?v=5.0">
+</head>
+<body>
 
+    <div class="stars"></div>
+
+    <canvas id="effectCanvas"></canvas>
+
+    <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
+
+    <div class="container">
+
+        <div id="giftSection">
+            <img src="gift.png" id="giftBox" class="gift-img" alt="Gift Box">
+            <div class="tap-text">Tap to Open the Box ✨</div>
+        </div>
+
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">3</div>
+        </div>
+
+        <div id="templateSection" class="hidden template-wrapper">
+            <img src="birthday-template.png" class="template-img" alt="Birthday Wishes">
+        </div>
+
+        <div id="messageSection" class="hidden scroll-letter">
+            <div class="watermark-bg">
+                <img src="sketch.png" alt="Sketch Watermark">
+            </div>
+            <div id="typewriterText" class="letter-text"></div>
+        </div>
+
+    </div>
+
+    <div id="bdayGreetingScreen" class="hidden">
+        <h1 class="bday-text">HAPPY BIRTHDAY<br>GUNGUN 🎂✨</h1>
+    </div>
+
+    <script src="script.js?v=5.0"></script>
+</body>
+</html>
