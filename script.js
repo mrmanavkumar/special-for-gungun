@@ -1,21 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Ye direct aapki purani HTML ke elements ko pakdega
+    const startBtn = document.querySelector('[onclick*="startCountdown"]'); // Gift box ya button
     const splashScreen = document.getElementById("splashScreen");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const scrollLetter = document.getElementById("scrollLetter");
 
-    // 1. Splash Screen Tap Event
-    splashScreen.addEventListener("click", () => {
-        splashScreen.classList.add("hidden");
-        countdownScreen.classList.remove("hidden");
-        startCountdown();
-    });
+    // Agar direct HTML onclick call nahi ho rahi, toh hum is event listener se safe-handle karenge
+    const giftBoxElement = document.querySelector('.gift-container') || document.querySelector('.splash-container') || document.getElementById("splashScreen");
+    
+    if (giftBoxElement) {
+        giftBoxElement.addEventListener("click", () => {
+            triggerStart();
+        });
+    }
 
-    // 2. Countdown Engine
-    function startCountdown() {
+    // Is function ko global scope mein bhi daal dete hain taaki HTML ka "onclick" crash na ho
+    window.startCountdown = function() {
+        triggerStart();
+    };
+
+    function triggerStart() {
+        if (splashScreen) splashScreen.classList.add("hidden");
+        
+        // Agar countdown screen hai toh wahan le jao, nahi toh direct letter par
+        if (countdownScreen) {
+            countdownScreen.classList.remove("hidden");
+            startCountdownTimer();
+        } else {
+            showBirthdayGreeting();
+        }
+    }
+
+    // Countdown logic
+    function startCountdownTimer() {
         let count = 3;
-        countdownNumber.textContent = count;
+        if (countdownNumber) countdownNumber.textContent = count;
 
         const countdownMusic = document.getElementById("countdownMusic");
         if (countdownMusic) {
@@ -25,43 +46,44 @@ document.addEventListener("DOMContentLoaded", () => {
         const timer = setInterval(() => {
             count--;
             if (count > 0) {
-                countdownNumber.textContent = count;
+                if (countdownNumber) countdownNumber.textContent = count;
             } else {
                 clearInterval(timer);
-                countdownScreen.classList.add("hidden");
+                if (countdownScreen) countdownScreen.classList.add("hidden");
                 showBirthdayGreeting();
             }
         }, 1000);
     }
 
-    // 3. Birthday Greeting Screen Sequence
+    // Greeting transition to romantic letter
     function showBirthdayGreeting() {
-        bdayGreetingScreen.classList.remove("hidden");
+        if (bdayGreetingScreen) {
+            bdayGreetingScreen.classList.remove("hidden");
+        }
 
         const bgMusic = document.getElementById("bgMusic");
         if (bgMusic) {
             bgMusic.play().catch(err => console.log("BG Music play blocked", err));
         }
 
-        // 3 Seconds baad automatically gift box transition and letter page open
         setTimeout(() => {
-            bdayGreetingScreen.classList.add("hidden");
-            scrollLetter.classList.remove("hidden");
-            // Add class for smooth fade in
-            setTimeout(() => {
-                scrollLetter.classList.add("active");
-                typeWriterEffect();
-            }, 100);
+            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+            if (scrollLetter) {
+                scrollLetter.classList.remove("hidden");
+                setTimeout(() => {
+                    scrollLetter.classList.add("active");
+                    typeWriterEffect();
+                }, 100);
+            }
         }, 3000);
     }
 
-    // 4. Premium Romantic Typewriter Engine with Heart Cursor
+    // Typewriter engine with beautiful heart cursor
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.querySelector(".scroll-letter");
         if (!targetDiv) return;
 
-        // Custom Deep Romantic Letter Content
         const letterData = [
             { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki smile kabhi kam na ho, kyuki tum sach me har ek happiness deserve karti ho.' },
@@ -71,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Take care of yourself. ✨', className: 'signature' }
         ];
 
-        targetDiv.innerHTML = ""; // Pehle clear karein
+        targetDiv.innerHTML = ""; // Clear existing
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
@@ -81,28 +103,22 @@ document.addEventListener("DOMContentLoaded", () => {
             let rawText = data.text;
             
             for (let i = 0; i < rawText.length; i++) {
-                // Remove previous temporary heart cursors
                 const oldCursor = element.querySelector('.heart-cursor');
                 if (oldCursor) oldCursor.remove();
 
-                // Append new character + glowing heart cursor
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
-                // Smooth scrolling calculation
                 if (scrollBox) {
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                 }
                 
-                // Typing speed setup (45ms per word)
                 await new Promise(res => setTimeout(res, 45));
             }
 
-            // End of paragraph cursor removal
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
 
-            // Delay between paragraphs (600ms)
             await new Promise(res => setTimeout(res, 600));
         }
     }
