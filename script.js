@@ -1,133 +1,67 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById('effectCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationActive = false;
+    const splashScreen = document.getElementById("splashScreen");
+    const countdownScreen = document.getElementById("countdownScreen");
+    const countdownNumber = document.getElementById("countdownNumber");
+    const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
+    const scrollLetter = document.getElementById("scrollLetter");
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    // 1. Splash Screen Tap Event
+    splashScreen.addEventListener("click", () => {
+        splashScreen.classList.add("hidden");
+        countdownScreen.classList.remove("hidden");
+        startCountdown();
+    });
 
-    class DualParticle {
-        constructor(direction) {
-            this.direction = direction;
-            this.x = Math.random() * canvas.width;
-            this.size = Math.random() * 10 + 6;
-            this.speedY = direction === 'rose' ? (Math.random() * 1.2 + 0.5) : -(Math.random() * 1.2 + 0.5);
-            this.y = direction === 'rose' ? -20 : canvas.height + 20;
-            this.swing = Math.random() * 2;
-            this.swingSpeed = Math.random() * 0.02;
+    // 2. Countdown Engine
+    function startCountdown() {
+        let count = 3;
+        countdownNumber.textContent = count;
+
+        const countdownMusic = document.getElementById("countdownMusic");
+        if (countdownMusic) {
+            countdownMusic.play().catch(err => console.log("Music play blocked", err));
         }
-        update() {
-            this.y += this.speedY;
-            this.x += Math.sin(this.swing) * 0.3;
-            this.swing += this.swingSpeed;
-            if (this.direction === 'rose' && this.y > canvas.height) { this.y = -20; this.x = Math.random() * canvas.width; }
-            if (this.direction === 'heart' && this.y < -20) { this.y = canvas.height + 20; this.x = Math.random() * canvas.width; }
-        }
-        draw() {
-            ctx.save();
-            ctx.beginPath();
-            if (this.direction === 'rose') {
-                ctx.fillStyle = '#ff7675';
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+
+        const timer = setInterval(() => {
+            count--;
+            if (count > 0) {
+                countdownNumber.textContent = count;
             } else {
-                ctx.fillStyle = '#d63031';
-                let d = this.size;
-                ctx.translate(this.x, this.y);
-                ctx.moveTo(0, 0);
-                ctx.bezierCurveTo(-d/2, -d, -d, -d/3, 0, d);
-                ctx.bezierCurveTo(d, -d/3, d/2, -d, 0, 0);
-                ctx.fill();
+                clearInterval(timer);
+                countdownScreen.classList.add("hidden");
+                showBirthdayGreeting();
             }
-            ctx.restore();
+        }, 1000);
+    }
+
+    // 3. Birthday Greeting Screen Sequence
+    function showBirthdayGreeting() {
+        bdayGreetingScreen.classList.remove("hidden");
+
+        const bgMusic = document.getElementById("bgMusic");
+        if (bgMusic) {
+            bgMusic.play().catch(err => console.log("BG Music play blocked", err));
         }
-    }
 
-    function runEngine() {
-        if (!animationActive) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(runEngine);
-    }
-
-    // Direct Secure Click Handler
-    const giftBox = document.getElementById('giftBox');
-    if (giftBox) {
-        giftBox.addEventListener('click', () => {
-            giftBox.classList.add('shake');
-
+        // 3 Seconds baad automatically gift box transition and letter page open
+        setTimeout(() => {
+            bdayGreetingScreen.classList.add("hidden");
+            scrollLetter.classList.remove("hidden");
+            // Add class for smooth fade in
             setTimeout(() => {
-                document.getElementById('giftSection').classList.add('hidden');
-                const countdownScreen = document.getElementById('countdownScreen');
-                countdownScreen.classList.remove('hidden');
-                
-                const countdownAudio = document.getElementById('countdownAudio');
-                if (countdownAudio) countdownAudio.play().catch(e => console.log(e));
-
-                let ticks = 3;
-                let timer = setInterval(() => {
-                    ticks--;
-                    if (ticks > 0) {
-                        document.getElementById('countdownNumber').innerText = ticks;
-                    } else {
-                        clearInterval(timer);
-                        countdownScreen.classList.add('hidden');
-
-                        const bdayScreen = document.getElementById('bdayGreetingScreen');
-                        bdayScreen.classList.remove('hidden');
-                        
-                        const bgMusic = document.getElementById('bgMusic');
-                        if (bgMusic) bgMusic.play().catch(e => console.log(e));
-
-                        setTimeout(() => {
-                            bdayScreen.classList.add('hidden');
-                            const templateSec = document.getElementById('templateSection');
-                            templateSec.classList.remove('hidden');
-                            setTimeout(() => { templateSec.style.opacity = '1'; }, 50);
-
-                            // Trigger Hearts & Roses Engine
-                            animationActive = true;
-                            for (let i = 0; i < 25; i++) particles.push(new DualParticle('rose'));
-                            for (let i = 0; i < 20; i++) particles.push(new DualParticle('heart'));
-                            runEngine();
-
-                            // 15 Sec Template Screen Duration
-                            setTimeout(() => {
-                                templateSec.classList.add('fade-out-effect');
-
-                                setTimeout(() => {
-                                    templateSec.classList.add('hidden');
-                                    const messageSec = document.getElementById('messageSection');
-                                    messageSec.classList.remove('hidden');
-                                    
-                                    setTimeout(() => {
-                                        messageSec.classList.add('show-message');
-                                    }, 100);
-                                    
-                                    setTimeout(() => {
-                                        typeWriterEffect();
-                                    }, 1500);
-                                }, 2000);
-                            }, 15000);
-                        }, 2500);
-                    }
-                }, 1000);
-            }, 1200);
-        });
+                scrollLetter.classList.add("active");
+                typeWriterEffect();
+            }, 100);
+        }, 3000);
     }
 
-    // Typewriter Engine with New Formatted Text
+    // 4. Premium Romantic Typewriter Engine with Heart Cursor
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.querySelector(".scroll-letter");
         if (!targetDiv) return;
 
+        // Custom Deep Romantic Letter Content
         const letterData = [
             { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki smile kabhi kam na ho, kyuki tum sach me har ek happiness deserve karti ho.' },
@@ -137,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Take care of yourself. ✨', className: 'signature' }
         ];
 
-        targetDiv.innerHTML = "";
+        targetDiv.innerHTML = ""; // Pehle clear karein
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
@@ -145,13 +79,32 @@ document.addEventListener("DOMContentLoaded", () => {
             targetDiv.appendChild(element);
 
             let rawText = data.text;
+            
             for (let i = 0; i < rawText.length; i++) {
+                // Remove previous temporary heart cursors
+                const oldCursor = element.querySelector('.heart-cursor');
+                if (oldCursor) oldCursor.remove();
+
+                // Append new character + glowing heart cursor
                 element.innerHTML += rawText.charAt(i);
-                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
-                await new Promise(res => setTimeout(res, 45)); // Smooth Speed
+                element.innerHTML += '<span class="heart-cursor">❤️</span>';
+
+                // Smooth scrolling calculation
+                if (scrollBox) {
+                    scrollBox.scrollTop = scrollBox.scrollHeight;
+                }
+                
+                // Typing speed setup (45ms per word)
+                await new Promise(res => setTimeout(res, 45));
             }
+
+            // End of paragraph cursor removal
+            const finalCursor = element.querySelector('.heart-cursor');
+            if (finalCursor) finalCursor.remove();
+
+            // Delay between paragraphs (600ms)
             await new Promise(res => setTimeout(res, 600));
         }
     }
 });
-                    
+                
