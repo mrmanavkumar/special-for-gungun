@@ -155,7 +155,7 @@ body {
 }
 
 /* ==========================================================================
-   4. PURE CSS GENERATED NOTEBOOK PAGE (100% STRAIGHT LINES)
+   4. PURE CSS GENERATED NOTEBOOK PAGE (100% STRAIGHT DOTTED LINES)
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -172,8 +172,8 @@ body {
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
 
-    /* Naya CSS Page Styling (Bilkul image jaisa card color aur pink border) */
-    background-color: #fbf0ea; 
+    /* Base Digital Layout - No Tilted Image */
+    background-color: #fbf0ea !important; 
     border: 8px solid #f7d6d0; 
     outline: 2px solid #e1b4ad; 
 }
@@ -183,42 +183,40 @@ body {
     transform: scale(1);
 }
 
-/* WATERMARK BACKGROUND WITH SKETCH */
+/* EX SPECIAL DECORATIONS - Top Left Corner Rose & Bottom Right Corner Balloons */
 .scroll-letter::before {
-    content: "";
+    content: "🌹";
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%; height: 45%;
-    background-image: url('sketch.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.12;
-    z-index: 2;
+    top: 15px;
+    left: 15px;
+    font-size: 32px;
+    z-index: 10;
     pointer-events: none;
+    transform: rotate(-10deg);
 }
 
-/* TEXT AREA WITH PERFECT DIGITAL DOTTED LINES */
+.scroll-letter::after {
+    content: "🎈";
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 32px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(10deg);
+}
+
+/* TEXT AREA ENGINE WITH PERFECT DIGITAL LINE LOCK */
 .letter-text { 
     position: relative; 
     z-index: 5; 
     text-align: left; 
-    padding: 40px 25px 40px 25px; 
+    padding: 50px 25px 50px 25px; 
     font-family: 'Playfair Display', 'Georgia', serif;
     width: 100%;
-    
-    /* PURE CSS LINES: Yeh background har 26px par ek perfectly seedhi dotted line banayega */
-    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
-    background-position: bottom;
-    background-size: 6px 1px;
-    background-repeat: repeat-x;
-    
-    /* Line ko pure page par multiply karne ke liye styling */
-    line-height: 26px; 
 }
 
-/* Heading top zone */
+/* Heading top layout */
 .letter-text h3 { 
     color: #b33939 !important; 
     font-size: 16px; 
@@ -230,17 +228,18 @@ body {
     padding-bottom: 10px;
 }
 
-/* Paragraph Text - Ekdam perfectly digital lines ke upar chipkega */
+/* Paragraph Text - Locked smoothly on every dotted line */
 .letter-text p {
     font-size: 14.5px;
-    line-height: 26px; /* Ekdam line-size ke barabar */
+    line-height: 26px; 
     margin: 0;
-    margin-bottom: 26px; /* Har para naye line se shuru hoga */
+    margin-bottom: 26px; 
     color: #4a2c2a !important;
     font-weight: 500;
     word-wrap: break-word;
     text-shadow: none;
-    /* CSS background lines ko text box ke piche repeat karne ka formula */
+    
+    /* Digital Dotted Line Generator CSS */
     background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
     background-position: bottom;
     background-size: 6px 1px;
