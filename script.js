@@ -142,8 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Take care of yourself. ✨', className: 'signature' },
             { type: 'p', text: 'MANAV', className: 'signature' }
         ];
-        
-        ];
 
         targetDiv.innerHTML = ""; 
 
