@@ -1,7 +1,6 @@
 /* ==========================================================================
-   1. YOUR ORIGINAL DESIGN STYLES (Gift Box, Background & Canvas Safe Keep)
+   1. RESET & BASIC SETUP
    ========================================================================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -44,11 +43,13 @@ body {
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    max-width: 420px;
+    padding: 15px;
 }
 
-/* --- GIFT BOX STYLING (Original Size Restored) --- */
+/* ==========================================================================
+   2. SHAKING & BOUNCING GIFT BOX EFFECT
+   ========================================================================== */
 #giftSection {
     cursor: pointer;
     display: flex;
@@ -59,25 +60,37 @@ body {
 
 .gift-img {
     width: 80%;
-    max-width: 280px; 
+    max-width: 250px; 
     height: auto;
-    animation: bounce 2s infinite alternate;
     transition: transform 0.3s ease;
 }
 
-.gift-img:hover {
-    transform: scale(1.05);
+/* Jab click hoga, JS se hum "shake-active" class lagayenge */
+.gift-img.shake-active {
+    animation: intenseShake 0.5s infinite ease-in-out;
 }
 
 .tap-text {
-    margin-top: 15px;
+    margin-top: 20px;
     font-size: 16px;
     color: #ff4d6d;
     font-weight: 600;
-    text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
 }
 
-/* --- COUNTDOWN SCREEN --- */
+@keyframes intenseShake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-10px) rotate(-6deg) scale(1.05); }
+    30% { transform: translateY(5px) rotate(5deg); }
+    45% { transform: translateY(-6px) rotate(-4deg); }
+    60% { transform: translateY(3px) rotate(3deg); }
+    75% { transform: translateY(-4px) rotate(-2deg); }
+    90% { transform: translateY(1px) rotate(1deg); }
+}
+
+/* ==========================================================================
+   3. SCREEN COMPONENTS & TRANSITIONS
+   ========================================================================== */
 #countdownScreen {
     display: flex;
     justify-content: center;
@@ -86,20 +99,21 @@ body {
 }
 
 #countdownNumber {
-    font-size: 80px;
+    font-size: 90px;
     font-weight: 800;
     color: #ff4d6d;
-    text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+    text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
+    animation: zoomPulse 1s infinite alternate;
 }
 
-/* --- BIRTHDAY GREETING SCREEN --- */
+/* ZOOM IN EFFECT FOR HAPPY BIRTHDAY (Ander se Bahar) */
 #bdayGreetingScreen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(15, 12, 27, 0.9);
+    background: rgba(15, 12, 27, 0.95);
     z-index: 100;
 }
 
@@ -108,106 +122,110 @@ body {
     font-weight: 800;
     color: #ffffff;
     text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+    animation: zoomInBday 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    width: 90%;
+    text-align: center;
 }
 
-/* --- TEMPLATE WRAPPER --- */
+@keyframes zoomInBday {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* TEMPLATE FADE OUT TRANSITIONS */
 .template-wrapper {
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 3s ease, transform 3s ease; /* 3 seconds ka dhire dhire fade-out/in */
+}
+
+.template-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .template-img {
-    width: 100%;
+    width: 90%;
+    max-width: 320px;
     height: auto;
-    border-radius: 15px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
 }
 
-
 /* ==========================================================================
-   2. NEW ROMANTIC LETTER STYLES (Only affects the letter page)
+   4. DESIGNER LETTER0.PNG STYLES
    ========================================================================== */
-
 .scroll-letter { 
     position: relative;
-    background: linear-gradient(135deg, #fffdf9 0%, #fff3f5 100%) !important; 
-    padding: 35px 25px; 
-    border-radius: 30px; 
     width: 100%;          
-    height: 65vh; 
-    max-height: 520px;
+    height: 75vh; 
+    max-height: 580px;
     overflow-y: auto; 
     scroll-behavior: smooth; 
-    box-shadow: 0 20px 50px rgba(224, 86, 109, 0.2), 0 10px 30px rgba(0,0,0,0.3); 
-    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     opacity: 0;
-    transition: opacity 2s ease;
+    transform: scale(0.8);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 
 .scroll-letter.active {
     opacity: 1;
+    transform: scale(1);
 }
 
-/* Inner Gold Border Line */
-.scroll-letter::before {
-    content: '';
+.letter-bg-wrap {
     position: absolute;
-    top: 8px; left: 8px; right: 8px; bottom: 8px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 24px;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
     pointer-events: none;
 }
 
-/* Watermark Setup (Your Sketch Hidden Elegantly in Background) */
-.watermark-bg { 
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%); 
-    width: 70%; 
-    opacity: 0.07; 
-    z-index: 1; 
-    pointer-events: none; 
+.letter-main-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 20px;
 }
 
-.watermark-bg img { 
-    width: 100%; 
-    height: auto; 
-}
-
-/* Text Container */
+/* Text Container spacing to perfectly match line spacing of letter0 */
 .letter-text { 
     position: relative; 
     z-index: 5; 
-    line-height: 1.8; 
+    line-height: 2.15; /* Line-spacing adjust ki h lines pe set rehne ke liye */
     text-align: left; 
+    padding: 70px 45px 40px 45px; /* Side and top paddings to secure paper margins */
 }
 
-/* ✨ HEADING IN CENTER ✨ */
 .letter-text h3 { 
     color: #b33939 !important; 
-    margin-bottom: 20px; 
-    font-size: 20px; 
+    margin-bottom: 30px; 
+    font-size: 16px; 
     font-weight: 700; 
     text-align: center !important; 
-    border-bottom: 1px dashed rgba(212, 175, 55, 0.3); 
-    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(179, 57, 57, 0.2); 
+    padding-bottom: 5px;
     font-family: 'Playfair Display', 'Georgia', serif;
 }
 
-/* Paragraph Text Styling */
 .letter-text p { 
-    font-size: 15px; 
-    margin-bottom: 15px; 
+    font-size: 13.5px; 
+    margin-bottom: 18px; 
     font-weight: 500; 
     color: #4a2c2a !important; 
     font-family: 'Playfair Display', 'Georgia', serif;
 }
 
-/* Text Highlights */
 .highlight-bday { 
     color: #b33939 !important; 
     font-weight: 700; 
-    font-size: 16px !important; 
+    font-size: 14px !important; 
     margin-top: 25px; 
     display: block; 
 }
@@ -221,34 +239,51 @@ body {
     text-align: right;
 }
 
-/* 🌹 Romantic Typewriter Heart Cursor */
 .heart-cursor {
     display: inline-block;
     color: #ff4d6d;
-    font-size: 14px;
+    font-size: 12px;
     margin-left: 3px;
     animation: heartPulse 0.6s infinite alternate;
     vertical-align: middle;
 }
 
 /* ==========================================================================
-   3. FLOATING HEARTS BACKGROUND EFFECTS
+   5. ROSE PETAL & HEART RAIN SYSTEM
    ========================================================================== */
-
-.bg-heart {
+#rainContainer {
     position: fixed;
-    bottom: -10%;
-    color: rgba(255, 77, 109, 0.35); /* Soft glowing red/pink hearts */
-    font-size: 20px;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     pointer-events: none;
-    z-index: 1; /* Background stars ke upar, elements ke peeche */
-    animation: floatUp 6s linear infinite;
+    z-index: 2; /* Background stars ke upar, letter ke peeche/aage */
+    overflow: hidden;
 }
 
-/* Animations */
-@keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
+.rain-item {
+    position: absolute;
+    top: -50px;
+    pointer-events: none;
+    animation: fallDown 7s linear infinite;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* General Keyframes */
+@keyframes zoomPulse {
+    from { transform: scale(0.9); }
+    to { transform: scale(1.1); }
 }
 
 @keyframes heartPulse {
@@ -256,31 +291,13 @@ body {
     100% { transform: scale(1.2); opacity: 1; }
 }
 
-@keyframes floatUp {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-110vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Custom Letter Scrollbar Styling */
 .scroll-letter::-webkit-scrollbar { 
-    width: 4px; 
+    width: 3px; 
 }
 .scroll-letter::-webkit-scrollbar-track { 
     background: transparent; 
 }
 .scroll-letter::-webkit-scrollbar-thumb { 
-    background: rgba(212, 175, 55, 0.3); 
+    background: rgba(179, 57, 57, 0.15); 
     border-radius: 10px; 
 }
