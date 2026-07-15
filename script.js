@@ -12,24 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
-    let rainInterval = null;
-
     // STEP 1: Gift Box Click and Shaking
     if (giftBox) {
         giftBox.addEventListener("click", () => {
-            // MAGIC FIX FOR AUDIO: Gift box click par hi music ko 'load' aur silent 'play' kar dete hain
-            // Isse browser ko lagega ki user ne permission de di hai, aur music block nahi hoga!
+            // MUSIC BLOCK REPAIR SYSTEM
             if (bgMusic) {
                 bgMusic.play().then(() => {
-                    bgMusic.pause(); // Turant pause kar diya taaki counting ke baad hi aawaz aaye
+                    bgMusic.pause(); 
                     bgMusic.currentTime = 0; 
-                }).catch(err => console.log("Audio unlock failed:", err));
+                }).catch(err => console.log("Audio interaction unlocked", err));
             }
 
-            // Box shake active karo
             giftBox.classList.add("shake-active");
 
-            // 1.5 seconds shake hone ke BAAD counting shuru hogi
             setTimeout(() => {
                 if (giftSection) giftSection.classList.add("hidden");
                 if (countdownScreen) {
@@ -42,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // STEP 2: Countdown System
+    // STEP 2: Countdown Engine
     function startCountdownTimer() {
         if (countdownAudio) {
             countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
@@ -63,41 +58,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // STEP 3: Happy Birthday Screen & REAL MUSIC PLAY HERE
+    // STEP 3: Happy Birthday Screen & Music Unmute Trigger
     function showBirthdayGreeting() {
-        if (bdayGreetingScreen) {
-            bdayGreetingScreen.classList.remove("hidden");
-        }
+        if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
-        // PERFECT TIMING UPON COUNTDOWN END: Ab music bina rukavat ke chalega!
         if (bgMusic) {
-            bgMusic.play().catch(err => console.log("Music play error:", err));
+            bgMusic.play().catch(err => console.log("Music failed to play:", err));
         }
 
         initConfetti();
         startMagicalRain();
 
-        // Keep Birthday title for 3 seconds, then transition to Template Section
+        // 3 Seconds on Greeting, then jump to Template Memory
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
+                setTimeout(() => { templateSection.classList.add("active"); }, 100);
                 
-                setTimeout(() => {
-                    templateSection.classList.add("active");
-                }, 100);
-                
-                // STEP 4: 15 Seconds display and then smooth 3s fade out
+                // Keep memory viewable for 15 seconds
                 setTimeout(() => {
                     templateSection.classList.remove("active");
-                    
-                    // 3 seconds fade out complete then show Letter
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
-                    }, 3000); 
-                    
+                    }, 2000); 
                 }, 15000); 
                 
             } else {
@@ -106,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    // STEP 5: Smooth Arrival of Letter Page
+    // STEP 4: Render Pure CSS Letter Layout
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -117,30 +103,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Magical Rain
+    // Rain Particle Generator
     function startMagicalRain() {
         const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
-        
-        rainInterval = setInterval(() => {
+        setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
             element.innerHTML = items[Math.floor(Math.random() * items.length)];
-            
             element.style.left = Math.random() * 100 + 'vw';
             const size = Math.random() * 18 + 12; 
             element.style.fontSize = size + 'px';
-            
             const fallDuration = Math.random() * 5 + 4; 
             element.style.animationDuration = fallDuration + 's';
             
-            if (rainContainer) {
-                rainContainer.appendChild(element);
-            }
-
-            setTimeout(() => {
-                element.remove();
-            }, fallDuration * 1000);
-            
+            if (rainContainer) rainContainer.appendChild(element);
+            setTimeout(() => { element.remove(); }, fallDuration * 1000);
         }, 250); 
     }
 
@@ -167,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
             targetDiv.appendChild(element);
 
             let rawText = data.text;
-            
             for (let i = 0; i < rawText.length; i++) {
                 const oldCursor = element.querySelector('.heart-cursor');
                 if (oldCursor) oldCursor.remove();
@@ -175,27 +151,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
-                if (scrollBox) {
-                    scrollBox.scrollTop = scrollBox.scrollHeight;
-                }
-                
+                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
                 await new Promise(res => setTimeout(res, 50)); 
             }
-
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
-
             await new Promise(res => setTimeout(res, 400));
         }
     }
 
-    // Background Canvas Glitter Confetti System
+    // Confetti System
     function initConfetti() {
         if (!effectCanvas) return;
         const ctx = effectCanvas.getContext("2d");
         let width = (effectCanvas.width = window.innerWidth);
         let height = (effectCanvas.height = window.innerHeight);
-
         const particles = [];
         const colors = ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c1", "#fff"];
 
@@ -219,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
                 p.x += Math.sin(p.tiltAngle);
                 p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
-
                 ctx.beginPath();
                 ctx.lineWidth = p.r;
                 ctx.strokeStyle = p.color;
@@ -227,26 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
                 ctx.stroke();
             });
-
-            updateParticles();
+            particles.forEach((p) => { if (p.y > height) { p.y = -20; p.x = Math.random() * width; } });
             requestAnimationFrame(draw);
         }
-
-        function updateParticles() {
-            particles.forEach((p) => {
-                if (p.y > height) {
-                    p.y = -20;
-                    p.x = Math.random() * width;
-                }
-            });
-        }
-
         draw();
-
-        window.addEventListener("resize", () => {
-            width = effectCanvas.width = window.innerWidth;
-            height = effectCanvas.height = window.innerHeight;
-        });
     }
 });
-                
+                    
