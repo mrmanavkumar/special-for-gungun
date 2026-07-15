@@ -4,33 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specially for gungun ❤️</title>
-    <link rel="stylesheet" href="style.css?v=6.0">
+    <link rel="stylesheet" href="style.css?v=7.0">
 </head>
 <body>
 
     <div class="stars"></div>
-    <div id="rainContainer"></div> <!-- Isme rose aur hearts ki barsaat hogi -->
+    <div id="rainContainer"></div> <!-- Roses and Hearts Falling Container -->
+    <canvas id="effectCanvas"></canvas> <!-- Sparkles canvas -->
 
-    <canvas id="effectCanvas"></canvas>
-
+    <!-- Audio Elements -->
     <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
     <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
 
     <div class="container">
 
+        <!-- STEP 1: Gift Box Section -->
         <div id="giftSection">
             <img src="gift.png" id="giftBox" class="gift-img" alt="Gift Box">
             <div class="tap-text">Tap to Open the Box ✨</div>
         </div>
 
+        <!-- STEP 2: Countdown Screen -->
         <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">3</div>
         </div>
 
+        <!-- STEP 4: Wishes Template Screen -->
         <div id="templateSection" class="hidden template-wrapper">
             <img src="birthday-template.png" class="template-img" alt="Birthday Wishes">
         </div>
 
+        <!-- STEP 5: Designer Scroll Letter Screen -->
         <div id="messageSection" class="hidden scroll-letter">
             <div class="letter-bg-wrap">
                 <img src="letter0.png" class="letter-main-bg" alt="Letter Template">
@@ -40,10 +44,11 @@
 
     </div>
 
+    <!-- STEP 3: HAPPY BIRTHDAY ZOOM SCREEN -->
     <div id="bdayGreetingScreen" class="hidden">
-        <h1 class="bday-text">HAPPY BIRTHDAY✨</h1>
+        <h1 class="bday-text">HAPPY BIRTHDAY GUNGUN 💖</h1>
     </div>
 
-    <script src="script.js?v=6.0"></script>
+    <script src="script.js?v=7.0"></script>
 </body>
 </html>
