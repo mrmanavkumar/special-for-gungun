@@ -14,18 +14,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let rainInterval = null;
 
-    // STEP 1: Gift Box Click and Shaking (NO SOUND & NO COUNTDOWN YET)
+    // STEP 1: Gift Box Click and Shaking
     if (giftBox) {
         giftBox.addEventListener("click", () => {
-            // Sirf box shake hoga pehle
+            // MAGIC FIX FOR AUDIO: Gift box click par hi music ko 'load' aur silent 'play' kar dete hain
+            // Isse browser ko lagega ki user ne permission de di hai, aur music block nahi hoga!
+            if (bgMusic) {
+                bgMusic.play().then(() => {
+                    bgMusic.pause(); // Turant pause kar diya taaki counting ke baad hi aawaz aaye
+                    bgMusic.currentTime = 0; 
+                }).catch(err => console.log("Audio unlock failed:", err));
+            }
+
+            // Box shake active karo
             giftBox.classList.add("shake-active");
 
-            // 1.5 seconds shake hone ke BAAD counting aur ticking shuru hogi
+            // 1.5 seconds shake hone ke BAAD counting shuru hogi
             setTimeout(() => {
                 if (giftSection) giftSection.classList.add("hidden");
                 if (countdownScreen) {
                     countdownScreen.classList.remove("hidden");
-                    startCountdownTimer(); // Countdown timer call kiya
+                    startCountdownTimer(); 
                 } else {
                     showBirthdayGreeting();
                 }
@@ -33,9 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // STEP 2: Countdown System (Starts AFTER shake)
+    // STEP 2: Countdown System
     function startCountdownTimer() {
-        // Ticking sound ab counting ke sath start hogi
         if (countdownAudio) {
             countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
         }
@@ -50,25 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 if (countdownScreen) countdownScreen.classList.add("hidden");
-                showBirthdayGreeting(); // Happy Birthday screen call
+                showBirthdayGreeting(); 
             }
         }, 1000);
     }
 
-    // STEP 3: Happy Birthday Zoom & START MUSIC HERE (Exactly at 0)
+    // STEP 3: Happy Birthday Screen & REAL MUSIC PLAY HERE
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
         }
 
-        // MUSIC PLAY TRIGGER - Background music ab start hoga!
+        // PERFECT TIMING UPON COUNTDOWN END: Ab music bina rukavat ke chalega!
         if (bgMusic) {
-            bgMusic.play().catch(err => {
-                console.log("Music auto-play blocked by browser, wait for user interact:", err);
-            });
+            bgMusic.play().catch(err => console.log("Music play error:", err));
         }
 
-        // Active sparkles/confetti and magical falling rain
         initConfetti();
         startMagicalRain();
 
@@ -112,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Magical Rain (Hearts, Rose Petals and Sparks)
+    // Magical Rain
     function startMagicalRain() {
         const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
         
@@ -139,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 250); 
     }
 
-    // Typewriter Engine (Writes strictly on dotted lines)
+    // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
@@ -174,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                 }
                 
-                await new Promise(res => setTimeout(res, 50)); // typing speed
+                await new Promise(res => setTimeout(res, 50)); 
             }
 
             const finalCursor = element.querySelector('.heart-cursor');
@@ -244,3 +249,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+                
