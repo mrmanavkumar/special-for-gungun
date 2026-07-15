@@ -157,7 +157,7 @@ body {
 }
 
 /* ==========================================================================
-   4. NEW DESIGNER LETTER0.PNG STYLES (PIXEL PERFECT FOR NEW IMAGE)
+   4. DESIGNER LETTER0.PNG STYLES WITH SKETCH WATERMARK
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -179,6 +179,7 @@ body {
     transform: scale(1);
 }
 
+/* Letter background image and watermark container */
 .letter-bg-wrap {
     position: absolute;
     top: 0; left: 0;
@@ -194,12 +195,30 @@ body {
     border-radius: 20px;
 }
 
-/* Padding aur margins ko naye heart header border ke hisaab se adjust kiya hai */
+/* SKETCH WATERMARK EFFECT JODA HAI */
+.letter-bg-wrap::after {
+    content: "";
+    position: absolute;
+    top: 55%; /* Page ke thoda niche aur center me aane ke liye */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; /* Watermark ka size control karne ke liye */
+    height: 45%;
+    background-image: url('sketch.png'); /* Aapke GitHub folder se sketch file */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.12; /* Ekdam halka aur safe watermark effect */
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Padding and margins optimized for text alignment */
 .letter-text { 
     position: relative; 
     z-index: 5; 
     text-align: left; 
-    padding: 108px 52px 50px 52px; /* Side paddings perfect margin block karti hain */
+    padding: 108px 52px 50px 52px; 
     font-family: 'Playfair Display', 'Georgia', serif;
     width: 100%;
 }
@@ -207,7 +226,7 @@ body {
 /* Text lines grid setup */
 .letter-text p, .letter-text h3 {
     font-size: 13.5px;
-    line-height: 2.36; /* Naye page ki dotted lines par accurate fix karne ke liye */
+    line-height: 2.36; 
     margin: 0;
     padding: 0;
     color: #4a2c2a !important;
@@ -215,13 +234,13 @@ body {
     word-wrap: break-word;
 }
 
-/* Heading top straight line area ke andar fix rahegi */
+/* Heading top straight line area */
 .letter-text h3 { 
     color: #b33939 !important; 
     font-size: 14.5px; 
     font-weight: 700; 
     text-align: center !important; 
-    margin-bottom: 24px; /* Pehli line se separation gap */
+    margin-bottom: 24px; 
 }
 
 .highlight-bday { 
