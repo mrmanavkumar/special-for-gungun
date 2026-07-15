@@ -14,22 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let rainInterval = null;
 
-    // STEP 1: Gift Box Click and Shaking
+    // STEP 1: Gift Box Click and Shaking (NO SOUND & NO COUNTDOWN YET)
     if (giftBox) {
         giftBox.addEventListener("click", () => {
+            // Sirf box shake hoga pehle
             giftBox.classList.add("shake-active");
 
-            // Play countdown ticking sound
-            if (countdownAudio) {
-                countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
-            }
-
-            // 1.5 seconds shake, then transition to Countdown
+            // 1.5 seconds shake hone ke BAAD counting aur ticking shuru hogi
             setTimeout(() => {
                 if (giftSection) giftSection.classList.add("hidden");
                 if (countdownScreen) {
                     countdownScreen.classList.remove("hidden");
-                    startCountdownTimer();
+                    startCountdownTimer(); // Countdown timer call kiya
                 } else {
                     showBirthdayGreeting();
                 }
@@ -37,8 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // STEP 2: Countdown System
+    // STEP 2: Countdown System (Starts AFTER shake)
     function startCountdownTimer() {
+        // Ticking sound ab counting ke sath start hogi
+        if (countdownAudio) {
+            countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
+        }
+
         let count = 3;
         if (countdownNumber) countdownNumber.textContent = count;
 
@@ -49,18 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 if (countdownScreen) countdownScreen.classList.add("hidden");
-                showBirthdayGreeting();
+                showBirthdayGreeting(); // Happy Birthday screen call
             }
         }, 1000);
     }
 
-    // STEP 3: Happy Birthday Zoom & START MUSIC HERE
+    // STEP 3: Happy Birthday Zoom & START MUSIC HERE (Exactly at 0)
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
         }
 
-        // MUSIC PLAY TRIGGER - Music starts exactly now!
+        // MUSIC PLAY TRIGGER - Background music ab start hoga!
         if (bgMusic) {
             bgMusic.play().catch(err => {
                 console.log("Music auto-play blocked by browser, wait for user interact:", err);
@@ -243,4 +244,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-                    
