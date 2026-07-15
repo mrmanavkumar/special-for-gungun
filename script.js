@@ -1,60 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const giftBox = document.getElementById("giftBox");
+    // DOM Elements
     const giftSection = document.getElementById("giftSection");
+    const giftBox = document.getElementById("giftBox");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
-    const templateSection = document.getElementById("templateSection"); 
-    const messageSection = document.getElementById("messageSection"); 
+    const templateSection = document.getElementById("templateSection");
+    const messageSection = document.getElementById("messageSection");
+    const bgMusic = document.getElementById("bgMusic");
+    const countdownAudio = document.getElementById("countdownAudio");
     const rainContainer = document.getElementById("rainContainer");
+    const effectCanvas = document.getElementById("effectCanvas");
 
     let rainInterval = null;
 
-    // 1. Beautiful Rain Effect (Rose Petals & Hearts)
-    function startMagicalRain() {
-        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
-        
-        rainInterval = setInterval(() => {
-            const element = document.createElement('div');
-            element.classList.add('rain-item');
-            
-            // Random element select karo
-            element.innerHTML = items[Math.floor(Math.random() * items.length)];
-            
-            // Positioning and sizing
-            element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 18 + 12; // 12px to 30px
-            element.style.fontSize = size + 'px';
-            
-            // Speed of falling
-            const fallDuration = Math.random() * 5 + 4; // 4s to 9s
-            element.style.animationDuration = fallDuration + 's';
-            
-            if (rainContainer) {
-                rainContainer.appendChild(element);
-            }
-
-            // Garbages delete
-            setTimeout(() => {
-                element.remove();
-            }, fallDuration * 1000);
-            
-        }, 250); // Har 250ms me barish hogi
-    }
-
-    // 2. Gift Box Click Process (2s shaking then countdown)
+    // STEP 1: Gift Box Click and Shaking
     if (giftBox) {
         giftBox.addEventListener("click", () => {
-            // Box shake shuru karo
             giftBox.classList.add("shake-active");
 
-            // Background music start
-            const bgMusic = document.getElementById("bgMusic");
-            if (bgMusic) {
-                bgMusic.play().catch(err => console.log("Music blocked", err));
+            // Play countdown ticking sound
+            if (countdownAudio) {
+                countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
             }
 
-            // 2 Seconds tak shake hoga, uske baad box gayab aur countdown
+            // 1.5 seconds shake, then transition to Countdown
             setTimeout(() => {
                 if (giftSection) giftSection.classList.add("hidden");
                 if (countdownScreen) {
@@ -63,19 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     showBirthdayGreeting();
                 }
-            }, 2000); // 2 Seconds shake time
+            }, 1500); 
         });
     }
 
-    // 3. Countdown Timer (3 -> 2 -> 1)
+    // STEP 2: Countdown System
     function startCountdownTimer() {
         let count = 3;
         if (countdownNumber) countdownNumber.textContent = count;
-
-        const countdownAudio = document.getElementById("countdownAudio");
-        if (countdownAudio) {
-            countdownAudio.play().catch(err => console.log("Audio blocked", err));
-        }
 
         const timer = setInterval(() => {
             count--;
@@ -89,62 +54,91 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // 4. Greeting Zoom -> Template Display & 15s Fade-out -> Letter Page
+    // STEP 3: Happy Birthday Zoom & START MUSIC HERE
     function showBirthdayGreeting() {
-        // "HAPPY BIRTHDAY" screen unhide with zoom animation
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
         }
 
-        // 3 seconds baad zoom text gayab hokar template display karega
+        // MUSIC PLAY TRIGGER - Music starts exactly now!
+        if (bgMusic) {
+            bgMusic.play().catch(err => {
+                console.log("Music auto-play blocked by browser, wait for user interact:", err);
+            });
+        }
+
+        // Active sparkles/confetti and magical falling rain
+        initConfetti();
+        startMagicalRain();
+
+        // Keep Birthday title for 3 seconds, then transition to Template Section
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
                 
-                // Active class adds smooth entrance
                 setTimeout(() => {
                     templateSection.classList.add("active");
-                    // Rose/Heart rain shuru
-                    startMagicalRain();
                 }, 100);
                 
-                // 15 seconds tak template dikhao, fir dhire-dhire fade-out karo
+                // STEP 4: 15 Seconds display and then smooth 3s fade out
                 setTimeout(() => {
-                    // Remove "active" class to start smooth CSS transition fade-out (3 seconds duration)
                     templateSection.classList.remove("active");
                     
-                    // 3 seconds ke smooth fade-out complete hone ka wait karein, fir hide karein aur letter laya jaye
+                    // 3 seconds fade out complete then show Letter
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
-                        
-                        if (messageSection) {
-                            messageSection.classList.remove("hidden");
-                            setTimeout(() => {
-                                messageSection.classList.add("active");
-                                typeWriterEffect();
-                            }, 100);
-                        }
-                    }, 3000); // 3s fading wait time
+                        showLetterPage();
+                    }, 3000); 
                     
-                }, 15000); // 15 Seconds template screen stay time
+                }, 15000); 
                 
             } else {
-                // If template missing, direct letter
-                startMagicalRain();
-                if (messageSection) {
-                    messageSection.classList.remove("hidden");
-                    setTimeout(() => {
-                        messageSection.classList.add("active");
-                        typeWriterEffect();
-                    }, 100);
-                }
+                showLetterPage();
             }
         }, 3000);
     }
 
-    // 5. Typewriter Engine with Beautiful Heart Cursor
+    // STEP 5: Smooth Arrival of Letter Page
+    function showLetterPage() {
+        if (messageSection) {
+            messageSection.classList.remove("hidden");
+            setTimeout(() => {
+                messageSection.classList.add("active");
+                typeWriterEffect();
+            }, 100);
+        }
+    }
+
+    // Magical Rain (Hearts, Rose Petals and Sparks)
+    function startMagicalRain() {
+        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
+        
+        rainInterval = setInterval(() => {
+            const element = document.createElement('div');
+            element.classList.add('rain-item');
+            element.innerHTML = items[Math.floor(Math.random() * items.length)];
+            
+            element.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 18 + 12; 
+            element.style.fontSize = size + 'px';
+            
+            const fallDuration = Math.random() * 5 + 4; 
+            element.style.animationDuration = fallDuration + 's';
+            
+            if (rainContainer) {
+                rainContainer.appendChild(element);
+            }
+
+            setTimeout(() => {
+                element.remove();
+            }, fallDuration * 1000);
+            
+        }, 250); 
+    }
+
+    // Typewriter Engine (Writes strictly on dotted lines)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
@@ -185,8 +179,68 @@ document.addEventListener("DOMContentLoaded", () => {
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
 
-            await new Promise(res => setTimeout(res, 600));
+            await new Promise(res => setTimeout(res, 400));
         }
     }
+
+    // Background Canvas Glitter Confetti System
+    function initConfetti() {
+        if (!effectCanvas) return;
+        const ctx = effectCanvas.getContext("2d");
+        let width = (effectCanvas.width = window.innerWidth);
+        let height = (effectCanvas.height = window.innerHeight);
+
+        const particles = [];
+        const colors = ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c1", "#fff"];
+
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height - height,
+                r: Math.random() * 4 + 2,
+                d: Math.random() * 50 + 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10 - 5,
+                tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                tiltAngle: 0
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, idx) => {
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle);
+                p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
+            });
+
+            updateParticles();
+            requestAnimationFrame(draw);
+        }
+
+        function updateParticles() {
+            particles.forEach((p) => {
+                if (p.y > height) {
+                    p.y = -20;
+                    p.x = Math.random() * width;
+                }
+            });
+        }
+
+        draw();
+
+        window.addEventListener("resize", () => {
+            width = effectCanvas.width = window.innerWidth;
+            height = effectCanvas.height = window.innerHeight;
+        });
+    }
 });
-        
+                    
