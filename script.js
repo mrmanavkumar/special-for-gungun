@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
-    // STEP 1: Gift Box Click and Shaking
+    // STEP 1 & 2: Gift Box Click and Shaking
     if (giftBox) {
         giftBox.addEventListener("click", () => {
-            // MUSIC BLOCK REPAIR SYSTEM
+            // Unlocks music capability early for browsers
             if (bgMusic) {
                 bgMusic.play().then(() => {
                     bgMusic.pause(); 
@@ -23,8 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }).catch(err => console.log("Audio interaction unlocked", err));
             }
 
+            // Box shake active karo
             giftBox.classList.add("shake-active");
 
+            // After 1.5s shake, transition to Step 3 (Countdown)
             setTimeout(() => {
                 if (giftSection) giftSection.classList.add("hidden");
                 if (countdownScreen) {
@@ -37,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // STEP 2: Countdown Engine
+    // STEP 3: Countdown Timer (3, 2, 1)
     function startCountdownTimer() {
         if (countdownAudio) {
-            countdownAudio.play().catch(err => console.log("Sound blocked by browser:", err));
+            countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
         }
 
         let count = 3;
@@ -53,15 +55,16 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 if (countdownScreen) countdownScreen.classList.add("hidden");
-                showBirthdayGreeting(); 
+                showBirthdayGreeting(); // Move to Step 4
             }
         }, 1000);
     }
 
-    // STEP 3: Happy Birthday Screen & Music Unmute Trigger
+    // STEP 4: Happy Birthday Screen + Music Starts
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
+        // Main background music starts right here!
         if (bgMusic) {
             bgMusic.play().catch(err => console.log("Music failed to play:", err));
         }
@@ -69,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initConfetti();
         startMagicalRain();
 
-        // 3 Seconds on Greeting, then jump to Template Memory
+        // 3 Seconds on Greeting title, then jump to Step 5 (Photo Template)
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
@@ -77,9 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 templateSection.classList.remove("hidden");
                 setTimeout(() => { templateSection.classList.add("active"); }, 100);
                 
-                // Keep memory viewable for 15 seconds
+                // STEP 5: Show photo for exactly 15 seconds
                 setTimeout(() => {
                     templateSection.classList.remove("active");
+                    
+                    // Smooth transition to Step 6 (Letter Page)
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
@@ -92,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    // STEP 4: Render Pure CSS Letter Layout
+    // STEP 6: Notebook Letter Screen Arrival
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -202,4 +207,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                    
+        
