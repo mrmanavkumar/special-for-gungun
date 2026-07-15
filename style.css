@@ -24,7 +24,7 @@ body {
     display: none !important;
 }
 
-/* Background Stars & Effects Canvas */
+/* Background Effects */
 .stars {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -48,7 +48,7 @@ body {
 }
 
 /* ==========================================================================
-   2. SHAKING & BOUNCING GIFT BOX EFFECT
+   2. GIFT BOX SECTION
    ========================================================================== */
 #giftSection {
     cursor: pointer;
@@ -88,7 +88,7 @@ body {
 }
 
 /* ==========================================================================
-   3. SCREEN COMPONENTS & TRANSITIONS
+   3. TRANSITIONS & SCREEN COMPONENT
    ========================================================================== */
 #countdownScreen {
     display: flex;
@@ -138,7 +138,7 @@ body {
     align-items: center;
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 3s ease, transform 3s ease; 
+    transition: opacity 2s ease, transform 2s ease; 
 }
 
 .template-wrapper.active {
@@ -155,7 +155,7 @@ body {
 }
 
 /* ==========================================================================
-   4. PURE CSS GENERATED NOTEBOOK PAGE (100% STRAIGHT DOTTED LINES)
+   4. NOTEBOOK PAGE WITH SKETCH WATERMARK & CORNER ITEMS
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -171,8 +171,6 @@ body {
     transform: scale(0.8);
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
-
-    /* Base Digital Layout - No Tilted Image */
     background-color: #fbf0ea !important; 
     border: 8px solid #f7d6d0; 
     outline: 2px solid #e1b4ad; 
@@ -183,40 +181,51 @@ body {
     transform: scale(1);
 }
 
-/* EX SPECIAL DECORATIONS - Top Left Corner Rose & Bottom Right Corner Balloons */
+/* SKETCH WATERMARK LAYER (Centered behind text) */
 .scroll-letter::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('sketch.png') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.18; 
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* EX SPECIAL CORNER DECORATIONS (Rose & Balloon) */
+.scroll-letter::after {
     content: "🌹";
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 15px; left: 15px;
     font-size: 32px;
     z-index: 10;
     pointer-events: none;
     transform: rotate(-10deg);
 }
 
-.scroll-letter::after {
+.letter-text::after {
     content: "🎈";
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    bottom: 15px; right: 15px;
     font-size: 32px;
     z-index: 10;
     pointer-events: none;
     transform: rotate(10deg);
 }
 
-/* TEXT AREA ENGINE WITH PERFECT DIGITAL LINE LOCK */
+/* TEXT AREA STYLING */
 .letter-text { 
     position: relative; 
     z-index: 5; 
     text-align: left; 
     padding: 50px 25px 50px 25px; 
-    font-family: 'Playfair Display', 'Georgia', serif;
+    font-family: 'Playfair Display', serif;
     width: 100%;
 }
 
-/* Heading top layout */
 .letter-text h3 { 
     color: #b33939 !important; 
     font-size: 16px; 
@@ -228,7 +237,6 @@ body {
     padding-bottom: 10px;
 }
 
-/* Paragraph Text - Locked smoothly on every dotted line */
 .letter-text p {
     font-size: 14.5px;
     line-height: 26px; 
@@ -237,87 +245,34 @@ body {
     color: #4a2c2a !important;
     font-weight: 500;
     word-wrap: break-word;
-    text-shadow: none;
     
-    /* Digital Dotted Line Generator CSS */
+    /* Digital Dotted Lines */
     background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
     background-position: bottom;
     background-size: 6px 1px;
     background-repeat: repeat-x;
 }
 
-.highlight-bday { 
-    color: #b33939 !important; 
-    font-weight: 700; 
-}
-
-.signature { 
-    font-weight: 700; 
-    color: #7f8c8d !important; 
-    font-style: italic; 
-    text-align: right;
-    display: block;
-    margin-top: 13px;
-}
-
-.heart-cursor {
-    display: inline-block;
-    color: #ff4d6d;
-    font-size: 12px;
-    margin-left: 2px;
-    animation: heartPulse 0.6s infinite alternate;
-    vertical-align: middle;
-}
+.highlight-bday { color: #b33939 !important; font-weight: 700; }
+.signature { font-weight: 700; color: #7f8c8d !important; font-style: italic; text-align: right; display: block; margin-top: 13px; }
+.heart-cursor { display: inline-block; color: #ff4d6d; font-size: 12px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
 
 /* ==========================================================================
-   5. ROSE PETAL & HEART RAIN SYSTEM
+   5. EFFECTS & ANIMATIONS
    ========================================================================== */
-#rainContainer {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 2; 
-    overflow: hidden;
-}
-
-.rain-item {
-    position: absolute;
-    top: -50px;
-    pointer-events: none;
-    animation: fallDown 7s linear infinite;
-}
+#rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+.rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
 
 @keyframes fallDown {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
     10% { opacity: 0.9; }
     90% { opacity: 0.9; }
-    100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
-
-@keyframes zoomPulse {
-    from { transform: scale(0.9); }
-    to { transform: scale(1.1); }
-}
-
-@keyframes heartPulse {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    100% { transform: scale(1.2); opacity: 1; }
-}
-
-.scroll-letter::-webkit-scrollbar { 
-    width: 3px; 
-}
-.scroll-letter::-webkit-scrollbar-track { 
-    background: transparent; 
-}
-.scroll-letter::-webkit-scrollbar-thumb { 
-    background: rgba(179, 57, 57, 0.15); 
-    border-radius: 10px; 
-}
+@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+.scroll-letter::-webkit-scrollbar { width: 3px; }
+.scroll-letter::-webkit-scrollbar-track { background: transparent; }
+.scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
+   
