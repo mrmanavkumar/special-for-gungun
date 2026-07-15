@@ -195,7 +195,7 @@ body {
     pointer-events: none;
 }
 
-/* EX SPECIAL CORNER DECORATIONS (Rose & Balloon) */
+/* CORNER DECORATIONS (Rose on Top-Left & Balloon on Bottom-Right) */
 .scroll-letter::after {
     content: "🌹";
     position: absolute;
