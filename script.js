@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Aur ek baat... tum hamesha mere liye bahut special aur important rahogi. ❤️' },
             { type: 'p', text: 'Once again, Happy Birthday Gungun! 🥳🎂', className: 'highlight-bday' },
             { type: 'p', text: 'Take care of yourself. ✨', className: 'signature' },
-            { type: 'p', text: 'MANAV', className: 'signature' }
+            { type: 'p', text: '-MANAV', className: 'signature' }
         ];
 
         targetDiv.innerHTML = ""; 
