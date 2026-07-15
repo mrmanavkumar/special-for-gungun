@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Sabhi HTML elements ko safely target kiya gaya hai
     const giftBox = document.getElementById("giftBox");
     const giftSection = document.getElementById("giftSection");
     const countdownScreen = document.getElementById("countdownScreen");
@@ -7,64 +6,75 @@ document.addEventListener("DOMContentLoaded", () => {
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection"); 
     const messageSection = document.getElementById("messageSection"); 
+    const rainContainer = document.getElementById("rainContainer");
 
-    // Floating Hearts Background System (Auto Create)
-    function createFloatingHearts() {
-        // Alag alag designs ke hearts float karenge
-        const heartIcons = ['❤️', '💖', '💝', '💕'];
+    let rainInterval = null;
+
+    // 1. Beautiful Rain Effect (Rose Petals & Hearts)
+    function startMagicalRain() {
+        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
         
-        setInterval(() => {
-            const heart = document.createElement('div');
-            heart.classList.add('bg-heart');
+        rainInterval = setInterval(() => {
+            const element = document.createElement('div');
+            element.classList.add('rain-item');
             
-            // Randomly choose heart character
-            heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            // Random element select karo
+            element.innerHTML = items[Math.floor(Math.random() * items.length)];
             
-            // Screen par random left positioning
-            heart.style.left = Math.random() * 100 + 'vw';
+            // Positioning and sizing
+            element.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 18 + 12; // 12px to 30px
+            element.style.fontSize = size + 'px';
             
-            // Random sizes for depth feel
-            const randomSize = Math.random() * 15 + 15; // 15px to 30px
-            heart.style.fontSize = randomSize + 'px';
+            // Speed of falling
+            const fallDuration = Math.random() * 5 + 4; // 4s to 9s
+            element.style.animationDuration = fallDuration + 's';
             
-            // Random speed duration
-            const duration = Math.random() * 4 + 4; // 4s to 8s
-            heart.style.animationDuration = duration + 's';
-            
-            document.body.appendChild(heart);
+            if (rainContainer) {
+                rainContainer.appendChild(element);
+            }
 
-            // Task complete hone par screen se remove karein taaki lag na ho
+            // Garbages delete
             setTimeout(() => {
-                heart.remove();
-            }, duration * 1000);
+                element.remove();
+            }, fallDuration * 1000);
             
-        }, 350); // Har 350ms me ek naya dil niklega
+        }, 250); // Har 250ms me barish hogi
     }
 
-    // Floating hearts ko page load hote hi background me chalane ke liye trigger karein
-    createFloatingHearts();
-
-    // 1. Gift Box Click event handler
+    // 2. Gift Box Click Process (2s shaking then countdown)
     if (giftBox) {
         giftBox.addEventListener("click", () => {
-            if (giftSection) giftSection.classList.add("hidden");
-            if (countdownScreen) {
-                countdownScreen.classList.remove("hidden");
-                startCountdownTimer();
-            } else {
-                showBirthdayGreeting();
+            // Box shake shuru karo
+            giftBox.classList.add("shake-active");
+
+            // Background music start
+            const bgMusic = document.getElementById("bgMusic");
+            if (bgMusic) {
+                bgMusic.play().catch(err => console.log("Music blocked", err));
             }
+
+            // 2 Seconds tak shake hoga, uske baad box gayab aur countdown
+            setTimeout(() => {
+                if (giftSection) giftSection.classList.add("hidden");
+                if (countdownScreen) {
+                    countdownScreen.classList.remove("hidden");
+                    startCountdownTimer();
+                } else {
+                    showBirthdayGreeting();
+                }
+            }, 2000); // 2 Seconds shake time
         });
     }
 
-    // 2. Countdown Engine
+    // 3. Countdown Timer (3 -> 2 -> 1)
     function startCountdownTimer() {
         let count = 3;
         if (countdownNumber) countdownNumber.textContent = count;
 
         const countdownAudio = document.getElementById("countdownAudio");
         if (countdownAudio) {
-            countdownAudio.play().catch(err => console.log("Audio play blocked", err));
+            countdownAudio.play().catch(err => console.log("Audio blocked", err));
         }
 
         const timer = setInterval(() => {
@@ -79,38 +89,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // 3. Sequential Transition (Happy Birthday -> Template Image -> Romantic Letter)
+    // 4. Greeting Zoom -> Template Display & 15s Fade-out -> Letter Page
     function showBirthdayGreeting() {
+        // "HAPPY BIRTHDAY" screen unhide with zoom animation
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
         }
 
-        const bgMusic = document.getElementById("bgMusic");
-        if (bgMusic) {
-            bgMusic.play().catch(err => console.log("BG Music play blocked", err));
-        }
-
-        // 3 seconds tak "HAPPY BIRTHDAY" screen fir hide hokar template unhide hoga
+        // 3 seconds baad zoom text gayab hokar template display karega
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
-                templateSection.classList.remove("hidden"); // Display template image
+                templateSection.classList.remove("hidden");
                 
-                // 3 seconds baad template band karke letter section khulega
+                // Active class adds smooth entrance
                 setTimeout(() => {
-                    templateSection.classList.add("hidden"); 
+                    templateSection.classList.add("active");
+                    // Rose/Heart rain shuru
+                    startMagicalRain();
+                }, 100);
+                
+                // 15 seconds tak template dikhao, fir dhire-dhire fade-out karo
+                setTimeout(() => {
+                    // Remove "active" class to start smooth CSS transition fade-out (3 seconds duration)
+                    templateSection.classList.remove("active");
                     
-                    if (messageSection) {
-                        messageSection.classList.remove("hidden");
-                        setTimeout(() => {
-                            messageSection.classList.add("active");
-                            typeWriterEffect();
-                        }, 100);
-                    }
-                }, 3000);
+                    // 3 seconds ke smooth fade-out complete hone ka wait karein, fir hide karein aur letter laya jaye
+                    setTimeout(() => {
+                        templateSection.classList.add("hidden");
+                        
+                        if (messageSection) {
+                            messageSection.classList.remove("hidden");
+                            setTimeout(() => {
+                                messageSection.classList.add("active");
+                                typeWriterEffect();
+                            }, 100);
+                        }
+                    }, 3000); // 3s fading wait time
+                    
+                }, 15000); // 15 Seconds template screen stay time
+                
             } else {
-                // Agar template wrapper nahi milta toh direct letter box
+                // If template missing, direct letter
+                startMagicalRain();
                 if (messageSection) {
                     messageSection.classList.remove("hidden");
                     setTimeout(() => {
@@ -122,14 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    // 4. Romantic Typewriter with Centered Heading & Heart Cursor
+    // 5. Typewriter Engine with Beautiful Heart Cursor
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
-            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' }, // Yeh heading style CSS se center align hogi
+            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki smile kabhi kam na ho, kyuki tum sach me har ek happiness deserve karti ho.' },
             { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne sapno ko poora karna aur life me aage badhte rehna.' },
             { type: 'p', text: 'Aur ek baat... tum hamesha mere liye bahut special aur important rahogi. ❤️' },
@@ -157,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                 }
                 
-                await new Promise(res => setTimeout(res, 45));
+                await new Promise(res => setTimeout(res, 50)); // typing speed
             }
 
             const finalCursor = element.querySelector('.heart-cursor');
@@ -167,4 +189,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
-                            
+        
