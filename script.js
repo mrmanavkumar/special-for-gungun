@@ -1,46 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Ye direct aapki purani HTML ke elements ko pakdega
-    const startBtn = document.querySelector('[onclick*="startCountdown"]'); // Gift box ya button
-    const splashScreen = document.getElementById("splashScreen");
+    // Aapki HTML ke exact elements ko target kiya hai
+    const giftBox = document.getElementById("giftBox");
+    const giftSection = document.getElementById("giftSection");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
-    const scrollLetter = document.getElementById("scrollLetter");
+    const messageSection = document.getElementById("messageSection"); // Aapka scroll-letter box
 
-    // Agar direct HTML onclick call nahi ho rahi, toh hum is event listener se safe-handle karenge
-    const giftBoxElement = document.querySelector('.gift-container') || document.querySelector('.splash-container') || document.getElementById("splashScreen");
-    
-    if (giftBoxElement) {
-        giftBoxElement.addEventListener("click", () => {
-            triggerStart();
+    // 1. Gift Box Click Event
+    if (giftBox) {
+        giftBox.addEventListener("click", () => {
+            if (giftSection) giftSection.classList.add("hidden");
+            if (countdownScreen) {
+                countdownScreen.classList.remove("hidden");
+                startCountdownTimer();
+            } else {
+                showBirthdayGreeting();
+            }
         });
     }
 
-    // Is function ko global scope mein bhi daal dete hain taaki HTML ka "onclick" crash na ho
-    window.startCountdown = function() {
-        triggerStart();
-    };
-
-    function triggerStart() {
-        if (splashScreen) splashScreen.classList.add("hidden");
-        
-        // Agar countdown screen hai toh wahan le jao, nahi toh direct letter par
-        if (countdownScreen) {
-            countdownScreen.classList.remove("hidden");
-            startCountdownTimer();
-        } else {
-            showBirthdayGreeting();
-        }
-    }
-
-    // Countdown logic
+    // 2. Countdown Timer Logic
     function startCountdownTimer() {
         let count = 3;
         if (countdownNumber) countdownNumber.textContent = count;
 
-        const countdownMusic = document.getElementById("countdownMusic");
-        if (countdownMusic) {
-            countdownMusic.play().catch(err => console.log("Music play blocked", err));
+        // HTML ke countdown audio tag ko play karega
+        const countdownAudio = document.getElementById("countdownAudio");
+        if (countdownAudio) {
+            countdownAudio.play().catch(err => console.log("Audio play blocked", err));
         }
 
         const timer = setInterval(() => {
@@ -55,37 +43,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // Greeting transition to romantic letter
+    // 3. Greeting Screen Sequence
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
         }
 
+        // Background music play hoga
         const bgMusic = document.getElementById("bgMusic");
         if (bgMusic) {
             bgMusic.play().catch(err => console.log("BG Music play blocked", err));
         }
 
+        // 3 seconds baad romantic letter section show hoga
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
-            if (scrollLetter) {
-                scrollLetter.classList.remove("hidden");
+            if (messageSection) {
+                messageSection.classList.remove("hidden");
+                // Smooth transition ke liye active class jodi hai
                 setTimeout(() => {
-                    scrollLetter.classList.add("active");
+                    messageSection.classList.add("active");
                     typeWriterEffect();
                 }, 100);
             }
         }, 3000);
     }
 
-    // Typewriter engine with beautiful heart cursor
+    // 4. Romantic Typewriter Engine (Heading center ke sath)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        const scrollBox = document.querySelector(".scroll-letter");
+        const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
-            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' },
+            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN ❤️' }, // Yeh header CSS se center hoga
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki smile kabhi kam na ho, kyuki tum sach me har ek happiness deserve karti ho.' },
             { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne sapno ko poora karna aur life me aage badhte rehna.' },
             { type: 'p', text: 'Aur ek baat... tum hamesha mere liye bahut special aur important rahogi. ❤️' },
@@ -93,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { type: 'p', text: 'Take care of yourself. ✨', className: 'signature' }
         ];
 
-        targetDiv.innerHTML = ""; // Clear existing
+        targetDiv.innerHTML = ""; // Clear existing before typing
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
@@ -103,12 +94,15 @@ document.addEventListener("DOMContentLoaded", () => {
             let rawText = data.text;
             
             for (let i = 0; i < rawText.length; i++) {
+                // Purana temporary cursor hatao
                 const oldCursor = element.querySelector('.heart-cursor');
                 if (oldCursor) oldCursor.remove();
 
+                // Naya text aur pulsing heart cursor jodo
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
+                // Automatically scroll down as it types
                 if (scrollBox) {
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                 }
@@ -116,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await new Promise(res => setTimeout(res, 45));
             }
 
+            // Paragraph khatam hote hi aakhiri cursor remove karo
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
 
@@ -123,4 +118,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
-                
