@@ -105,7 +105,6 @@ body {
     animation: zoomPulse 1s infinite alternate;
 }
 
-/* ZOOM IN EFFECT FOR HAPPY BIRTHDAY */
 #bdayGreetingScreen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -131,7 +130,6 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* TEMPLATE FADE OUT TRANSITIONS */
 .template-wrapper {
     position: relative;
     width: 100%;
@@ -157,7 +155,7 @@ body {
 }
 
 /* ==========================================================================
-   4. FIXED HEIGHT LETTER SHEET (REAL WRITING FEEL & TILT ALIGNMENT)
+   4. PURE CSS GENERATED NOTEBOOK PAGE (100% STRAIGHT LINES)
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -167,12 +165,17 @@ body {
     overflow-y: auto; 
     overflow-x: hidden;
     scroll-behavior: smooth; 
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
+
+    /* Naya CSS Page Styling (Bilkul image jaisa card color aur pink border) */
+    background-color: #fbf0ea; 
+    border: 8px solid #f7d6d0; 
+    outline: 2px solid #e1b4ad; 
 }
 
 .scroll-letter.active {
@@ -180,74 +183,68 @@ body {
     transform: scale(1);
 }
 
-.letter-bg-wrap {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.letter-main-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    border-radius: 20px;
-}
-
-/* SKETCH WATERMARK EFFECT */
-.letter-bg-wrap::after {
+/* WATERMARK BACKGROUND WITH SKETCH */
+.scroll-letter::before {
     content: "";
     position: absolute;
-    top: 55%; 
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 58%; 
-    height: 40%;
-    background-image: url('sketch.png'); 
+    width: 60%; height: 45%;
+    background-image: url('sketch.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.12; 
+    opacity: 0.12;
     z-index: 2;
     pointer-events: none;
 }
 
-/* TEXT ALIGNMENT ZONE (WITH PERSPECTIVE ROTATION TO MATCH PAGE TILT) */
+/* TEXT AREA WITH PERFECT DIGITAL DOTTED LINES */
 .letter-text { 
     position: relative; 
     z-index: 5; 
     text-align: left; 
-    padding: 73px 35px 40px 35px; 
+    padding: 40px 25px 40px 25px; 
     font-family: 'Playfair Display', 'Georgia', serif;
     width: 100%;
-
-    /* Text ko paper ke angle par perfectly bithaane ke liye rotate rule */
-    transform: rotate(-0.4deg); 
-    transform-origin: top left;
+    
+    /* PURE CSS LINES: Yeh background har 26px par ek perfectly seedhi dotted line banayega */
+    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
+    background-position: bottom;
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+    
+    /* Line ko pure page par multiply karne ke liye styling */
+    line-height: 26px; 
 }
 
-/* Heading sits perfectly inside the pink header border zone */
+/* Heading top zone */
 .letter-text h3 { 
     color: #b33939 !important; 
     font-size: 16px; 
     font-weight: 800; 
     text-align: center !important; 
-    margin-bottom: 25px; 
+    margin-bottom: 26px; 
     line-height: 1.2;
+    border-bottom: 2px dashed #f5c2bb;
+    padding-bottom: 10px;
 }
 
-/* Line Lock Engine - Locks each word's base right above the paper lines */
+/* Paragraph Text - Ekdam perfectly digital lines ke upar chipkega */
 .letter-text p {
-    font-size: 14px;
-    line-height: 25.5px; 
+    font-size: 14.5px;
+    line-height: 26px; /* Ekdam line-size ke barabar */
     margin: 0;
-    margin-bottom: 0px; 
-    padding: 0;
+    margin-bottom: 26px; /* Har para naye line se shuru hoga */
     color: #4a2c2a !important;
     font-weight: 500;
     word-wrap: break-word;
-    text-shadow: none; 
+    text-shadow: none;
+    /* CSS background lines ko text box ke piche repeat karne ka formula */
+    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
+    background-position: bottom;
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
 }
 
 .highlight-bday { 
@@ -261,7 +258,7 @@ body {
     font-style: italic; 
     text-align: right;
     display: block;
-    margin-top: 15px;
+    margin-top: 13px;
 }
 
 .heart-cursor {
@@ -324,4 +321,4 @@ body {
 .scroll-letter::-webkit-scrollbar-thumb { 
     background: rgba(179, 57, 57, 0.15); 
     border-radius: 10px; 
-   }
+}
