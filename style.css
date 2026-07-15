@@ -65,7 +65,6 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Jab click hoga, JS se hum "shake-active" class lagayenge */
 .gift-img.shake-active {
     animation: intenseShake 0.5s infinite ease-in-out;
 }
@@ -106,7 +105,7 @@ body {
     animation: zoomPulse 1s infinite alternate;
 }
 
-/* ZOOM IN EFFECT FOR HAPPY BIRTHDAY (Ander se Bahar) */
+/* ZOOM IN EFFECT FOR HAPPY BIRTHDAY */
 #bdayGreetingScreen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -141,7 +140,7 @@ body {
     align-items: center;
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 3s ease, transform 3s ease; /* 3 seconds ka dhire dhire fade-out/in */
+    transition: opacity 3s ease, transform 3s ease; 
 }
 
 .template-wrapper.active {
@@ -158,14 +157,15 @@ body {
 }
 
 /* ==========================================================================
-   4. DESIGNER LETTER0.PNG STYLES
+   4. NEW DESIGNER LETTER0.PNG STYLES (PIXEL PERFECT FOR NEW IMAGE)
    ========================================================================== */
 .scroll-letter { 
     position: relative;
     width: 100%;          
-    height: 75vh; 
-    max-height: 580px;
+    height: 78vh; 
+    max-height: 600px;
     overflow-y: auto; 
+    overflow-x: hidden;
     scroll-behavior: smooth; 
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -194,49 +194,48 @@ body {
     border-radius: 20px;
 }
 
-/* Text Container spacing to perfectly match line spacing of letter0 */
+/* Padding aur margins ko naye heart header border ke hisaab se adjust kiya hai */
 .letter-text { 
     position: relative; 
     z-index: 5; 
-    line-height: 2.15; /* Line-spacing adjust ki h lines pe set rehne ke liye */
     text-align: left; 
-    padding: 70px 45px 40px 45px; /* Side and top paddings to secure paper margins */
+    padding: 108px 52px 50px 52px; /* Side paddings perfect margin block karti hain */
+    font-family: 'Playfair Display', 'Georgia', serif;
+    width: 100%;
 }
 
+/* Text lines grid setup */
+.letter-text p, .letter-text h3 {
+    font-size: 13.5px;
+    line-height: 2.36; /* Naye page ki dotted lines par accurate fix karne ke liye */
+    margin: 0;
+    padding: 0;
+    color: #4a2c2a !important;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+/* Heading top straight line area ke andar fix rahegi */
 .letter-text h3 { 
     color: #b33939 !important; 
-    margin-bottom: 30px; 
-    font-size: 16px; 
+    font-size: 14.5px; 
     font-weight: 700; 
     text-align: center !important; 
-    border-bottom: 1px dashed rgba(179, 57, 57, 0.2); 
-    padding-bottom: 5px;
-    font-family: 'Playfair Display', 'Georgia', serif;
-}
-
-.letter-text p { 
-    font-size: 13.5px; 
-    margin-bottom: 18px; 
-    font-weight: 500; 
-    color: #4a2c2a !important; 
-    font-family: 'Playfair Display', 'Georgia', serif;
+    margin-bottom: 24px; /* Pehli line se separation gap */
 }
 
 .highlight-bday { 
     color: #b33939 !important; 
     font-weight: 700; 
-    font-size: 14px !important; 
-    margin-top: 25px; 
-    display: block; 
 }
 
 .signature { 
     font-weight: 700; 
     color: #7f8c8d !important; 
-    margin-top: 20px; 
     font-style: italic; 
-    display: block; 
     text-align: right;
+    display: block;
+    margin-top: 10px;
 }
 
 .heart-cursor {
@@ -256,7 +255,7 @@ body {
     top: 0; left: 0;
     width: 100%; height: 100%;
     pointer-events: none;
-    z-index: 2; /* Background stars ke upar, letter ke peeche/aage */
+    z-index: 2; 
     overflow: hidden;
 }
 
@@ -280,7 +279,6 @@ body {
     }
 }
 
-/* General Keyframes */
 @keyframes zoomPulse {
     from { transform: scale(0.9); }
     to { transform: scale(1.1); }
