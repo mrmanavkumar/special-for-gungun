@@ -1,42 +1,56 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
+    const mainLink = document.getElementById("mainLink");
     const giftBox = document.getElementById("giftBox");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
+    const creditsSection = document.getElementById("creditsSection");
+    const creditsSlide1 = document.getElementById("creditsSlide1");
+    const creditsSlide2 = document.getElementById("creditsSlide2");
+    const creditsSlide3 = document.getElementById("creditsSlide3");
     const bgMusic = document.getElementById("bgMusic");
     const countdownAudio = document.getElementById("countdownAudio");
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
-    // STEP 1 & 2: Gift Box Click and Shaking
-    if (giftBox) {
-        giftBox.addEventListener("click", () => {
-            // Unlocks music capability early for browsers
-            if (bgMusic) {
-                bgMusic.play().then(() => {
-                    bgMusic.pause(); 
-                    bgMusic.currentTime = 0; 
-                }).catch(err => console.log("Audio interaction unlocked", err));
+    let isTriggered = false;
+
+    // Direct Link Click Handler
+    function handleLinkClick(e) {
+        if (e) e.preventDefault();
+        if (isTriggered) return;
+        isTriggered = true;
+
+        // Audio unlock for Mobile & Web browsers
+        if (bgMusic) {
+            bgMusic.play().then(() => {
+                bgMusic.pause(); 
+                bgMusic.currentTime = 0; 
+            }).catch(err => console.log("Audio unlock:", err));
+        }
+
+        // Trigger Shake Animation on Box Image
+        if (giftBox) giftBox.classList.add("shake-active");
+
+        // Transition to Countdown
+        setTimeout(() => {
+            if (giftSection) giftSection.classList.add("hidden");
+            if (countdownScreen) {
+                countdownScreen.classList.remove("hidden");
+                startCountdownTimer(); 
+            } else {
+                showBirthdayGreeting();
             }
+        }, 1500);
+    }
 
-            // Box shake active karo
-            giftBox.classList.add("shake-active");
-
-            // After 1.5s shake, transition to Step 3 (Countdown)
-            setTimeout(() => {
-                if (giftSection) giftSection.classList.add("hidden");
-                if (countdownScreen) {
-                    countdownScreen.classList.remove("hidden");
-                    startCountdownTimer(); 
-                } else {
-                    showBirthdayGreeting();
-                }
-            }, 1500); 
-        });
+    // Bind event to the link wrapper
+    if (mainLink) {
+        mainLink.addEventListener("click", handleLinkClick);
     }
 
     // STEP 3: Countdown Timer (3, 2, 1)
@@ -55,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 if (countdownScreen) countdownScreen.classList.add("hidden");
-                showBirthdayGreeting(); // Move to Step 4
+                showBirthdayGreeting();
             }
         }, 1000);
     }
@@ -64,15 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
-        // Main background music starts right here!
         if (bgMusic) {
-            bgMusic.play().catch(err => console.log("Music failed to play:", err));
+            bgMusic.play().catch(err => console.log("Music play failed:", err));
         }
 
         initConfetti();
         startMagicalRain();
 
-        // 3 Seconds on Greeting title, then jump to Step 5 (Photo Template)
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
@@ -80,11 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 templateSection.classList.remove("hidden");
                 setTimeout(() => { templateSection.classList.add("active"); }, 100);
                 
-                // STEP 5: Show photo for exactly 15 seconds
                 setTimeout(() => {
                     templateSection.classList.remove("active");
                     
-                    // Smooth transition to Step 6 (Letter Page)
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
@@ -132,8 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
-        
-                    const letterData = [
+        const letterData = [
             { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN🦋' },
             { type: 'p', text: 'Gungun, main bas yehi dua karta hu ki tum hamesha khush raho. Tumhare chehre ki muskan kabhi kam na ho, kyuki tum sach me har ek khusi deserve karti ho.' },
             { type: 'p', text: 'Hamesha aise hi muskurati rehna, apne sapno ko poora karna aur life me aage badhte rehna.🩺👩‍⚕️🩺' },
@@ -165,6 +174,61 @@ document.addEventListener("DOMContentLoaded", () => {
             if (finalCursor) finalCursor.remove();
             await new Promise(res => setTimeout(res, 400));
         }
+
+        // STEP 7: 15 Second Delay after letter completes
+        setTimeout(() => {
+            if (messageSection) {
+                messageSection.classList.remove("active");
+                setTimeout(() => {
+                    messageSection.classList.add("hidden");
+                    startCreditsSequence();
+                }, 1000);
+            }
+        }, 15000); // 15 Seconds Delay
+    }
+
+    // Credits Sequence Controller
+    function startCreditsSequence() {
+        if (!creditsSection) return;
+        creditsSection.classList.remove("hidden");
+
+        // Slide 1: Warning
+        if (creditsSlide1) {
+            creditsSlide1.classList.remove("hidden");
+            creditsSlide1.classList.add("fade-in");
+        }
+
+        // Transition to Slide 2
+        setTimeout(() => {
+            if (creditsSlide1) {
+                creditsSlide1.classList.remove("fade-in");
+                creditsSlide1.classList.add("fade-out");
+                
+                setTimeout(() => {
+                    creditsSlide1.classList.add("hidden");
+                    if (creditsSlide2) {
+                        creditsSlide2.classList.remove("hidden");
+                        creditsSlide2.classList.add("fade-in");
+                    }
+                }, 1000);
+            }
+        }, 4000);
+
+        // Transition to Slide 3 (THE END)
+        setTimeout(() => {
+            if (creditsSlide2) {
+                creditsSlide2.classList.remove("fade-in");
+                creditsSlide2.classList.add("fade-out");
+
+                setTimeout(() => {
+                    creditsSlide2.classList.add("hidden");
+                    if (creditsSlide3) {
+                        creditsSlide3.classList.remove("hidden");
+                        creditsSlide3.classList.add("fade-in");
+                    }
+                }, 1000);
+            }
+        }, 12000);
     }
 
     // Confetti System
@@ -209,4 +273,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-        
+            
