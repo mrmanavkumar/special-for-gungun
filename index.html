@@ -23,10 +23,12 @@
     <!-- MAIN INTERACTIVE CONTAINER -->
     <div class="container">
 
-        <!-- STEP 1 & 2: GIFT BOX SECTION -->
+        <!-- STEP 1 & 2: GIFT BOX SECTION WRAPPED IN DIRECT LINK -->
         <div id="giftSection">
-            <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
-            <p class="tap-text">Tap on the Gift Box to Open! ✨</p>
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper">
+                <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
+                <p class="tap-text">Tap on the Gift Box to Open! ✨</p>
+            </a>
         </div>
 
         <!-- STEP 3: COUNTDOWN TIMER SCREEN -->
@@ -39,14 +41,43 @@
             <h1 class="bday-text">HAPPY BIRTHDAY</h1>
         </div>
 
-        <!-- STEP 5: TEMPLATE TRANSITION IMAGE (Exact Repository Name Linked) -->
+        <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
         <div id="templateSection" class="hidden template-wrapper">
             <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
         </div>
 
-        <!-- STEP 6: PURE CSS NOTEBOOK LETTER BOX (With Sketch Watermark & Corner Decorations) -->
+        <!-- STEP 6: PURE CSS NOTEBOOK LETTER BOX -->
         <div id="messageSection" class="hidden scroll-letter">
             <div id="typewriterText" class="letter-text"></div>
+        </div>
+
+        <!-- STEP 7: CREDITS SEQUENCE (15-SECOND DELAY) -->
+        <div id="creditsSection" class="hidden credits-container">
+            <!-- Slide 1: Warning / Disclaimer -->
+            <div id="creditsSlide1" class="credits-slide hidden">
+                <p class="credits-subtext">This line is just for fun 😊</p>
+                <p class="credits-warning"><strong>Warning:</strong> No Gunguns were harmed in the making of this project.</p>
+            </div>
+
+            <!-- Slide 2: Main Credits Info -->
+            <div id="creditsSlide2" class="credits-slide hidden">
+                <div class="credits-grid">
+                    <p><span>IMAGINE BY:</span> MANAV</p>
+                    <p><span>MAIN CHARACTER / LEAD ROLE:</span> GUNGUN</p>
+                    <p><span>SPECIALLY FOR:</span> GUNGUN</p>
+                    <p><span>PRODUCED BY:</span> MANAV</p>
+                    <p><span>INSPIRED BY:</span> GUNGUN</p>
+                    <p><span>STARRING:</span> GUNGUN RATHORE <br><small>(The Birthday Star)</small></p>
+                    <p><span>DEDICATED TO:</span> GUNGUN</p>
+                    <p><span>SPECIAL THANKS TO:</span> GUNGUN <br><small>(For always being awesome)</small></p>
+                    <p><span>TOTAL BUDGET:</span> Unlimited Love (₹0)</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Final Outro -->
+            <div id="creditsSlide3" class="credits-slide hidden">
+                <h1 class="the-end-text">THE END</h1>
+            </div>
         </div>
 
     </div>
