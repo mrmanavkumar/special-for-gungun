@@ -48,14 +48,28 @@ body {
 }
 
 /* ==========================================================================
-   2. GIFT BOX SECTION
+   2. GIFT BOX SECTION & LINK CLICK FIX
    ========================================================================== */
 #giftSection {
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 20;
+}
+
+/* Main Link Wrapper to open via link tap */
+.gift-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .gift-img {
@@ -63,6 +77,7 @@ body {
     max-width: 250px; 
     height: auto;
     transition: transform 0.3s ease;
+    pointer-events: none; /* Disables direct image tap so link gets the click */
 }
 
 .gift-img.shake-active {
@@ -75,6 +90,7 @@ body {
     color: #ff4d6d;
     font-weight: 600;
     text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
+    pointer-events: none;
 }
 
 @keyframes intenseShake {
@@ -195,7 +211,7 @@ body {
     pointer-events: none;
 }
 
-/* CORNER DECORATIONS (Rose on Top-Left & Balloon on Bottom-Right) */
+/* CORNER DECORATIONS */
 .scroll-letter::after {
     content: "🌹";
     position: absolute;
@@ -258,7 +274,100 @@ body {
 .heart-cursor { display: inline-block; color: #ff4d6d; font-size: 12px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
 
 /* ==========================================================================
-   5. EFFECTS & ANIMATIONS
+   5. CREDITS SEQUENCE STYLING (FUNNY & CINEMATIC)
+   ========================================================================== */
+.credits-container {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 30;
+}
+
+.credits-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+
+.credits-subtext {
+    font-size: 18px;
+    color: #ffb3c1;
+    margin-bottom: 12px;
+}
+
+.credits-warning {
+    font-size: 15px;
+    color: #f7d6d0;
+    line-height: 1.5;
+    background: rgba(255, 77, 109, 0.1);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px dashed #ff4d6d;
+}
+
+.credits-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    width: 100%;
+}
+
+.credits-grid p {
+    font-size: 14px;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+.credits-grid p span {
+    color: #ff758f;
+    font-weight: 700;
+    font-size: 12px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.credits-grid small {
+    color: #ffb3c1;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.the-end-text {
+    font-size: 42px;
+    font-weight: 800;
+    color: #ff4d6d;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 0 20px rgba(255, 77, 109, 0.8), 0 0 40px rgba(255, 77, 109, 0.4);
+    letter-spacing: 3px;
+}
+
+/* Fade In / Fade Out Animation Classes */
+.fade-in {
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+}
+
+.fade-out {
+    opacity: 0 !important;
+    transform: scale(0.95) translateY(-10px) !important;
+}
+
+.credits-slide.hidden {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+}
+
+/* ==========================================================================
+   6. EFFECTS & ANIMATIONS
    ========================================================================== */
 #rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
 .rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
