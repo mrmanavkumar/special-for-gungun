@@ -1,4 +1,4 @@
-Document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -19,13 +19,13 @@ Document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // Direct Link Click Handler
+    // Direct Gift Click Handler Fix
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Audio unlock for Mobile & Web browsers
+        // Try playing and unlocking audio safely
         if (bgMusic) {
             bgMusic.play().then(() => {
                 bgMusic.pause(); 
@@ -33,7 +33,7 @@ Document.addEventListener("DOMContentLoaded", () => {
             }).catch(err => console.log("Audio unlock:", err));
         }
 
-        // Trigger Shake Animation on Box Image
+        // Trigger Shake Animation
         if (giftBox) giftBox.classList.add("shake-active");
 
         // Transition to Countdown
@@ -48,10 +48,9 @@ Document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     }
 
-    // Bind event to the link wrapper
-    if (mainLink) {
-        mainLink.addEventListener("click", handleLinkClick);
-    }
+    // Bind event to both the wrapper link and direct image for guaranteed clicks
+    if (mainLink) mainLink.addEventListener("click", handleLinkClick);
+    if (giftBox) giftBox.addEventListener("click", handleLinkClick);
 
     // STEP 3: Countdown Timer (3, 2, 1)
     function startCountdownTimer() {
@@ -175,7 +174,7 @@ Document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 400));
         }
 
-        // STEP 7: 15 Second Delay after letter completes
+        // STEP 7: 15 Seconds Delay After Letter Ends, Then Start Credits
         setTimeout(() => {
             if (messageSection) {
                 messageSection.classList.remove("active");
@@ -184,21 +183,21 @@ Document.addEventListener("DOMContentLoaded", () => {
                     startCreditsSequence();
                 }, 1000);
             }
-        }, 15000); // 15 Seconds Delay
+        }, 15000); 
     }
 
-    // Credits Sequence Controller
+    // Credits Sequence Controller (One By One Display)
     function startCreditsSequence() {
         if (!creditsSection) return;
         creditsSection.classList.remove("hidden");
 
-        // Slide 1: Warning
+        // --- Slide 1: Funny Disclaimer ---
         if (creditsSlide1) {
             creditsSlide1.classList.remove("hidden");
-            creditsSlide1.classList.add("fade-in");
+            setTimeout(() => creditsSlide1.classList.add("fade-in"), 100);
         }
 
-        // Transition to Slide 2
+        // Transition: Slide 1 -> Slide 2 (After 4 Seconds)
         setTimeout(() => {
             if (creditsSlide1) {
                 creditsSlide1.classList.remove("fade-in");
@@ -208,13 +207,13 @@ Document.addEventListener("DOMContentLoaded", () => {
                     creditsSlide1.classList.add("hidden");
                     if (creditsSlide2) {
                         creditsSlide2.classList.remove("hidden");
-                        creditsSlide2.classList.add("fade-in");
+                        setTimeout(() => creditsSlide2.classList.add("fade-in"), 100);
                     }
                 }, 1000);
             }
         }, 4000);
 
-        // Transition to Slide 3 (THE END)
+        // Transition: Slide 2 -> Slide 3 [THE END] (After 12 Seconds)
         setTimeout(() => {
             if (creditsSlide2) {
                 creditsSlide2.classList.remove("fade-in");
@@ -224,7 +223,7 @@ Document.addEventListener("DOMContentLoaded", () => {
                     creditsSlide2.classList.add("hidden");
                     if (creditsSlide3) {
                         creditsSlide3.classList.remove("hidden");
-                        creditsSlide3.classList.add("fade-in");
+                        setTimeout(() => creditsSlide3.classList.add("fade-in"), 100);
                     }
                 }, 1000);
             }
@@ -273,4 +272,4 @@ Document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                
