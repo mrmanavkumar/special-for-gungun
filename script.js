@@ -19,18 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // Direct Gift Click Handler Fix
+    // Direct Gift Click Handler
     function handleLinkClick(e) {
-        if (e) e.preventDefault();
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         if (isTriggered) return;
         isTriggered = true;
 
-        // Try playing and unlocking audio safely
+        // Try playing background audio safely
         if (bgMusic) {
             bgMusic.play().then(() => {
-                bgMusic.pause(); 
-                bgMusic.currentTime = 0; 
-            }).catch(err => console.log("Audio unlock:", err));
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+            }).catch(err => console.log("Audio unlock note:", err));
         }
 
         // Trigger Shake Animation
@@ -41,21 +44,22 @@ document.addEventListener("DOMContentLoaded", () => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
                 countdownScreen.classList.remove("hidden");
-                startCountdownTimer(); 
+                startCountdownTimer();
             } else {
                 showBirthdayGreeting();
             }
-        }, 1500);
+        }, 1200);
     }
 
-    // Bind event to both the wrapper link and direct image for guaranteed clicks
+    // Attach Click Events on all clickable elements in Gift Section
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
+    if (giftSection) giftSection.addEventListener("click", handleLinkClick);
 
     // STEP 3: Countdown Timer (3, 2, 1)
     function startCountdownTimer() {
         if (countdownAudio) {
-            countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
+            countdownAudio.play().catch(err => console.log("Countdown sound skipped:", err));
         }
 
         let count = 3;
@@ -191,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!creditsSection) return;
         creditsSection.classList.remove("hidden");
 
-        // --- Slide 1: Funny Disclaimer ---
+        // --- Slide 1: Disclaimer ---
         if (creditsSlide1) {
             creditsSlide1.classList.remove("hidden");
             setTimeout(() => creditsSlide1.classList.add("fade-in"), 100);
@@ -272,4 +276,3 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
