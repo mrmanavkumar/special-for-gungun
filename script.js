@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
+    const bdayText = document.querySelector(".bday-text");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
     const creditsSection = document.getElementById("creditsSection");
@@ -80,75 +81,82 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // STEP 3: Black Screen + selfi 1.mp3 (BGM) + selfie 2.mp3 ("Oye Selfie")
+    // STEP 3: Happy Birthday Screen -> Disappear -> 5s Black Screen + BGM -> Flower Rain + Template
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
-        // Start main BGM (selfi 1.mp3) with slow fade-in
-        if (selfi1) {
-            selfi1.volume = 0;
-            selfi1.play().catch(err => console.log("selfi 1 BGM error:", err));
-            let fadeAudio = setInterval(() => {
-                if (selfi1.volume < 0.9) selfi1.volume += 0.05;
-                else { selfi1.volume = 1.0; clearInterval(fadeAudio); }
-            }, 150);
-        }
-
-        initConfetti();
-        startMagicalRain();
-
-        // Template aane ke exactly 1.5 seconds pehle selfie 2.mp3 ("Oye Selfie")
-        // Black screen runs for 4s, selfie 2 triggers at 2.5s
+        // 1.5 Seconds baad HAPPY BIRTHDAY text gayab hoga
         setTimeout(() => {
-            if (selfi2) {
-                if (selfi1) selfi1.volume = 0.3; // Duck BGM volume
-                selfi2.play().catch(err => console.log("selfie 2 error:", err));
-                
-                selfi2.onended = () => {
-                    if (selfi1) selfi1.volume = 1.0; // Restore BGM volume
-                };
+            if (bdayText) bdayText.style.display = "none";
+
+            // BGM (selfi 1.mp3) start hoga purely black screen par
+            if (selfi1) {
+                selfi1.volume = 0;
+                selfi1.play().catch(err => console.log("selfi 1 BGM error:", err));
+                let fadeAudio = setInterval(() => {
+                    if (selfi1.volume < 0.9) selfi1.volume += 0.05;
+                    else { selfi1.volume = 1.0; clearInterval(fadeAudio); }
+                }, 150);
             }
-        }, 2500);
 
-        // STEP 4: Template Reveal (Exactly at 4 seconds)
-        setTimeout(() => {
-            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
-            
-            if (templateSection) {
-                templateSection.classList.remove("hidden");
-                setTimeout(() => { 
-                    templateSection.classList.add("active"); 
+            // Exactly 5 Seconds pure Black Screen hold
+            setTimeout(() => {
+                // 5 sec baad Flowers & Hearts rain shuru aur "Oye Selfie" dialogue
+                initConfetti();
+                startMagicalRain();
 
-                    // 3 seconds baad selfi 3.mp3 ("Oye Happy Birthday") dialogue
-                    setTimeout(() => {
-                        if (selfi3) {
-                            if (selfi1) selfi1.volume = 0.3; // Duck BGM for dialogue
-                            selfi3.play().catch(err => console.log("selfi 3 error:", err));
+                if (selfi2) {
+                    if (selfi1) selfi1.volume = 0.3; // Duck BGM
+                    selfi2.play().catch(err => console.log("selfie 2 error:", err));
+                    
+                    selfi2.onended = () => {
+                        if (selfi1) selfi1.volume = 1.0;
+                    };
+                }
 
-                            selfi3.onended = () => {
-                                if (selfi1) selfi1.volume = 1.0; // BGM continuous keeps playing
-                            };
-                        }
-                    }, 3000);
-
-                }, 100);
-                
-                // Show Template for 15 seconds then fade out to Letter
+                // 1.5 Sec baad Template screen reveal
                 setTimeout(() => {
-                    templateSection.classList.remove("active");
-                    setTimeout(() => {
-                        templateSection.classList.add("hidden");
+                    if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+                    
+                    if (templateSection) {
+                        templateSection.classList.remove("hidden");
+                        setTimeout(() => { 
+                            templateSection.classList.add("active"); 
+
+                            // Template aane ke 3 Sec baad "Oye Happy Birthday" (selfi 3.mp3)
+                            setTimeout(() => {
+                                if (selfi3) {
+                                    if (selfi1) selfi1.volume = 0.3;
+                                    selfi3.play().catch(err => console.log("selfi 3 error:", err));
+
+                                    selfi3.onended = () => {
+                                        if (selfi1) selfi1.volume = 1.0;
+                                    };
+                                }
+                            }, 3000);
+
+                        }, 100);
+                        
+                        // 15 Sec baad Template Screen Fade-Out -> Letter Page
+                        setTimeout(() => {
+                            templateSection.classList.remove("active");
+                            setTimeout(() => {
+                                templateSection.classList.add("hidden");
+                                showLetterPage();
+                            }, 2000); 
+                        }, 15000); 
+                        
+                    } else {
                         showLetterPage();
-                    }, 2000); 
-                }, 15000); 
-                
-            } else {
-                showLetterPage();
-            }
-        }, 4000);
+                    }
+                }, 1500);
+
+            }, 5000); // 5 Seconds Black Delay
+
+        }, 1500);
     }
 
-    // STEP 5: Notebook Letter Screen Arrival
+    // STEP 4: Notebook Letter Screen Arrival
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -314,4 +322,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                    
