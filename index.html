@@ -15,10 +15,10 @@
     <canvas id="effectCanvas"></canvas>
     <div id="rainContainer"></div>
 
-    <!-- AUDIO FILES -->
-    <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
+    <!-- AUDIO FILES (Updated to .m4a as per repository) -->
+    <audio id="countdownAudio" src="countdown2.m4a" preload="auto"></audio>
     <audio id="selfi1" src="selfi 1.mp3" preload="auto" loop></audio>
-    <audio id="selfi3" src="selfi 3.mp3" preload="auto"></audio>
+    <audio id="selfi3" src="selfi 3.m4a" preload="auto"></audio>
 
     <!-- MAIN INTERACTIVE CONTAINER -->
     <div class="container">
@@ -36,10 +36,8 @@
             <div id="countdownNumber">3</div>
         </div>
 
-        <!-- STEP 3: HAPPY BIRTHDAY GREETING SCREEN (BLACK BACKGROUND) -->
-        <div id="bdayGreetingScreen" class="hidden">
-            <h1 class="bday-text">HAPPY BIRTHDAY</h1>
-        </div>
+        <!-- STEP 3: PURE BLACK SCREEN FOR SUSPENSE, DIALOGUE & RAIN -->
+        <div id="bdayGreetingScreen" class="hidden"></div>
 
         <!-- STEP 4: TEMPLATE TRANSITION IMAGE -->
         <div id="templateSection" class="hidden template-wrapper">
@@ -49,35 +47,6 @@
         <!-- STEP 5: NOTEBOOK LETTER BOX WITH SKETCH WATERMARK -->
         <div id="messageSection" class="hidden scroll-letter">
             <div id="typewriterText" class="letter-text"></div>
-        </div>
-
-        <!-- STEP 6: CREDITS SEQUENCE -->
-        <div id="creditsSection" class="hidden credits-container">
-            <!-- Slide 1 -->
-            <div id="creditsSlide1" class="credits-slide hidden">
-                <p class="credits-subtext">This line is just for fun 😊</p>
-                <p class="credits-warning"><strong>Warning:</strong> No Gunguns were harmed in the making of this project.</p>
-            </div>
-
-            <!-- Slide 2 -->
-            <div id="creditsSlide2" class="credits-slide hidden">
-                <div class="credits-grid">
-                    <p><span>IMAGINE BY:</span> MANAV</p>
-                    <p><span>MAIN CHARACTER / LEAD ROLE:</span> GUNGUN</p>
-                    <p><span>SPECIALLY FOR:</span> GUNGUN</p>
-                    <p><span>PRODUCED BY:</span> MANAV</p>
-                    <p><span>INSPIRED BY:</span> GUNGUN</p>
-                    <p><span>STARRING:</span> GUNGUN RATHORE <br><small>(The Birthday Star)</small></p>
-                    <p><span>DEDICATED TO:</span> GUNGUN</p>
-                    <p><span>SPECIAL THANKS TO:</span> GUNGUN <br><small>(For always being awesome)</small></p>
-                    <p><span>TOTAL BUDGET:</span> Unlimited Love (₹0)</p>
-                </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div id="creditsSlide3" class="credits-slide hidden">
-                <h1 class="the-end-text">THE END</h1>
-            </div>
         </div>
 
     </div>
