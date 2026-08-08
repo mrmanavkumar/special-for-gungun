@@ -6,24 +6,25 @@
     <title>specially for Gungun💖</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
-    <!-- Main Style Sheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- BACKGROUND STARS EFFECT & CANVAS SYSTEM -->
+    <!-- BACKGROUND STARS & CANVAS SYSTEM -->
     <div class="stars"></div>
     <canvas id="effectCanvas"></canvas>
     <div id="rainContainer"></div>
 
-    <!-- AUDIO FILES SYSTEM -->
+    <!-- AUDIO FILES (EXACT GITHUB NAMES) -->
     <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="bg-music.mp3" preload="auto" loop></audio>
+    <audio id="selfi1" src="selfi 1.mp3" preload="auto" loop></audio>
+    <audio id="selfi2" src="selfie 2.mp3" preload="auto"></audio>
+    <audio id="selfi3" src="selfi 3.mp3" preload="auto"></audio>
 
     <!-- MAIN INTERACTIVE CONTAINER -->
     <div class="container">
 
-        <!-- STEP 1 & 2: GIFT BOX SECTION -->
+        <!-- STEP 1: GIFT BOX SECTION -->
         <div id="giftSection">
             <div id="mainLink" class="gift-link-wrapper">
                 <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
@@ -31,35 +32,35 @@
             </div>
         </div>
 
-        <!-- STEP 3: COUNTDOWN TIMER SCREEN -->
+        <!-- STEP 2: COUNTDOWN TIMER SCREEN -->
         <div id="countdownScreen" class="hidden">
             <div id="countdownNumber">3</div>
         </div>
 
-        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
+        <!-- STEP 3: HAPPY BIRTHDAY GREETING SCREEN (BLACK BACKGROUND) -->
         <div id="bdayGreetingScreen" class="hidden">
             <h1 class="bday-text">HAPPY BIRTHDAY</h1>
         </div>
 
-        <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
+        <!-- STEP 4: TEMPLATE TRANSITION IMAGE -->
         <div id="templateSection" class="hidden template-wrapper">
             <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
         </div>
 
-        <!-- STEP 6: PURE CSS NOTEBOOK LETTER BOX -->
+        <!-- STEP 5: NOTEBOOK LETTER BOX WITH SKETCH WATERMARK -->
         <div id="messageSection" class="hidden scroll-letter">
             <div id="typewriterText" class="letter-text"></div>
         </div>
 
-        <!-- STEP 7: CREDITS SEQUENCE (15-SECOND DELAY, ONE BY ONE) -->
+        <!-- STEP 6: CREDITS SEQUENCE -->
         <div id="creditsSection" class="hidden credits-container">
-            <!-- Slide 1: Warning / Disclaimer -->
+            <!-- Slide 1 -->
             <div id="creditsSlide1" class="credits-slide hidden">
                 <p class="credits-subtext">This line is just for fun 😊</p>
                 <p class="credits-warning"><strong>Warning:</strong> No Gunguns were harmed in the making of this project.</p>
             </div>
 
-            <!-- Slide 2: Main Credits Info -->
+            <!-- Slide 2 -->
             <div id="creditsSlide2" class="credits-slide hidden">
                 <div class="credits-grid">
                     <p><span>IMAGINE BY:</span> MANAV</p>
@@ -74,7 +75,7 @@
                 </div>
             </div>
 
-            <!-- Slide 3: Final Outro -->
+            <!-- Slide 3 -->
             <div id="creditsSlide3" class="credits-slide hidden">
                 <h1 class="the-end-text">THE END</h1>
             </div>
@@ -82,7 +83,7 @@
 
     </div>
 
-    <!-- Main Logic Script Engine -->
+    <!-- Main Script Engine -->
     <script src="script.js"></script>
 </body>
 </html>
