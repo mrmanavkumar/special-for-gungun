@@ -74,88 +74,99 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000); // Exact 3 Seconds
     }
 
-    // STEP 3: Black Screen -> One-by-One Word Animation + selfi 3.m4a -> 5s Black Hold -> 8s Flower Rain -> Template
+    // STEP 3: 5 Seconds Suspense Gap -> Audio Sync Text Transition -> Flower Rain -> Template
     function showBirthdayGreeting() {
-        if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
+        if (bdayGreetingScreen) {
+            bdayGreetingScreen.classList.remove("hidden");
+            bdayGreetingScreen.innerHTML = ""; // Clear container
+        }
 
-        // Start BGM (selfi 1.mp3) smoothly
+        // Start BGM (selfi 1.mp3) smoothly right after counting
         if (selfi1) {
             selfi1.volume = 0;
             selfi1.play().catch(err => console.log("selfi 1 BGM error:", err));
             let fadeAudio = setInterval(() => {
-                if (selfi1.volume < 0.9) selfi1.volume += 0.05;
-                else { selfi1.volume = 1.0; clearInterval(fadeAudio); }
+                if (selfi1.volume < 0.8) selfi1.volume += 0.05;
+                else { selfi1.volume = 0.8; clearInterval(fadeAudio); }
             }, 150);
         }
 
-        // Start Word-by-Word Animation & Dialogue Immediately after counting
-        setTimeout(async () => {
-            const textContainer = document.createElement("div");
-            textContainer.className = "word-by-word-container";
-            bdayGreetingScreen.appendChild(textContainer);
+        // 5 SECONDS SUSPENSE GAP (Pure Black Screen)
+        setTimeout(() => {
+            
+            // Container for Animated Text
+            const textDisplay = document.createElement("div");
+            textDisplay.className = "pop-text-display";
+            bdayGreetingScreen.appendChild(textDisplay);
 
             // Play selfi 3.m4a Dialogue ("Oye Happy Birthday")
             if (selfi3) {
-                if (selfi1) selfi1.volume = 0.25; // Duck BGM for clear voice
+                if (selfi1) selfi1.volume = 0.2; // Duck BGM for clear voice
                 selfi3.play().catch(err => console.log("selfi 3 error:", err));
 
                 selfi3.onended = () => {
-                    if (selfi1) selfi1.volume = 1.0; // Restore BGM volume
+                    if (selfi1) selfi1.volume = 0.9; // Restore BGM volume
                 };
             }
 
-            // Word-by-word reveal sequence (Ek-Ek Karke Word Aayenge)
-            const words = ["Oye", "Happy", "Birthday! 💖"];
-            for (let i = 0; i < words.length; i++) {
-                const wordSpan = document.createElement("span");
-                wordSpan.className = "step-word";
-                wordSpan.innerText = words[i] + " ";
-                textContainer.appendChild(wordSpan);
+            // Phase 1: Show "Oye... 👀✨"
+            textDisplay.innerHTML = "Oye... 👀✨";
+            textDisplay.classList.add("show-pop");
 
-                await new Promise(res => setTimeout(res, 100));
-                wordSpan.classList.add("show-word");
-                await new Promise(res => setTimeout(res, 600)); // 0.6s gap per word
-            }
-
-            // Text Fade Out
+            // Phase 2: Achanak Gayab (Disappear "Oye...") after ~1 second
             setTimeout(() => {
-                textContainer.style.transition = "opacity 1.5s ease";
-                textContainer.style.opacity = "0";
-            }, 1500);
+                textDisplay.classList.remove("show-pop");
+                textDisplay.classList.add("hide-pop");
 
-            // 5 Seconds Black Screen Hold Delay -> Then Start 8 Seconds Flower Rain
-            setTimeout(() => {
-                initConfetti();
-                startGradualRain(); // Rain starts and lasts for 8 seconds before template
-
-                // 8 Seconds Flower Rain Delay -> Fade In Template
+                // Phase 3: Show "Happy Birthday! 💖🎉🎂"
                 setTimeout(() => {
-                    if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
-                    
-                    if (templateSection) {
-                        templateSection.classList.remove("hidden");
-                        setTimeout(() => { 
-                            templateSection.classList.add("active"); // Dhere-dhere fade in
-                        }, 100);
-                        
-                        // Template 15 Seconds tak rahega -> Phir Dhere-Dhere Fade Out
+                    textDisplay.innerHTML = "Happy Birthday! 💖🎉🎂";
+                    textDisplay.classList.remove("hide-pop");
+                    textDisplay.classList.add("show-pop");
+
+                    // Hold Text -> Fade Out -> Start 8s Flower Rain
+                    setTimeout(() => {
+                        textDisplay.classList.remove("show-pop");
+                        textDisplay.classList.add("hide-pop");
+
                         setTimeout(() => {
-                            templateSection.classList.remove("active"); // Dhere-dhere fade out
+                            initConfetti();
+                            startGradualRain(); // Start 8 Seconds Rain
+
                             setTimeout(() => {
-                                templateSection.classList.add("hidden");
-                                showLetterPage();
-                            }, 2000); 
-                        }, 15000); 
-                        
-                    } else {
-                        showLetterPage();
-                    }
+                                if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+                                
+                                // Show Template Image
+                                if (templateSection) {
+                                    templateSection.classList.remove("hidden");
+                                    setTimeout(() => { 
+                                        templateSection.classList.add("active"); // Dhere-dhere fade in
+                                    }, 100);
+                                    
+                                    // Template 15 Seconds Hold -> Fade Out
+                                    setTimeout(() => {
+                                        templateSection.classList.remove("active"); // Dhere-dhere fade out
+                                        setTimeout(() => {
+                                            templateSection.classList.add("hidden");
+                                            showLetterPage();
+                                        }, 2000); 
+                                    }, 15000); 
+                                    
+                                } else {
+                                    showLetterPage();
+                                }
 
-                }, 8000); // 8 Seconds Rain Hold
+                            }, 8000); // 8 Seconds Rain Hold
 
-            }, 5000); // 5 Seconds Black Screen Hold
+                        }, 1000);
 
-        }, 300);
+                    }, 2500); // Hold Happy Birthday text
+
+                }, 200); // Small gap between disappear & reappear
+
+            }, 1100); // Display duration for "Oye..."
+
+        }, 5000); // EXACT 5 SECONDS SUSPENSE GAP AFTER COUNTING
     }
 
     // STEP 4: Letter Page Arrival
@@ -225,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
-                // Auto Scroll as text types
+                // Auto Scroll
                 if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
                 await new Promise(res => setTimeout(res, 50)); 
             }
@@ -235,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Canvas Confetti Particles
+    // Canvas Confetti
     function initConfetti() {
         if (!effectCanvas) return;
         const ctx = effectCanvas.getContext("2d");
@@ -277,4 +288,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                   
+                                                   
