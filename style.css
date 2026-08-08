@@ -48,7 +48,7 @@ body {
 }
 
 /* ==========================================================================
-   2. GIFT BOX SECTION & GUARANTEED CLICKABLE WRAPPER
+   2. GIFT BOX SECTION
    ========================================================================== */
 #giftSection {
     display: flex;
@@ -104,7 +104,7 @@ body {
 }
 
 /* ==========================================================================
-   3. TRANSITIONS & SCREEN COMPONENT
+   3. COUNTDOWN & BLACK GREETING SCREEN
    ========================================================================== */
 #countdownScreen {
     display: flex;
@@ -127,7 +127,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(15, 12, 27, 0.95);
+    background: #000000; /* Black Background */
     z-index: 100;
 }
 
@@ -141,11 +141,6 @@ body {
     text-align: center;
 }
 
-@keyframes zoomInBday {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
 .template-wrapper {
     position: relative;
     width: 100%;
@@ -154,7 +149,7 @@ body {
     align-items: center;
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 2s ease, transform 2s ease; 
+    transition: opacity 1.8s ease-in-out, transform 1.8s ease-in-out; 
 }
 
 .template-wrapper.active {
@@ -171,7 +166,7 @@ body {
 }
 
 /* ==========================================================================
-   4. NOTEBOOK PAGE WITH SKETCH WATERMARK & CORNER ITEMS
+   4. NOTEBOOK PAGE WITH SKETCH WATERMARK
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -197,7 +192,7 @@ body {
     transform: scale(1);
 }
 
-/* SKETCH WATERMARK LAYER (Centered behind text) */
+/* SKETCH WATERMARK BACKGROUND */
 .scroll-letter::before {
     content: "";
     position: absolute;
@@ -211,7 +206,6 @@ body {
     pointer-events: none;
 }
 
-/* CORNER DECORATIONS */
 .scroll-letter::after {
     content: "🌹";
     position: absolute;
@@ -232,7 +226,6 @@ body {
     transform: rotate(10deg);
 }
 
-/* TEXT AREA STYLING */
 .letter-text { 
     position: relative; 
     z-index: 5; 
@@ -262,7 +255,6 @@ body {
     font-weight: 500;
     word-wrap: break-word;
     
-    /* Digital Dotted Lines */
     background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
     background-position: bottom;
     background-size: 6px 1px;
@@ -274,7 +266,7 @@ body {
 .heart-cursor { display: inline-block; color: #ff4d6d; font-size: 12px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
 
 /* ==========================================================================
-   5. CREDITS SEQUENCE STYLING (FUNNY & CINEMATIC)
+   5. CREDITS SEQUENCE STYLING
    ========================================================================== */
 .credits-container {
     width: 100%;
@@ -350,7 +342,6 @@ body {
     letter-spacing: 3px;
 }
 
-/* Fade In / Fade Out Animation Classes */
 .fade-in {
     opacity: 1 !important;
     transform: scale(1) translateY(0) !important;
