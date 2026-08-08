@@ -12,7 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const creditsSlide1 = document.getElementById("creditsSlide1");
     const creditsSlide2 = document.getElementById("creditsSlide2");
     const creditsSlide3 = document.getElementById("creditsSlide3");
-    const bgMusic = document.getElementById("bgMusic");
+    
+    // Audio Elements
+    const selfi1 = document.getElementById("selfi1");
+    const selfi2 = document.getElementById("selfi2");
+    const selfi3 = document.getElementById("selfi3");
     const countdownAudio = document.getElementById("countdownAudio");
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
@@ -28,18 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isTriggered) return;
         isTriggered = true;
 
-        // Try playing background audio safely
-        if (bgMusic) {
-            bgMusic.play().then(() => {
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
-            }).catch(err => console.log("Audio unlock note:", err));
-        }
+        // Unlock Mobile Audio
+        [selfi1, selfi2, selfi3, countdownAudio].forEach(aud => {
+            if (aud) {
+                aud.play().then(() => {
+                    aud.pause();
+                    aud.currentTime = 0;
+                }).catch(err => console.log("Audio unlock note:", err));
+            }
+        });
 
-        // Trigger Shake Animation
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Transition to Countdown
         setTimeout(() => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
@@ -51,12 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1200);
     }
 
-    // Attach Click Events on all clickable elements in Gift Section
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
     if (giftSection) giftSection.addEventListener("click", handleLinkClick);
 
-    // STEP 3: Countdown Timer (3, 2, 1)
+    // STEP 2: Countdown Timer
     function startCountdownTimer() {
         if (countdownAudio) {
             countdownAudio.play().catch(err => console.log("Countdown sound skipped:", err));
@@ -77,27 +80,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + Music Starts
+    // STEP 3: Black Screen + selfi 1.mp3 (BGM) + selfie 2.mp3 ("Oye Selfie")
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
-        if (bgMusic) {
-            bgMusic.play().catch(err => console.log("Music play failed:", err));
+        // Start main BGM (selfi 1.mp3) with slow fade-in
+        if (selfi1) {
+            selfi1.volume = 0;
+            selfi1.play().catch(err => console.log("selfi 1 BGM error:", err));
+            let fadeAudio = setInterval(() => {
+                if (selfi1.volume < 0.9) selfi1.volume += 0.05;
+                else { selfi1.volume = 1.0; clearInterval(fadeAudio); }
+            }, 150);
         }
 
         initConfetti();
         startMagicalRain();
 
+        // Template aane ke exactly 1.5 seconds pehle selfie 2.mp3 ("Oye Selfie")
+        // Black screen runs for 4s, selfie 2 triggers at 2.5s
+        setTimeout(() => {
+            if (selfi2) {
+                if (selfi1) selfi1.volume = 0.3; // Duck BGM volume
+                selfi2.play().catch(err => console.log("selfie 2 error:", err));
+                
+                selfi2.onended = () => {
+                    if (selfi1) selfi1.volume = 1.0; // Restore BGM volume
+                };
+            }
+        }, 2500);
+
+        // STEP 4: Template Reveal (Exactly at 4 seconds)
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
-                setTimeout(() => { templateSection.classList.add("active"); }, 100);
+                setTimeout(() => { 
+                    templateSection.classList.add("active"); 
+
+                    // 3 seconds baad selfi 3.mp3 ("Oye Happy Birthday") dialogue
+                    setTimeout(() => {
+                        if (selfi3) {
+                            if (selfi1) selfi1.volume = 0.3; // Duck BGM for dialogue
+                            selfi3.play().catch(err => console.log("selfi 3 error:", err));
+
+                            selfi3.onended = () => {
+                                if (selfi1) selfi1.volume = 1.0; // BGM continuous keeps playing
+                            };
+                        }
+                    }, 3000);
+
+                }, 100);
                 
+                // Show Template for 15 seconds then fade out to Letter
                 setTimeout(() => {
                     templateSection.classList.remove("active");
-                    
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
@@ -107,10 +145,10 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 showLetterPage();
             }
-        }, 3000);
+        }, 4000);
     }
 
-    // STEP 6: Notebook Letter Screen Arrival
+    // STEP 5: Notebook Letter Screen Arrival
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -121,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rain Particle Generator
+    // Flower & Hearts Rain Generator
     function startMagicalRain() {
         const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
         setInterval(() => {
@@ -178,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 400));
         }
 
-        // STEP 7: 15 Seconds Delay After Letter Ends, Then Start Credits
+        // 15 Seconds Delay After Letter, Then Start Credits
         setTimeout(() => {
             if (messageSection) {
                 messageSection.classList.remove("active");
@@ -190,18 +228,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 15000); 
     }
 
-    // Credits Sequence Controller (One By One Display)
+    // Credits Sequence Controller
     function startCreditsSequence() {
         if (!creditsSection) return;
         creditsSection.classList.remove("hidden");
 
-        // --- Slide 1: Disclaimer ---
+        // Slide 1
         if (creditsSlide1) {
             creditsSlide1.classList.remove("hidden");
             setTimeout(() => creditsSlide1.classList.add("fade-in"), 100);
         }
 
-        // Transition: Slide 1 -> Slide 2 (After 4 Seconds)
+        // Slide 1 -> Slide 2 (After 4s)
         setTimeout(() => {
             if (creditsSlide1) {
                 creditsSlide1.classList.remove("fade-in");
@@ -217,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, 4000);
 
-        // Transition: Slide 2 -> Slide 3 [THE END] (After 12 Seconds)
+        // Slide 2 -> Slide 3 [THE END] (After 12s)
         setTimeout(() => {
             if (creditsSlide2) {
                 creditsSlide2.classList.remove("fade-in");
@@ -276,3 +314,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
+            
