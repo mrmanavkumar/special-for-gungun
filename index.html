@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- ✨ Dynamic Rain: Balloons, Sparkles & Hearts -->
+    <!-- ✨ Dynamic Rain Background -->
     <div id="effects-container" class="effects-overlay"></div>
 
     <!-- 🎵 Audio Element -->
@@ -28,13 +28,13 @@
             <span id="countdownNumber">3</span>
         </div>
 
-        <!-- Happy Birthday Animated Text (Without Gungun Name) -->
+        <!-- Happy Birthday Animated Text -->
         <div id="birthdayGreeting" class="birthday-text hidden">
             <h1>🎉 Happy Birthday! 🎈</h1>
         </div>
 
-        <!-- 1. Interactive Gift Box Section -->
-        <div id="giftBoxSection" class="gift-box-wrapper" onclick="startSurpriseSequence()">
+        <!-- 1. Gift Box Section -->
+        <div id="giftBoxSection" class="gift-box-wrapper">
             <div class="gift-image-container" id="giftBoxContainer">
                 <img src="gift.png" alt="Special Gift Box" class="gift-img">
             </div>
@@ -50,14 +50,27 @@
             </div>
         </div>
 
-        <!-- 3. Letter Box Section (With Watermark & Corner Decorations) -->
+        <!-- 3. Letter Box Section with Real Image Bouquets & "23" Badge -->
         <div id="messageSection" class="message-container hidden">
             <div class="letter-background">
-                <!-- Corner Decorations -->
-                <div class="corner-deco top-left">🌸🎈</div>
-                <div class="corner-deco top-right">🎈🌸</div>
-                <div class="corner-deco bottom-left">🌸✨</div>
-                <div class="corner-deco bottom-right">✨🌸</div>
+                
+                <!-- 💐 Real Bouquet & Balloon Corners -->
+                <div class="real-bouquet-container top-left">
+                    <img src="bouquet.png" class="corner-img" alt="Rose Bouquet">
+                    <div class="age-tag">23</div>
+                </div>
+
+                <div class="real-bouquet-container top-right">
+                    <img src="balloons.png" class="corner-img balloons-img" alt="Balloons">
+                </div>
+
+                <div class="real-bouquet-container bottom-left">
+                    <img src="balloons.png" class="corner-img balloons-img" alt="Balloons">
+                </div>
+
+                <div class="real-bouquet-container bottom-right">
+                    <img src="bouquet.png" class="corner-img" alt="Rose Bouquet">
+                </div>
 
                 <!-- Watermark Sketch -->
                 <div class="sketch-watermark">
@@ -74,3 +87,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
