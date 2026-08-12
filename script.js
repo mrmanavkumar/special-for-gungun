@@ -1,10 +1,10 @@
-// 🎈 1. Background Rain Effects
+// 🎈 Background Rain
 function createBackgroundEffects() {
     const container = document.getElementById("effects-container");
     if (!container) return;
 
-    const elements = ["🎈", "✨", "⭐", "🌸", "💖", "💫"];
-    const totalCount = 35;
+    const elements = ["🌸", "✨", "💖", "💫", "🌹"];
+    const totalCount = 30;
 
     for (let i = 0; i < totalCount; i++) {
         const span = document.createElement("span");
@@ -14,9 +14,9 @@ function createBackgroundEffects() {
         span.innerText = randomSymbol;
 
         const leftPos = Math.random() * 100;
-        const duration = 5 + Math.random() * 7;
-        const delay = Math.random() * 5;
-        const fontSize = 14 + Math.random() * 18;
+        const duration = 6 + Math.random() * 6;
+        const delay = Math.random() * 4;
+        const fontSize = 14 + Math.random() * 16;
 
         span.style.left = `${leftPos}vw`;
         span.style.animationDuration = `${duration}s`;
@@ -27,7 +27,7 @@ function createBackgroundEffects() {
     }
 }
 
-// ⏳ 2. Preloader & Setup
+// ⏳ Setup
 window.addEventListener("DOMContentLoaded", () => {
     createBackgroundEffects();
 
@@ -44,10 +44,10 @@ window.addEventListener("DOMContentLoaded", () => {
             mainContainer.classList.remove("main-content-hidden");
             mainContainer.classList.add("main-content-visible");
         }
-    }, 3000);
+    }, 2500);
 });
 
-// 🎁 3. Sequence Controller
+// 🎁 Surprise Flow
 let sequenceStarted = false;
 
 function startSurpriseSequence() {
@@ -62,17 +62,15 @@ function startSurpriseSequence() {
     const messageSection = document.getElementById("messageSection");
     const music = document.getElementById("bgMusic");
 
-    // STEP A: Box Shake Effect
     if (giftBoxContainer) {
         giftBoxContainer.classList.add("shake-box");
     }
 
     setTimeout(() => {
-        // Hide Box, Show Countdown Overlay
         if (giftBoxSection) giftBoxSection.classList.add("hidden");
         if (countdownOverlay) countdownOverlay.classList.remove("hidden");
 
-        const countdownSteps = ["3", "2", "1", "🎉 Happy Birthday! 🎈"];
+        const countdownSteps = ["3", "2", "1", "HAPPY BIRTHDAY"];
         let stepIdx = 0;
 
         let timer = setInterval(() => {
@@ -82,11 +80,11 @@ function startSurpriseSequence() {
                 if (countdownNumber) {
                     countdownNumber.innerText = countdownSteps[stepIdx];
                     if (stepIdx === 3) {
-                        countdownNumber.style.fontSize = "2.2rem"; 
+                        countdownNumber.style.fontSize = "2.8rem"; 
                     }
                 }
 
-                // Jaise hi 'Happy Birthday!' bolega: Music Starts
+                // Audio Trigger
                 if (stepIdx === 3 && music) {
                     music.play().catch(err => console.log("Audio Error:", err));
                 }
@@ -94,17 +92,14 @@ function startSurpriseSequence() {
             } else {
                 clearInterval(timer);
 
-                // STEP B: Hide Happy Birthday Text completely
                 if (countdownOverlay) countdownOverlay.classList.add("hidden");
 
-                // STEP C: Show Template Page
                 setTimeout(() => {
                     if (templateSection) {
                         templateSection.classList.remove("hidden");
                         templateSection.classList.add("fade-in-slow");
                     }
 
-                    // STEP D: Show Template for 15s then Fade-Out to Letter
                     setTimeout(() => {
                         if (templateSection) {
                             templateSection.classList.remove("fade-in-slow");
@@ -119,18 +114,18 @@ function startSurpriseSequence() {
                             }
 
                             typeWriterEffect();
-                        }, 1500);
+                        }, 1200);
 
-                    }, 15000);
+                    }, 12000);
 
-                }, 500);
+                }, 400);
             }
         }, 1000);
 
-    }, 1200);
+    }, 1000);
 }
 
-// ✍️ 4. Typewriter Letter Engine
+// ✍️ Typewriter Engine with ♥️ Cursor
 async function typeWriterEffect() {
     const targetDiv = document.getElementById("typewriterText");
     const scrollContainer = document.getElementById("messageSection");
@@ -139,9 +134,9 @@ async function typeWriterEffect() {
     const letterData = [
         { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
         { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
-        { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
+        { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
         { type: 'p', text: 'Once again happy birthday 🎊✨' },
-        { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
+        { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'italic-line' },
         { type: 'p', text: '- MANAV', className: 'signature' }
     ];
 
@@ -149,7 +144,7 @@ async function typeWriterEffect() {
 
     for (const data of letterData) {
         const element = document.createElement(data.type);
-        if (data.className) element.classList.add(data.className);
+        if (data.className) element.className = data.className;
         targetDiv.appendChild(element);
 
         let rawText = data.text;
@@ -158,15 +153,15 @@ async function typeWriterEffect() {
             if (oldCursor) oldCursor.remove();
 
             element.innerHTML += rawText.charAt(i);
-            element.innerHTML += '<span class="heart-cursor">✨</span>';
+            element.innerHTML += '<span class="heart-cursor">♥️</span>';
 
             if (scrollContainer) {
                 scrollContainer.scrollTop = scrollContainer.scrollHeight;
             }
-            await new Promise(res => setTimeout(res, 45)); 
+            await new Promise(res => setTimeout(res, 40)); 
         }
         const finalCursor = element.querySelector('.heart-cursor');
         if (finalCursor) finalCursor.remove();
-        await new Promise(res => setTimeout(res, 350));
+        await new Promise(res => setTimeout(res, 300));
     }
 }
