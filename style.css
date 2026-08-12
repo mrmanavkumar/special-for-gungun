@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Rain Balloons, Hearts & Sparkles Overlay */
+/* Background Rain Overlay */
 .effects-overlay {
     position: fixed;
     top: 0;
@@ -97,6 +97,7 @@ body {
 .gift-box-wrapper {
     cursor: pointer;
     text-align: center;
+    user-select: none;
 }
 
 .gift-image-container {
@@ -107,6 +108,7 @@ body {
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(255, 182, 193, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
 }
 
 .gift-img {
@@ -117,7 +119,7 @@ body {
 }
 
 .shake-box {
-    animation: boxShake 0.6s ease-in-out infinite;
+    animation: boxShake 0.6s ease-in-out infinite !important;
 }
 
 @keyframes boxShake {
@@ -136,9 +138,10 @@ body {
     box-shadow: 0 5px 20px rgba(232, 67, 147, 0.4);
     font-size: 0.95rem;
     font-weight: 600;
+    pointer-events: none;
 }
 
-/* Countdown Overlay Animation */
+/* Countdown Animation */
 .countdown-overlay {
     position: fixed;
     top: 50%;
@@ -174,7 +177,7 @@ body {
     text-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
 }
 
-/* Birthday Template Fade Effects */
+/* Birthday Template Setup */
 .media-container {
     width: 100%;
     margin-bottom: 20px;
@@ -212,7 +215,7 @@ body {
     to { opacity: 0; transform: translateY(-15px); }
 }
 
-/* Letter Section with Watermark & Scroll */
+/* Letter Section with Real Bouquet Corners & Scroll */
 .hidden {
     display: none !important;
 }
@@ -236,7 +239,7 @@ body {
 .letter-background {
     background: #fff8f9;
     color: #2d3436;
-    padding: 35px 22px;
+    padding: 45px 25px;
     border-radius: 18px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     border: 1px solid #ffd1dc;
@@ -244,18 +247,47 @@ body {
     overflow: hidden;
 }
 
-/* Corner Decorations */
-.corner-deco {
+/* Corner Real Image Bouquets & Age Tag */
+.real-bouquet-container {
     position: absolute;
-    font-size: 0.95rem;
+    width: 65px;
+    height: 65px;
     z-index: 5;
     pointer-events: none;
-    opacity: 0.85;
 }
-.top-left { top: 8px; left: 10px; }
-.top-right { top: 8px; right: 10px; }
-.bottom-left { bottom: 8px; left: 10px; }
-.bottom-right { bottom: 8px; right: 10px; }
+
+.corner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    border: 2px solid #ffffff;
+}
+
+.balloons-img {
+    border-radius: 12px; /* Balloons look better with slight curve */
+}
+
+/* Golden "23" Badge on Top Left Bouquet */
+.age-tag {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+    color: #d63031;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    border: 1px solid #d63031;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.top-left { top: -10px; left: -10px; }
+.top-right { top: -10px; right: -10px; }
+.bottom-left { bottom: -10px; left: -10px; }
+.bottom-right { bottom: -10px; right: -10px; }
 
 /* Sketch Watermark */
 .sketch-watermark {
@@ -307,4 +339,4 @@ body {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
-}
+    }
