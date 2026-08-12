@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- ✨ Dynamic Rain Background -->
+    <!-- ✨ Background Rain Effect -->
     <div id="effects-container" class="effects-overlay"></div>
 
     <!-- 🎵 Audio Element -->
@@ -33,8 +33,8 @@
             <h1>🎉 Happy Birthday! 🎈</h1>
         </div>
 
-        <!-- 1. Gift Box Section -->
-        <div id="giftBoxSection" class="gift-box-wrapper">
+        <!-- 1. Gift Box Section (Click Trigger Direct On Wrapper) -->
+        <div id="giftBoxSection" class="gift-box-wrapper" onclick="startSurpriseSequence()">
             <div class="gift-image-container" id="giftBoxContainer">
                 <img src="gift.png" alt="Special Gift Box" class="gift-img">
             </div>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <!-- 3. Letter Box Section with Real Image Bouquets & "23" Badge -->
+        <!-- 3. Letter Box Section -->
         <div id="messageSection" class="message-container hidden">
             <div class="letter-background">
                 
@@ -87,4 +87,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
