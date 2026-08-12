@@ -9,28 +9,33 @@
 </head>
 <body>
 
-    <!-- ✨ Dynamic Rain Balloons & Sparkles Background -->
+    <!-- ✨ Dynamic Rain: Balloons, Sparkles & Hearts -->
     <div id="effects-container" class="effects-overlay"></div>
 
-    <!-- 🎵 Audio Element with Repo Audio -->
+    <!-- 🎵 Audio Element -->
     <audio id="bgMusic" src="countdown.mp3" preload="auto"></audio>
 
-    <!-- 🎈 Pre-loader Screen -->
+    <!-- 🎈 Preloader -->
     <div class="balloon-loader" id="balloonLoader">
         <div class="loader-text">Loading something special for Gungun... 🌸</div>
     </div>
 
-    <!-- 🎁 Main Wrapper -->
+    <!-- 🎁 Main Content Container -->
     <main id="mainWishContainer" class="main-content-hidden">
 
-        <!-- 1. Counting Section -->
-        <div id="countingSection" class="counter-badge">
-            <span id="countdownText">Turning 23 🎂✨</span>
+        <!-- Countdown Number Overlay (3, 2, 1) -->
+        <div id="countdownOverlay" class="countdown-overlay hidden">
+            <span id="countdownNumber">3</span>
         </div>
 
-        <!-- 2. Gift Box Section (Click to Open) -->
-        <div id="giftBoxSection" class="gift-box-wrapper" onclick="openBox()">
-            <div class="gift-image-container">
+        <!-- Happy Birthday Animated Text (Without Gungun Name) -->
+        <div id="birthdayGreeting" class="birthday-text hidden">
+            <h1>🎉 Happy Birthday! 🎈</h1>
+        </div>
+
+        <!-- 1. Interactive Gift Box Section -->
+        <div id="giftBoxSection" class="gift-box-wrapper" onclick="startSurpriseSequence()">
+            <div class="gift-image-container" id="giftBoxContainer">
                 <img src="gift.png" alt="Special Gift Box" class="gift-img">
             </div>
             <div class="tap-instruction">
@@ -38,17 +43,28 @@
             </div>
         </div>
 
-        <!-- 3. Template & Sketch Display Section -->
+        <!-- 2. Birthday Template Section -->
         <div id="templateSection" class="media-container hidden">
             <div class="template-card">
                 <img src="birthday-template.png" alt="Birthday Wish Template" class="wish-template-img">
-                <img src="sketch.png" alt="Special Sketch" class="sketch-img">
             </div>
         </div>
 
-        <!-- 4. Typewriter Letter Box Section -->
+        <!-- 3. Letter Box Section (With Watermark & Corner Decorations) -->
         <div id="messageSection" class="message-container hidden">
             <div class="letter-background">
+                <!-- Corner Decorations -->
+                <div class="corner-deco top-left">🌸🎈</div>
+                <div class="corner-deco top-right">🎈🌸</div>
+                <div class="corner-deco bottom-left">🌸✨</div>
+                <div class="corner-deco bottom-right">✨🌸</div>
+
+                <!-- Watermark Sketch -->
+                <div class="sketch-watermark">
+                    <img src="sketch.png" alt="Sketch Watermark">
+                </div>
+
+                <!-- Typewriter Letter Content -->
                 <div id="typewriterText" class="letter-content"></div>
             </div>
         </div>
