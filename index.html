@@ -23,17 +23,12 @@
     <!-- 🎁 Main Content Container -->
     <main id="mainWishContainer" class="main-content-hidden">
 
-        <!-- Countdown Number Overlay (3, 2, 1) -->
+        <!-- Dynamic Countdown & Text Overlay (3, 2, 1, Happy Birthday) -->
         <div id="countdownOverlay" class="countdown-overlay hidden">
             <span id="countdownNumber">3</span>
         </div>
 
-        <!-- Happy Birthday Animated Text -->
-        <div id="birthdayGreeting" class="birthday-text hidden">
-            <h1>🎉 Happy Birthday! 🎈</h1>
-        </div>
-
-        <!-- 1. Gift Box Section (Click Trigger Direct On Wrapper) -->
+        <!-- 1. Gift Box Section -->
         <div id="giftBoxSection" class="gift-box-wrapper" onclick="startSurpriseSequence()">
             <div class="gift-image-container" id="giftBoxContainer">
                 <img src="gift.png" alt="Special Gift Box" class="gift-img">
@@ -54,25 +49,22 @@
         <div id="messageSection" class="message-container hidden">
             <div class="letter-background">
                 
-                <!-- 💐 Real Bouquet & Balloon Corners -->
-                <div class="real-bouquet-container top-left">
-                    <img src="bouquet.png" class="corner-img" alt="Rose Bouquet">
-                    <div class="age-tag">23</div>
+                <!-- 🌹 Rose & Balloon Corners -->
+                <div class="corner-item top-left">
+                    <span class="corner-emoji">🌹</span>
+                    <span class="age-badge">23</span>
+                </div>
+                <div class="corner-item top-right">
+                    <span class="corner-emoji">🎈</span>
+                </div>
+                <div class="corner-item bottom-left">
+                    <span class="corner-emoji">🎈</span>
+                </div>
+                <div class="corner-item bottom-right">
+                    <span class="corner-emoji">🌹</span>
                 </div>
 
-                <div class="real-bouquet-container top-right">
-                    <img src="balloons.png" class="corner-img balloons-img" alt="Balloons">
-                </div>
-
-                <div class="real-bouquet-container bottom-left">
-                    <img src="balloons.png" class="corner-img balloons-img" alt="Balloons">
-                </div>
-
-                <div class="real-bouquet-container bottom-right">
-                    <img src="bouquet.png" class="corner-img" alt="Rose Bouquet">
-                </div>
-
-                <!-- Watermark Sketch -->
+                <!-- Watermark Sketch Center Lock -->
                 <div class="sketch-watermark">
                     <img src="sketch.png" alt="Sketch Watermark">
                 </div>
