@@ -16,13 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 0: EXACT 5 SECONDS LOADING TEXT DISPLAY
+    // STEP 0: 5 SECONDS LOADING TEXT + GIFT BOX SE RAIN START
     setTimeout(() => {
         if (loadingScreen) {
             loadingScreen.style.opacity = "0";
             loadingScreen.style.visibility = "hidden";
             setTimeout(() => {
                 loadingScreen.classList.add("hidden");
+                startMagicalRain(); // 🌸 Gift Box aate hi Rain Effect Shuru
             }, 1000);
         }
     }, 5000); // 5 Seconds Delay
@@ -91,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         initConfetti();
-        startMagicalRain();
 
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
@@ -225,3 +225,5 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
+                            
+            
