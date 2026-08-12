@@ -27,6 +27,27 @@ function createBackgroundEffects() {
     }
 }
 
+// 🔊 Countdown Sound Synthesizer
+function playBeepSound(freq = 600, duration = 0.15) {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {
+        console.log("Audio ctx not supported", e);
+    }
+}
+
 // ⏳ Setup
 window.addEventListener("DOMContentLoaded", () => {
     createBackgroundEffects();
@@ -47,7 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }, 2500);
 });
 
-// 🎁 Surprise Flow
+// 🎁 Flow Controller
 let sequenceStarted = false;
 
 function startSurpriseSequence() {
@@ -73,6 +94,8 @@ function startSurpriseSequence() {
         const countdownSteps = ["3", "2", "1", "HAPPY BIRTHDAY"];
         let stepIdx = 0;
 
+        playBeepSound(600); // Beep for '3'
+
         let timer = setInterval(() => {
             stepIdx++;
 
@@ -84,9 +107,13 @@ function startSurpriseSequence() {
                     }
                 }
 
-                // Audio Trigger
-                if (stepIdx === 3 && music) {
-                    music.play().catch(err => console.log("Audio Error:", err));
+                if (stepIdx < 3) {
+                    playBeepSound(600); // Beep for 2 and 1
+                } else if (stepIdx === 3) {
+                    playBeepSound(900, 0.4); // High Beep for HAPPY BIRTHDAY
+                    if (music) {
+                        music.play().catch(err => console.log("Audio Error:", err));
+                    }
                 }
 
             } else {
@@ -108,27 +135,28 @@ function startSurpriseSequence() {
 
                         setTimeout(() => {
                             if (templateSection) templateSection.classList.add("hidden");
+                            
+                            // Show full letter card first, then start typing!
                             if (messageSection) {
                                 messageSection.classList.remove("hidden");
                                 messageSection.classList.add("fade-in-slow");
                             }
 
-                            typeWriterEffect();
-                        }, 1200);
+                            setTimeout(typeWriterEffect, 600);
+                        }, 1000);
 
-                    }, 12000);
+                    }, 10000);
 
-                }, 400);
+                }, 300);
             }
         }, 1000);
 
     }, 1000);
 }
 
-// ✍️ Typewriter Engine with ♥️ Cursor
+// ✍️ Typewriter with ♥️ Cursor
 async function typeWriterEffect() {
     const targetDiv = document.getElementById("typewriterText");
-    const scrollContainer = document.getElementById("messageSection");
     if (!targetDiv) return;
 
     const letterData = [
@@ -155,13 +183,10 @@ async function typeWriterEffect() {
             element.innerHTML += rawText.charAt(i);
             element.innerHTML += '<span class="heart-cursor">♥️</span>';
 
-            if (scrollContainer) {
-                scrollContainer.scrollTop = scrollContainer.scrollHeight;
-            }
-            await new Promise(res => setTimeout(res, 40)); 
+            await new Promise(res => setTimeout(res, 45)); 
         }
         const finalCursor = element.querySelector('.heart-cursor');
         if (finalCursor) finalCursor.remove();
-        await new Promise(res => setTimeout(res, 300));
+        await new Promise(res => setTimeout(res, 250));
     }
-}
+         }
