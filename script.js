@@ -1,10 +1,10 @@
-    // 🎈 1. Background Rain Effects
+// 🎈 1. Background Rain Effects
 function createBackgroundEffects() {
     const container = document.getElementById("effects-container");
     if (!container) return;
 
     const elements = ["🎈", "✨", "⭐", "🌸", "💖", "💫"];
-    const totalCount = 40;
+    const totalCount = 35;
 
     for (let i = 0; i < totalCount; i++) {
         const span = document.createElement("span");
@@ -27,14 +27,9 @@ function createBackgroundEffects() {
     }
 }
 
-// ⏳ 2. Preloader & Direct Click Binding
+// ⏳ 2. Preloader & Initialize
 window.addEventListener("DOMContentLoaded", () => {
     createBackgroundEffects();
-
-    const boxBtn = document.getElementById("giftBoxSection");
-    if (boxBtn) {
-        boxBtn.addEventListener("click", startSurpriseSequence);
-    }
 
     setTimeout(() => {
         const loader = document.getElementById("balloonLoader");
@@ -52,7 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }, 3000);
 });
 
-// 🎁 3. Main Step Sequence
+// 🎁 3. Main Sequence Function
 let sequenceStarted = false;
 
 function startSurpriseSequence() {
@@ -68,46 +63,54 @@ function startSurpriseSequence() {
     const messageSection = document.getElementById("messageSection");
     const music = document.getElementById("bgMusic");
 
-    // STEP A: Box Shake Effect
-    giftBoxContainer.classList.add("shake-box");
+    // STEP A: Box Shake Effect (1.2 Seconds)
+    if (giftBoxContainer) {
+        giftBoxContainer.classList.add("shake-box");
+    }
 
     setTimeout(() => {
-        // Hide Gift Box, Show Countdown Overlay
-        giftBoxSection.classList.add("hidden");
-        countdownOverlay.classList.remove("hidden");
+        // Hide Box, Show Countdown Overlay
+        if (giftBoxSection) giftBoxSection.classList.add("hidden");
+        if (countdownOverlay) countdownOverlay.classList.remove("hidden");
 
         let count = 3;
-        countdownNumber.innerText = count;
+        if (countdownNumber) countdownNumber.innerText = count;
 
         let timer = setInterval(() => {
             count--;
             if (count > 0) {
-                countdownNumber.innerText = count;
+                if (countdownNumber) countdownNumber.innerText = count;
             } else {
                 clearInterval(timer);
-                countdownOverlay.classList.add("hidden");
+                if (countdownOverlay) countdownOverlay.classList.add("hidden");
 
-                // STEP B: "Happy Birthday!" Text & Music Starts
-                birthdayGreeting.classList.remove("hidden");
+                // STEP B: Show Text & Start Music
+                if (birthdayGreeting) birthdayGreeting.classList.remove("hidden");
                 if (music) {
                     music.play().catch(err => console.log("Audio Error:", err));
                 }
 
-                // STEP C: Template Entry
+                // STEP C: Template Fade-In After 3 Seconds
                 setTimeout(() => {
-                    templateSection.classList.remove("hidden");
-                    templateSection.classList.add("fade-in-slow");
+                    if (templateSection) {
+                        templateSection.classList.remove("hidden");
+                        templateSection.classList.add("fade-in-slow");
+                    }
 
-                    // STEP D: Template Display for 15 Seconds then Fade Out
+                    // STEP D: Template Display for 15 Seconds then Fade-Out
                     setTimeout(() => {
-                        templateSection.classList.remove("fade-in-slow");
-                        templateSection.classList.add("fade-out-slow");
+                        if (templateSection) {
+                            templateSection.classList.remove("fade-in-slow");
+                            templateSection.classList.add("fade-out-slow");
+                        }
 
-                        // STEP E: Show Letter Section Smoothly
+                        // STEP E: Show Letter Section
                         setTimeout(() => {
-                            templateSection.classList.add("hidden");
-                            messageSection.classList.remove("hidden");
-                            messageSection.classList.add("fade-in-slow");
+                            if (templateSection) templateSection.classList.add("hidden");
+                            if (messageSection) {
+                                messageSection.classList.remove("hidden");
+                                messageSection.classList.add("fade-in-slow");
+                            }
 
                             typeWriterEffect();
                         }, 2000);
@@ -160,5 +163,4 @@ async function typeWriterEffect() {
         if (finalCursor) finalCursor.remove();
         await new Promise(res => setTimeout(res, 350));
     }
-         }
-
+}
