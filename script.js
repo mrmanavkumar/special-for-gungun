@@ -1,4 +1,4 @@
-// 🎈 1. Background Continuous Rain (Balloons, Sparkles, Hearts)
+    // 🎈 1. Background Rain Effects
 function createBackgroundEffects() {
     const container = document.getElementById("effects-container");
     if (!container) return;
@@ -27,9 +27,14 @@ function createBackgroundEffects() {
     }
 }
 
-// ⏳ 2. Preloader Logic
+// ⏳ 2. Preloader & Direct Click Binding
 window.addEventListener("DOMContentLoaded", () => {
     createBackgroundEffects();
+
+    const boxBtn = document.getElementById("giftBoxSection");
+    if (boxBtn) {
+        boxBtn.addEventListener("click", startSurpriseSequence);
+    }
 
     setTimeout(() => {
         const loader = document.getElementById("balloonLoader");
@@ -47,7 +52,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }, 3000);
 });
 
-// 🎁 3. Main Step-by-Step Sequence Trigger
+// 🎁 3. Main Step Sequence
 let sequenceStarted = false;
 
 function startSurpriseSequence() {
@@ -63,11 +68,11 @@ function startSurpriseSequence() {
     const messageSection = document.getElementById("messageSection");
     const music = document.getElementById("bgMusic");
 
-    // STEP A: Box Shaking Effect (1.2 Seconds)
+    // STEP A: Box Shake Effect
     giftBoxContainer.classList.add("shake-box");
 
     setTimeout(() => {
-        // Hide Box & Start Countdown Overlay
+        // Hide Gift Box, Show Countdown Overlay
         giftBoxSection.classList.add("hidden");
         countdownOverlay.classList.remove("hidden");
 
@@ -82,18 +87,18 @@ function startSurpriseSequence() {
                 clearInterval(timer);
                 countdownOverlay.classList.add("hidden");
 
-                // STEP B: "Happy Birthday!" Text Appears AND Music Starts
+                // STEP B: "Happy Birthday!" Text & Music Starts
                 birthdayGreeting.classList.remove("hidden");
                 if (music) {
                     music.play().catch(err => console.log("Audio Error:", err));
                 }
 
-                // STEP C: Template Entry (3 Seconds after Happy Birthday text)
+                // STEP C: Template Entry
                 setTimeout(() => {
                     templateSection.classList.remove("hidden");
                     templateSection.classList.add("fade-in-slow");
 
-                    // STEP D: Template Stays for 15 Seconds then Fade Out
+                    // STEP D: Template Display for 15 Seconds then Fade Out
                     setTimeout(() => {
                         templateSection.classList.remove("fade-in-slow");
                         templateSection.classList.add("fade-out-slow");
@@ -116,7 +121,7 @@ function startSurpriseSequence() {
     }, 1200);
 }
 
-// ✍️ 4. Typewriter Letter Engine (With Auto Scroll)
+// ✍️ 4. Typewriter Letter Engine
 async function typeWriterEffect() {
     const targetDiv = document.getElementById("typewriterText");
     const scrollContainer = document.getElementById("messageSection");
@@ -156,3 +161,4 @@ async function typeWriterEffect() {
         await new Promise(res => setTimeout(res, 350));
     }
          }
+
