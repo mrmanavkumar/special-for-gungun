@@ -1,192 +1,251 @@
-// 🎈 Background Rain
-function createBackgroundEffects() {
-    const container = document.getElementById("effects-container");
-    if (!container) return;
-
-    const elements = ["🌸", "✨", "💖", "💫", "🌹"];
-    const totalCount = 30;
-
-    for (let i = 0; i < totalCount; i++) {
-        const span = document.createElement("span");
-        span.classList.add("floating-element");
-
-        const randomSymbol = elements[Math.floor(Math.random() * elements.length)];
-        span.innerText = randomSymbol;
-
-        const leftPos = Math.random() * 100;
-        const duration = 6 + Math.random() * 6;
-        const delay = Math.random() * 4;
-        const fontSize = 14 + Math.random() * 16;
-
-        span.style.left = `${leftPos}vw`;
-        span.style.animationDuration = `${duration}s`;
-        span.style.animationDelay = `${delay}s`;
-        span.style.fontSize = `${fontSize}px`;
-
-        container.appendChild(span);
-    }
-}
-
-// 🔊 Countdown Sound Synthesizer
-function playBeepSound(freq = 600, duration = 0.15) {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-    } catch (e) {
-        console.log("Audio ctx not supported", e);
-    }
-}
-
-// ⏳ Setup
-window.addEventListener("DOMContentLoaded", () => {
-    createBackgroundEffects();
-
-    setTimeout(() => {
-        const loader = document.getElementById("balloonLoader");
-        const mainContainer = document.getElementById("mainWishContainer");
-
-        if (loader) {
-            loader.style.opacity = "0";
-            setTimeout(() => loader.style.display = "none", 1000);
-        }
-
-        if (mainContainer) {
-            mainContainer.classList.remove("main-content-hidden");
-            mainContainer.classList.add("main-content-visible");
-        }
-    }, 2500);
-});
-
-// 🎁 Flow Controller
-let sequenceStarted = false;
-
-function startSurpriseSequence() {
-    if (sequenceStarted) return;
-    sequenceStarted = true;
-
-    const giftBoxContainer = document.getElementById("giftBoxContainer");
-    const giftBoxSection = document.getElementById("giftBoxSection");
-    const countdownOverlay = document.getElementById("countdownOverlay");
+document.addEventListener("DOMContentLoaded", () => {
+    // DOM Elements
+    const loadingScreen = document.getElementById("loadingScreen");
+    const giftSection = document.getElementById("giftSection");
+    const mainLink = document.getElementById("mainLink");
+    const giftBox = document.getElementById("giftBox");
+    const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
+    const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
-    const music = document.getElementById("bgMusic");
+    const bgMusic = document.getElementById("bgMusic");
+    const countdownAudio = document.getElementById("countdownAudio");
+    const rainContainer = document.getElementById("rainContainer");
+    const effectCanvas = document.getElementById("effectCanvas");
 
-    if (giftBoxContainer) {
-        giftBoxContainer.classList.add("shake-box");
+    let isTriggered = false;
+
+    // STEP 0: INITIAL LOADING SCREEN DISAPPEAR LOGIC
+    setTimeout(() => {
+        if (loadingScreen) {
+            loadingScreen.style.opacity = "0";
+            loadingScreen.style.visibility = "hidden";
+            setTimeout(() => {
+                loadingScreen.classList.add("hidden");
+            }, 1000);
+        }
+    }, 2800);
+
+    // Synthesizer Fallback Beep Sound generator
+    function playBeepSound(freq = 600, duration = 0.15) {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+            console.log("Audio Context issue:", e);
+        }
     }
 
-    setTimeout(() => {
-        if (giftBoxSection) giftBoxSection.classList.add("hidden");
-        if (countdownOverlay) countdownOverlay.classList.remove("hidden");
+    // Direct Link Click Handler
+    function handleLinkClick(e) {
+        if (e) e.preventDefault();
+        if (isTriggered) return;
+        isTriggered = true;
 
-        const countdownSteps = ["3", "2", "1", "HAPPY BIRTHDAY"];
-        let stepIdx = 0;
+        // Audio unlock for Mobile & Web browsers
+        if (bgMusic) {
+            bgMusic.play().then(() => {
+                bgMusic.pause(); 
+                bgMusic.currentTime = 0; 
+            }).catch(err => console.log("Audio unlock:", err));
+        }
 
-        playBeepSound(600); // Beep for '3'
+        // Trigger Shake Animation on Box Image
+        if (giftBox) giftBox.classList.add("shake-active");
 
-        let timer = setInterval(() => {
-            stepIdx++;
+        // Transition to Countdown
+        setTimeout(() => {
+            if (giftSection) giftSection.classList.add("hidden");
+            if (countdownScreen) {
+                countdownScreen.classList.remove("hidden");
+                startCountdownTimer(); 
+            } else {
+                showBirthdayGreeting();
+            }
+        }, 1200);
+    }
 
-            if (stepIdx < countdownSteps.length) {
-                if (countdownNumber) {
-                    countdownNumber.innerText = countdownSteps[stepIdx];
-                    if (stepIdx === 3) {
-                        countdownNumber.style.fontSize = "2.8rem"; 
-                    }
-                }
+    // Bind event to the link wrapper
+    if (mainLink) {
+        mainLink.addEventListener("click", handleLinkClick);
+    }
 
-                if (stepIdx < 3) {
-                    playBeepSound(600); // Beep for 2 and 1
-                } else if (stepIdx === 3) {
-                    playBeepSound(900, 0.4); // High Beep for HAPPY BIRTHDAY
-                    if (music) {
-                        music.play().catch(err => console.log("Audio Error:", err));
-                    }
-                }
+    // STEP 3: Countdown Timer (3, 2, 1)
+    function startCountdownTimer() {
+        if (countdownAudio) {
+            countdownAudio.play().catch(() => playBeepSound(650, 0.2));
+        } else {
+            playBeepSound(650, 0.2);
+        }
 
+        let count = 3;
+        if (countdownNumber) countdownNumber.textContent = count;
+
+        const timer = setInterval(() => {
+            count--;
+            if (count > 0) {
+                if (countdownNumber) countdownNumber.textContent = count;
+                playBeepSound(650, 0.2);
             } else {
                 clearInterval(timer);
-
-                if (countdownOverlay) countdownOverlay.classList.add("hidden");
-
-                setTimeout(() => {
-                    if (templateSection) {
-                        templateSection.classList.remove("hidden");
-                        templateSection.classList.add("fade-in-slow");
-                    }
-
-                    setTimeout(() => {
-                        if (templateSection) {
-                            templateSection.classList.remove("fade-in-slow");
-                            templateSection.classList.add("fade-out-slow");
-                        }
-
-                        setTimeout(() => {
-                            if (templateSection) templateSection.classList.add("hidden");
-                            
-                            // Show full letter card first, then start typing!
-                            if (messageSection) {
-                                messageSection.classList.remove("hidden");
-                                messageSection.classList.add("fade-in-slow");
-                            }
-
-                            setTimeout(typeWriterEffect, 600);
-                        }, 1000);
-
-                    }, 10000);
-
-                }, 300);
+                if (countdownScreen) countdownScreen.classList.add("hidden");
+                showBirthdayGreeting();
             }
         }, 1000);
-
-    }, 1000);
-}
-
-// ✍️ Typewriter with ♥️ Cursor
-async function typeWriterEffect() {
-    const targetDiv = document.getElementById("typewriterText");
-    if (!targetDiv) return;
-
-    const letterData = [
-        { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
-        { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
-        { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
-        { type: 'p', text: 'Once again happy birthday 🎊✨' },
-        { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'italic-line' },
-        { type: 'p', text: '- MANAV', className: 'signature' }
-    ];
-
-    targetDiv.innerHTML = ""; 
-
-    for (const data of letterData) {
-        const element = document.createElement(data.type);
-        if (data.className) element.className = data.className;
-        targetDiv.appendChild(element);
-
-        let rawText = data.text;
-        for (let i = 0; i < rawText.length; i++) {
-            const oldCursor = element.querySelector('.heart-cursor');
-            if (oldCursor) oldCursor.remove();
-
-            element.innerHTML += rawText.charAt(i);
-            element.innerHTML += '<span class="heart-cursor">♥️</span>';
-
-            await new Promise(res => setTimeout(res, 45)); 
-        }
-        const finalCursor = element.querySelector('.heart-cursor');
-        if (finalCursor) finalCursor.remove();
-        await new Promise(res => setTimeout(res, 250));
     }
-         }
+
+    // STEP 4: Happy Birthday Screen + Music Starts
+    function showBirthdayGreeting() {
+        if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
+
+        playBeepSound(950, 0.4);
+
+        if (bgMusic) {
+            bgMusic.play().catch(err => console.log("Music play failed:", err));
+        }
+
+        initConfetti();
+        startMagicalRain();
+
+        setTimeout(() => {
+            if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
+            
+            if (templateSection) {
+                templateSection.classList.remove("hidden");
+                setTimeout(() => { templateSection.classList.add("active"); }, 100);
+                
+                setTimeout(() => {
+                    templateSection.classList.remove("active");
+                    
+                    setTimeout(() => {
+                        templateSection.classList.add("hidden");
+                        showLetterPage();
+                    }, 1500); 
+                }, 10000); 
+                
+            } else {
+                showLetterPage();
+            }
+        }, 2200);
+    }
+
+    // STEP 6: Notebook Letter Screen Arrival
+    function showLetterPage() {
+        if (messageSection) {
+            messageSection.classList.remove("hidden");
+            setTimeout(() => {
+                messageSection.classList.add("active");
+                typeWriterEffect();
+            }, 100);
+        }
+    }
+
+    // Rain Particle Generator
+    function startMagicalRain() {
+        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
+        setInterval(() => {
+            const element = document.createElement('div');
+            element.classList.add('rain-item');
+            element.innerHTML = items[Math.floor(Math.random() * items.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 18 + 12; 
+            element.style.fontSize = size + 'px';
+            const fallDuration = Math.random() * 5 + 4; 
+            element.style.animationDuration = fallDuration + 's';
+            
+            if (rainContainer) rainContainer.appendChild(element);
+            setTimeout(() => { element.remove(); }, fallDuration * 1000);
+        }, 250); 
+    }
+
+    // Typewriter Engine with ♥️ Cursor
+    async function typeWriterEffect() {
+        const targetDiv = document.getElementById("typewriterText");
+        const scrollBox = document.getElementById("messageSection");
+        if (!targetDiv) return;
+
+        const letterData = [
+            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
+            { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
+            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Once again happy birthday 🎊✨' },
+            { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
+            { type: 'p', text: '- MANAV', className: 'signature' }
+        ];
+
+        targetDiv.innerHTML = ""; 
+
+        for (const data of letterData) {
+            const element = document.createElement(data.type);
+            if (data.className) element.classList.add(data.className);
+            targetDiv.appendChild(element);
+
+            let rawText = data.text;
+            for (let i = 0; i < rawText.length; i++) {
+                const oldCursor = element.querySelector('.heart-cursor');
+                if (oldCursor) oldCursor.remove();
+
+                element.innerHTML += rawText.charAt(i);
+                element.innerHTML += '<span class="heart-cursor">❤️</span>';
+
+                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
+                await new Promise(res => setTimeout(res, 45)); 
+            }
+            const finalCursor = element.querySelector('.heart-cursor');
+            if (finalCursor) finalCursor.remove();
+            await new Promise(res => setTimeout(res, 300));
+        }
+    }
+
+    // Confetti System
+    function initConfetti() {
+        if (!effectCanvas) return;
+        const ctx = effectCanvas.getContext("2d");
+        let width = (effectCanvas.width = window.innerWidth);
+        let height = (effectCanvas.height = window.innerHeight);
+        const particles = [];
+        const colors = ["#ff4d6d", "#ff758f", "#ff8fa3", "#ffb3c1", "#fff"];
+
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height - height,
+                r: Math.random() * 4 + 2,
+                d: Math.random() * 50 + 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10 - 5,
+                tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                tiltAngle: 0
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, idx) => {
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle);
+                p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
+            });
+            particles.forEach((p) => { if (p.y > height) { p.y = -20; p.x = Math.random() * width; } });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+});
+                            
