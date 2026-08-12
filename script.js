@@ -27,7 +27,7 @@ function createBackgroundEffects() {
     }
 }
 
-// ⏳ 2. Preloader & Initialize
+// ⏳ 2. Preloader & Setup
 window.addEventListener("DOMContentLoaded", () => {
     createBackgroundEffects();
 
@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }, 3000);
 });
 
-// 🎁 3. Main Sequence Function
+// 🎁 3. Sequence Controller
 let sequenceStarted = false;
 
 function startSurpriseSequence() {
@@ -58,12 +58,11 @@ function startSurpriseSequence() {
     const giftBoxSection = document.getElementById("giftBoxSection");
     const countdownOverlay = document.getElementById("countdownOverlay");
     const countdownNumber = document.getElementById("countdownNumber");
-    const birthdayGreeting = document.getElementById("birthdayGreeting");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
     const music = document.getElementById("bgMusic");
 
-    // STEP A: Box Shake Effect (1.2 Seconds)
+    // STEP A: Box Shake Effect
     if (giftBoxContainer) {
         giftBoxContainer.classList.add("shake-box");
     }
@@ -73,38 +72,45 @@ function startSurpriseSequence() {
         if (giftBoxSection) giftBoxSection.classList.add("hidden");
         if (countdownOverlay) countdownOverlay.classList.remove("hidden");
 
-        let count = 3;
-        if (countdownNumber) countdownNumber.innerText = count;
+        const countdownSteps = ["3", "2", "1", "🎉 Happy Birthday! 🎈"];
+        let stepIdx = 0;
 
         let timer = setInterval(() => {
-            count--;
-            if (count > 0) {
-                if (countdownNumber) countdownNumber.innerText = count;
-            } else {
-                clearInterval(timer);
-                if (countdownOverlay) countdownOverlay.classList.add("hidden");
+            stepIdx++;
 
-                // STEP B: Show Text & Start Music
-                if (birthdayGreeting) birthdayGreeting.classList.remove("hidden");
-                if (music) {
+            if (stepIdx < countdownSteps.length) {
+                if (countdownNumber) {
+                    countdownNumber.innerText = countdownSteps[stepIdx];
+                    if (stepIdx === 3) {
+                        countdownNumber.style.fontSize = "2.2rem"; 
+                    }
+                }
+
+                // Jaise hi 'Happy Birthday!' bolega: Music Starts
+                if (stepIdx === 3 && music) {
                     music.play().catch(err => console.log("Audio Error:", err));
                 }
 
-                // STEP C: Template Fade-In After 3 Seconds
+            } else {
+                clearInterval(timer);
+
+                // STEP B: Hide Happy Birthday Text completely
+                if (countdownOverlay) countdownOverlay.classList.add("hidden");
+
+                // STEP C: Show Template Page
                 setTimeout(() => {
                     if (templateSection) {
                         templateSection.classList.remove("hidden");
                         templateSection.classList.add("fade-in-slow");
                     }
 
-                    // STEP D: Template Display for 15 Seconds then Fade-Out
+                    // STEP D: Show Template for 15s then Fade-Out to Letter
                     setTimeout(() => {
                         if (templateSection) {
                             templateSection.classList.remove("fade-in-slow");
                             templateSection.classList.add("fade-out-slow");
                         }
 
-                        // STEP E: Show Letter Section
                         setTimeout(() => {
                             if (templateSection) templateSection.classList.add("hidden");
                             if (messageSection) {
@@ -113,11 +119,11 @@ function startSurpriseSequence() {
                             }
 
                             typeWriterEffect();
-                        }, 2000);
+                        }, 1500);
 
                     }, 15000);
 
-                }, 3000);
+                }, 500);
             }
         }, 1000);
 
