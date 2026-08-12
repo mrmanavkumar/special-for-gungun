@@ -5,7 +5,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #0f0c20, #1a1a2e, #27173a);
+    background: #0d0914;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Background Rain Overlay */
+/* Rain Effect Overlay */
 .effects-overlay {
     position: fixed;
     top: 0;
@@ -40,8 +40,8 @@ body {
         transform: translateY(-10vh) scale(0.8) rotate(0deg);
         opacity: 0;
     }
-    15% { opacity: 0.9; }
-    85% { opacity: 0.9; }
+    15% { opacity: 0.8; }
+    85% { opacity: 0.8; }
     100% {
         transform: translateY(110vh) scale(1.1) rotate(360deg);
         opacity: 0;
@@ -55,7 +55,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #100e23;
+    background: #0d0914;
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -89,10 +89,10 @@ body {
     z-index: 10;
     padding: 20px;
     width: 100%;
-    max-width: 520px;
+    max-width: 480px;
 }
 
-/* Gift Box Section */
+/* Gift Box */
 .gift-box-wrapper {
     cursor: pointer !important;
     text-align: center;
@@ -102,13 +102,12 @@ body {
 }
 
 .gift-image-container {
-    width: 270px;
-    height: 270px;
-    margin: 0 auto 15px auto;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto 20px auto;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(255, 182, 193, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 .gift-img {
@@ -116,7 +115,6 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
-    pointer-events: none;
 }
 
 .shake-box {
@@ -125,24 +123,20 @@ body {
 
 @keyframes boxShake {
     0%, 100% { transform: rotate(0deg) scale(1); }
-    20% { transform: rotate(-8deg) scale(1.03); }
-    40% { transform: rotate(8deg) scale(1.03); }
-    60% { transform: rotate(-5deg) scale(1.03); }
-    80% { transform: rotate(5deg) scale(1.03); }
+    20% { transform: rotate(-6deg) scale(1.02); }
+    40% { transform: rotate(6deg) scale(1.02); }
+    60% { transform: rotate(-4deg) scale(1.02); }
+    80% { transform: rotate(4deg) scale(1.02); }
 }
 
 .tap-instruction {
-    background: linear-gradient(135deg, #e84393, #d63031);
-    padding: 12px 25px;
-    border-radius: 25px;
-    display: inline-block;
-    box-shadow: 0 5px 20px rgba(232, 67, 147, 0.4);
-    font-size: 0.95rem;
-    font-weight: 600;
-    pointer-events: none;
+    color: #e84393;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
-/* Countdown Overlay */
+/* Glow Countdown */
 .countdown-overlay {
     position: fixed;
     top: 50%;
@@ -155,21 +149,22 @@ body {
 }
 
 #countdownNumber {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #ff7675;
-    text-shadow: 0 0 25px rgba(255, 118, 117, 0.8);
+    font-size: 5rem;
+    font-weight: 700;
+    color: #ff3366;
+    text-shadow: 0 0 20px #ff3366, 0 0 40px #ff3366;
+    letter-spacing: 2px;
     animation: popNum 0.8s ease-out infinite;
     display: inline-block;
 }
 
 @keyframes popNum {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 0; }
+    0% { transform: scale(0.4); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-/* Template */
+/* Template Section */
 .media-container {
     width: 100%;
     margin-bottom: 20px;
@@ -177,108 +172,73 @@ body {
 
 .template-card {
     background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
+    padding: 10px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .wish-template-img {
     width: 100%;
     border-radius: 12px;
     display: block;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 .fade-in-slow {
-    animation: fadeInSlow 1.5s ease-out forwards;
+    animation: fadeInSlow 1.2s ease-out forwards;
 }
 
 .fade-out-slow {
-    animation: fadeOutSlow 1.5s ease-in forwards;
+    animation: fadeOutSlow 1.2s ease-in forwards;
 }
 
 @keyframes fadeInSlow {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeOutSlow {
     from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 0; transform: translateY(-10px); }
 }
 
-/* Letter Container */
+/* Letter Card Style */
 .hidden {
     display: none !important;
 }
 
 .message-container {
     width: 100%;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow-y: auto;
-    border-radius: 18px;
-    padding-right: 3px;
-}
-
-.message-container::-webkit-scrollbar {
-    width: 6px;
-}
-.message-container::-webkit-scrollbar-thumb {
-    background: #ffb7c5;
-    border-radius: 10px;
+    border-radius: 28px;
 }
 
 .letter-background {
-    background: #fff8f9;
-    color: #2d3436;
-    padding: 45px 25px;
-    border-radius: 18px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    border: 1px solid #ffd1dc;
+    background: #fbf0ea;
+    color: #8c3232;
+    padding: 35px 25px;
+    border-radius: 28px;
+    border: 12px solid #f2cfc9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
 }
 
-/* Corner Emoji Items & Age Badge */
-.corner-item {
+.corner-rose {
     position: absolute;
-    z-index: 5;
-    pointer-events: none;
-    line-height: 1;
-}
-
-.corner-emoji {
+    top: 15px;
+    left: 20px;
     font-size: 2.2rem;
-    display: block;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    z-index: 10;
 }
 
-.age-badge {
-    position: absolute;
-    bottom: -2px;
-    right: -8px;
-    background: #d63031;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 0.75rem;
-    padding: 2px 6px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.top-left { top: 12px; left: 12px; }
-.top-right { top: 12px; right: 12px; }
-.bottom-left { bottom: 12px; left: 12px; }
-.bottom-right { bottom: 12px; right: 12px; }
-
-/* Fixed Center Watermark Sketch */
+/* Center Sketch Watermark */
 .sketch-watermark {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70%;
-    opacity: 0.12;
+    width: 80%;
+    opacity: 0.18;
     pointer-events: none;
     z-index: 2;
 }
@@ -294,32 +254,53 @@ body {
 }
 
 .letter-content h3 {
-    color: #d63031;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
+    color: #aa2e2e;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    border-bottom: 1px dotted #e2a8a8;
+    padding-bottom: 12px;
 }
 
 .letter-content p {
-    font-size: 0.98rem;
-    line-height: 1.65;
-    margin-bottom: 14px;
-    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #4a1f1f;
+    border-bottom: 1px dotted #e2a8a8;
+    padding-bottom: 12px;
+}
+
+.letter-content p:last-child {
+    border-bottom: none;
+}
+
+.italic-line {
+    font-style: italic;
+    text-align: right;
+    margin-top: 10px;
+    color: #8c3232 !important;
 }
 
 .signature {
+    text-align: right;
     font-weight: 600;
-    color: #e84393;
-    margin-top: 5px;
+    color: #722222 !important;
 }
 
+/* Heart Cursor ♥️ */
 .heart-cursor {
     display: inline-block;
     color: #e84393;
-    animation: blink 0.6s infinite;
+    font-size: 1rem;
+    margin-left: 2px;
+    animation: blink 0.5s infinite alternate;
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-        }
-        
+    from { opacity: 1; }
+    to { opacity: 0; }
+    }
+    
