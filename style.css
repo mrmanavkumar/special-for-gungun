@@ -25,7 +25,7 @@ body {
 }
 
 /* ==========================================================================
-   2. INITIAL LOADING SCREEN
+   2. SIMPLE LOADING TEXT SCREEN
    ========================================================================== */
 #loadingScreen {
     position: fixed;
@@ -41,52 +41,14 @@ body {
     transition: opacity 1s ease-out, visibility 1s ease-out;
 }
 
-.loader-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-.heart-spinner {
-    font-size: 50px;
-    animation: pulseHeart 1s infinite alternate;
-    margin-bottom: 20px;
-}
-
 .loading-text {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: #ff4d6d;
-    text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
-    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(255, 77, 109, 0.8);
+    animation: zoomPulse 1.2s infinite alternate;
+    padding: 20px;
     letter-spacing: 0.5px;
-}
-
-.progress-bar {
-    width: 220px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
-    border-radius: 10px;
-    animation: fillProgress 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes pulseHeart {
-    0% { transform: scale(0.9); }
-    100% { transform: scale(1.2); }
-}
-
-@keyframes fillProgress {
-    0% { width: 0%; }
-    100% { width: 100%; }
 }
 
 /* Background Effects */
@@ -110,10 +72,13 @@ body {
     width: 100%;
     max-width: 420px;
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ==========================================================================
-   3. GIFT BOX SECTION & LINK CLICK FIX
+   3. GIFT BOX SECTION & SHAKE ANIMATION
    ========================================================================== */
 #giftSection {
     display: flex;
@@ -122,6 +87,7 @@ body {
     justify-content: center;
     position: relative;
     z-index: 20;
+    width: 100%;
 }
 
 .gift-link-wrapper {
@@ -174,7 +140,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 #countdownNumber {
@@ -256,7 +221,6 @@ body {
     transform: scale(1);
 }
 
-/* SKETCH WATERMARK LAYER (Centered behind text) */
 .scroll-letter::before {
     content: "";
     position: absolute;
@@ -270,7 +234,6 @@ body {
     pointer-events: none;
 }
 
-/* CORNER DECORATIONS */
 .scroll-letter::after {
     content: "🌹";
     position: absolute;
@@ -291,7 +254,6 @@ body {
     transform: rotate(10deg);
 }
 
-/* TEXT AREA STYLING */
 .letter-text { 
     position: relative; 
     z-index: 5; 
@@ -348,4 +310,4 @@ body {
 .scroll-letter::-webkit-scrollbar { width: 3px; }
 .scroll-letter::-webkit-scrollbar-track { background: transparent; }
 .scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
-    
+   
