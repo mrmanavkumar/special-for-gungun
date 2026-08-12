@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 0: INITIAL LOADING SCREEN DISAPPEAR LOGIC
+    // STEP 0: EXACT 5 SECONDS LOADING TEXT DISPLAY
     setTimeout(() => {
         if (loadingScreen) {
             loadingScreen.style.opacity = "0";
@@ -25,27 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadingScreen.classList.add("hidden");
             }, 1000);
         }
-    }, 2800);
+    }, 5000); // 5 Seconds Delay
 
-    // Synthesizer Fallback Beep Sound generator
-    function playBeepSound(freq = 600, duration = 0.15) {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = "sine";
-            osc.frequency.value = freq;
-            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        } catch (e) {
-            console.log("Audio Context issue:", e);
-        }
-    }
-
-    // Direct Link Click Handler
+    // Direct Link / Tap Click Handler
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
@@ -62,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Trigger Shake Animation on Box Image
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Transition to Countdown
+        // Transition to Countdown after Shake
         setTimeout(() => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
@@ -71,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 showBirthdayGreeting();
             }
-        }, 1200);
+        }, 1500);
     }
 
     // Bind event to the link wrapper
@@ -82,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // STEP 3: Countdown Timer (3, 2, 1)
     function startCountdownTimer() {
         if (countdownAudio) {
-            countdownAudio.play().catch(() => playBeepSound(650, 0.2));
-        } else {
-            playBeepSound(650, 0.2);
+            countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
         }
 
         let count = 3;
@@ -94,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
             count--;
             if (count > 0) {
                 if (countdownNumber) countdownNumber.textContent = count;
-                playBeepSound(650, 0.2);
             } else {
                 clearInterval(timer);
                 if (countdownScreen) countdownScreen.classList.add("hidden");
@@ -106,8 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // STEP 4: Happy Birthday Screen + Music Starts
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
-
-        playBeepSound(950, 0.4);
 
         if (bgMusic) {
             bgMusic.play().catch(err => console.log("Music play failed:", err));
@@ -129,13 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
-                    }, 1500); 
-                }, 10000); 
+                    }, 2000); 
+                }, 15000); 
                 
             } else {
                 showLetterPage();
             }
-        }, 2200);
+        }, 3000);
     }
 
     // STEP 6: Notebook Letter Screen Arrival
@@ -167,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 250); 
     }
 
-    // Typewriter Engine with ♥️ Cursor
+    // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
@@ -198,11 +175,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
                 if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
-                await new Promise(res => setTimeout(res, 45)); 
+                await new Promise(res => setTimeout(res, 50)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
-            await new Promise(res => setTimeout(res, 300));
+            await new Promise(res => setTimeout(res, 400));
         }
     }
 
@@ -248,4 +225,3 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                            
