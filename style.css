@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Rain Balloons & Sparkles Effects Overlay */
+/* Rain Balloons, Hearts & Sparkles Overlay */
 .effects-overlay {
     position: fixed;
     top: 0;
@@ -48,7 +48,7 @@ body {
     }
 }
 
-/* Preloader Screen */
+/* Preloader */
 .balloon-loader {
     position: fixed;
     top: 0;
@@ -75,7 +75,7 @@ body {
     50% { opacity: 1; }
 }
 
-/* Main Layout & Visibility */
+/* Main Layout Setup */
 .main-content-hidden {
     display: none;
     opacity: 0;
@@ -93,32 +93,10 @@ body {
     animation: fadeIn 1.2s ease-out forwards;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.counter-badge {
-    margin-bottom: 15px;
-    background: rgba(255, 182, 193, 0.2);
-    border: 1px solid rgba(255, 182, 193, 0.4);
-    color: #ffb7c5;
-    padding: 6px 20px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-
-/* Gift Box Section */
+/* Gift Box Section & Shake Animation */
 .gift-box-wrapper {
     cursor: pointer;
     text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.gift-box-wrapper:hover {
-    transform: scale(1.03);
 }
 
 .gift-image-container {
@@ -138,6 +116,18 @@ body {
     display: block;
 }
 
+.shake-box {
+    animation: boxShake 0.6s ease-in-out infinite;
+}
+
+@keyframes boxShake {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-8deg) scale(1.03); }
+    40% { transform: rotate(8deg) scale(1.03); }
+    60% { transform: rotate(-5deg) scale(1.03); }
+    80% { transform: rotate(5deg) scale(1.03); }
+}
+
 .tap-instruction {
     background: linear-gradient(135deg, #e84393, #d63031);
     padding: 12px 25px;
@@ -148,7 +138,43 @@ body {
     font-weight: 600;
 }
 
-/* Media Cards (Template & Sketch) */
+/* Countdown Overlay Animation */
+.countdown-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+}
+
+#countdownNumber {
+    font-size: 6.5rem;
+    font-weight: bold;
+    color: #ff7675;
+    text-shadow: 0 0 25px rgba(255, 118, 117, 0.8);
+    animation: popNum 0.8s ease-out infinite;
+}
+
+@keyframes popNum {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/* Happy Birthday Heading */
+.birthday-text {
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeInSlow 1.5s ease-out forwards;
+}
+
+.birthday-text h1 {
+    font-size: 1.8rem;
+    color: #ffb7c5;
+    text-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
+}
+
+/* Birthday Template Fade Effects */
 .media-container {
     width: 100%;
     margin-bottom: 20px;
@@ -156,43 +182,107 @@ body {
 
 .template-card {
     background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
+    padding: 12px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
-.wish-template-img, .sketch-img {
+.wish-template-img {
     width: 100%;
     border-radius: 12px;
     display: block;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
-/* Letter Display */
+.fade-in-slow {
+    animation: fadeInSlow 2s ease-out forwards;
+}
+
+.fade-out-slow {
+    animation: fadeOutSlow 2s ease-in forwards;
+}
+
+@keyframes fadeInSlow {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOutSlow {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-15px); }
+}
+
+/* Letter Section with Watermark & Scroll */
 .hidden {
     display: none !important;
 }
 
 .message-container {
     width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    padding-right: 3px;
+}
+
+.message-container::-webkit-scrollbar {
+    width: 6px;
+}
+.message-container::-webkit-scrollbar-thumb {
+    background: #ffb7c5;
+    border-radius: 10px;
 }
 
 .letter-background {
     background: #fff8f9;
     color: #2d3436;
-    padding: 30px 22px;
+    padding: 35px 22px;
     border-radius: 18px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     border: 1px solid #ffd1dc;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Corner Decorations */
+.corner-deco {
+    position: absolute;
+    font-size: 0.95rem;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.85;
+}
+.top-left { top: 8px; left: 10px; }
+.top-right { top: 8px; right: 10px; }
+.bottom-left { bottom: 8px; left: 10px; }
+.bottom-right { bottom: 8px; right: 10px; }
+
+/* Sketch Watermark */
+.sketch-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sketch-watermark img {
+    width: 100%;
+    height: auto;
+}
+
+.letter-content {
+    position: relative;
+    z-index: 4;
 }
 
 .letter-content h3 {
     color: #d63031;
     margin-bottom: 15px;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
 }
 
 .letter-content p {
