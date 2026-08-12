@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Birthday Wish</title>
+    <title>For Someone Special ❤️</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- 🎈 Pre-loader: Dher saare Balloons (Niche se Upar) -->
-    <div class="balloon-container" id="balloonLoader">
-        <span style="--i:1;--color:#ff7675;"></span>
-        <span style="--i:2;--color:#74b9ff;"></span>
-        <span style="--i:3;--color:#81ecec;"></span>
-        <span style="--i:4;--color:#ff9f43;"></span>
-        <span style="--i:5;--color:#ffcccc;"></span>
-        <span style="--i:6;--color:#0984e3;"></span>
-        <span style="--i:7;--color:#00cec9;"></span>
-        <span style="--i:8;--color:#fab1a0;"></span>
-        <span style="--i:9;--color:#ffeaa7;"></span>
-        <span style="--i:10;--color:#e17055;"></span>
-        <span style="--i:11;--color:#fd79a8;"></span>
-        <span style="--i:12;--color:#a29bfe;"></span>
-        <span style="--i:13;--color:#55efc4;"></span>
-        <span style="--i:14;--color:#ffeaa7;"></span>
-        <span style="--i:15;--color:#ff7675;"></span>
-        <span style="--i:16;--color:#74b9ff;"></span>
-        <span style="--i:17;--color:#81ecec;"></span>
-        <span style="--i:18;--color:#ff9f43;"></span>
-        <span style="--i:19;--color:#fd79a8;"></span>
-        <span style="--i:20;--color:#e17055;"></span>
+    <!-- ✨ Dynamic Rain Balloons & Sparkles Background -->
+    <div id="effects-container" class="effects-overlay"></div>
+
+    <!-- 🎵 Audio Element with Repo Audio -->
+    <audio id="bgMusic" src="countdown.mp3" preload="auto"></audio>
+
+    <!-- 🎈 Pre-loader Screen -->
+    <div class="balloon-loader" id="balloonLoader">
+        <div class="loader-text">Loading something special for Gungun... 🌸</div>
     </div>
 
-    <!-- 🎁 Main Content (Initial State: Hidden) -->
-    <div id="mainWishContainer" class="main-content-hidden">
-        
-        <!-- Interactive Gift Box / Click Area -->
+    <!-- 🎁 Main Wrapper -->
+    <main id="mainWishContainer" class="main-content-hidden">
+
+        <!-- 1. Counting Section -->
+        <div id="countingSection" class="counter-badge">
+            <span id="countdownText">Turning 23 🎂✨</span>
+        </div>
+
+        <!-- 2. Gift Box Section (Click to Open) -->
         <div id="giftBoxSection" class="gift-box-wrapper" onclick="openBox()">
-            <div class="gift-box">
-                <span class="click-text">🎁 Tap to Open Surprise 🎁</span>
+            <div class="gift-image-container">
+                <img src="gift.png" alt="Special Gift Box" class="gift-img">
+            </div>
+            <div class="tap-instruction">
+                <span>🎁 Tap Box to Open Surprise 🎁</span>
             </div>
         </div>
 
-        <!-- Letter / Message Display Box -->
+        <!-- 3. Template & Sketch Display Section -->
+        <div id="templateSection" class="media-container hidden">
+            <div class="template-card">
+                <img src="birthday-template.png" alt="Birthday Wish Template" class="wish-template-img">
+                <img src="sketch.png" alt="Special Sketch" class="sketch-img">
+            </div>
+        </div>
+
+        <!-- 4. Typewriter Letter Box Section -->
         <div id="messageSection" class="message-container hidden">
             <div class="letter-background">
                 <div id="typewriterText" class="letter-content"></div>
             </div>
         </div>
 
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
