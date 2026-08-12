@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Background Rain Overlay (Pointer events disabled so clicks pass through) */
+/* Background Rain Overlay */
 .effects-overlay {
     position: fixed;
     top: 0;
@@ -75,7 +75,7 @@ body {
     50% { opacity: 1; }
 }
 
-/* Main Layout */
+/* Layout */
 .main-content-hidden {
     display: none;
     opacity: 0;
@@ -90,10 +90,9 @@ body {
     padding: 20px;
     width: 100%;
     max-width: 520px;
-    animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* Gift Box Section & Click Area Fix */
+/* Gift Box Section */
 .gift-box-wrapper {
     cursor: pointer !important;
     text-align: center;
@@ -143,7 +142,7 @@ body {
     pointer-events: none;
 }
 
-/* Countdown */
+/* Countdown Overlay */
 .countdown-overlay {
     position: fixed;
     top: 50%;
@@ -151,33 +150,23 @@ body {
     transform: translate(-50%, -50%);
     z-index: 200;
     pointer-events: none;
+    text-align: center;
+    width: 100%;
 }
 
 #countdownNumber {
-    font-size: 6.5rem;
+    font-size: 4rem;
     font-weight: bold;
     color: #ff7675;
     text-shadow: 0 0 25px rgba(255, 118, 117, 0.8);
     animation: popNum 0.8s ease-out infinite;
+    display: inline-block;
 }
 
 @keyframes popNum {
     0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.2); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 0; }
-}
-
-/* Happy Birthday Heading */
-.birthday-text {
-    text-align: center;
-    margin-bottom: 20px;
-    animation: fadeInSlow 1.5s ease-out forwards;
-}
-
-.birthday-text h1 {
-    font-size: 1.8rem;
-    color: #ffb7c5;
-    text-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
 }
 
 /* Template */
@@ -201,11 +190,11 @@ body {
 }
 
 .fade-in-slow {
-    animation: fadeInSlow 2s ease-out forwards;
+    animation: fadeInSlow 1.5s ease-out forwards;
 }
 
 .fade-out-slow {
-    animation: fadeOutSlow 2s ease-in forwards;
+    animation: fadeOutSlow 1.5s ease-in forwards;
 }
 
 @keyframes fadeInSlow {
@@ -218,7 +207,7 @@ body {
     to { opacity: 0; transform: translateY(-15px); }
 }
 
-/* Letter Section & Corner Bouquets */
+/* Letter Container */
 .hidden {
     display: none !important;
 }
@@ -250,54 +239,45 @@ body {
     overflow: hidden;
 }
 
-/* Corner Real Image Bouquets & Age Tag */
-.real-bouquet-container {
+/* Corner Emoji Items & Age Badge */
+.corner-item {
     position: absolute;
-    width: 65px;
-    height: 65px;
     z-index: 5;
     pointer-events: none;
+    line-height: 1;
 }
 
-.corner-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-    border: 2px solid #ffffff;
+.corner-emoji {
+    font-size: 2.2rem;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
-.balloons-img {
-    border-radius: 12px;
-}
-
-.age-tag {
+.age-badge {
     position: absolute;
-    bottom: -4px;
-    right: -4px;
-    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-    color: #d63031;
+    bottom: -2px;
+    right: -8px;
+    background: #d63031;
+    color: #ffffff;
     font-weight: bold;
     font-size: 0.75rem;
     padding: 2px 6px;
     border-radius: 10px;
-    border: 1px solid #d63031;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-.top-left { top: -10px; left: -10px; }
-.top-right { top: -10px; right: -10px; }
-.bottom-left { bottom: -10px; left: -10px; }
-.bottom-right { bottom: -10px; right: -10px; }
+.top-left { top: 12px; left: 12px; }
+.top-right { top: 12px; right: 12px; }
+.bottom-left { bottom: 12px; left: 12px; }
+.bottom-right { bottom: 12px; right: 12px; }
 
-/* Sketch Watermark */
+/* Fixed Center Watermark Sketch */
 .sketch-watermark {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 75%;
+    width: 70%;
     opacity: 0.12;
     pointer-events: none;
     z-index: 2;
@@ -341,4 +321,5 @@ body {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
-                               }
+        }
+        
