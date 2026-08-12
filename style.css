@@ -16,14 +16,14 @@ body {
     position: relative;
 }
 
-/* Background Rain Overlay */
+/* Background Rain Overlay (Pointer events disabled so clicks pass through) */
 .effects-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none;
+    pointer-events: none !important;
     z-index: 1;
     overflow: hidden;
 }
@@ -31,7 +31,7 @@ body {
 .floating-element {
     position: absolute;
     user-select: none;
-    pointer-events: none;
+    pointer-events: none !important;
     animation: floatDown linear infinite;
 }
 
@@ -75,7 +75,7 @@ body {
     50% { opacity: 1; }
 }
 
-/* Main Layout Setup */
+/* Main Layout */
 .main-content-hidden {
     display: none;
     opacity: 0;
@@ -93,11 +93,13 @@ body {
     animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* Gift Box Section & Shake Animation */
+/* Gift Box Section & Click Area Fix */
 .gift-box-wrapper {
-    cursor: pointer;
+    cursor: pointer !important;
     text-align: center;
     user-select: none;
+    position: relative;
+    z-index: 50;
 }
 
 .gift-image-container {
@@ -108,7 +110,6 @@ body {
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(255, 182, 193, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    pointer-events: none;
 }
 
 .gift-img {
@@ -116,6 +117,7 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
 }
 
 .shake-box {
@@ -141,13 +143,14 @@ body {
     pointer-events: none;
 }
 
-/* Countdown Animation */
+/* Countdown */
 .countdown-overlay {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 200;
+    pointer-events: none;
 }
 
 #countdownNumber {
@@ -177,7 +180,7 @@ body {
     text-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
 }
 
-/* Birthday Template Setup */
+/* Template */
 .media-container {
     width: 100%;
     margin-bottom: 20px;
@@ -215,7 +218,7 @@ body {
     to { opacity: 0; transform: translateY(-15px); }
 }
 
-/* Letter Section with Real Bouquet Corners & Scroll */
+/* Letter Section & Corner Bouquets */
 .hidden {
     display: none !important;
 }
@@ -266,10 +269,9 @@ body {
 }
 
 .balloons-img {
-    border-radius: 12px; /* Balloons look better with slight curve */
+    border-radius: 12px;
 }
 
-/* Golden "23" Badge on Top Left Bouquet */
 .age-tag {
     position: absolute;
     bottom: -4px;
@@ -339,4 +341,4 @@ body {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
-    }
+                               }
