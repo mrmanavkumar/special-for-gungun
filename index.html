@@ -3,67 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Someone Special ❤️</title>
+    <title>Specially for Gungun💖</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- ✨ Background Rain Effect -->
-    <div id="effects-container" class="effects-overlay"></div>
-
-    <!-- 🎵 Background Music -->
-    <audio id="bgMusic" src="bg-music.mp3" preload="auto"></audio>
-
-    <!-- 🎈 Preloader -->
-    <div class="balloon-loader" id="balloonLoader">
-        <div class="loader-text">Loading something special for Gungun... 🌸</div>
+    <!-- STEP 0: INITIAL LOADING SCREEN -->
+    <div id="loadingScreen">
+        <div class="loader-content">
+            <div class="heart-spinner">💖</div>
+            <h2 class="loading-text">Something is loading for Gungun🌸</h2>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
     </div>
 
-    <!-- 🎁 Main Content Container -->
-    <main id="mainWishContainer" class="main-content-hidden">
+    <!-- BACKGROUND STARS EFFECT & CANVAS SYSTEM -->
+    <div class="stars"></div>
+    <canvas id="effectCanvas"></canvas>
+    <div id="rainContainer"></div>
 
-        <!-- Glowing Neon Countdown Overlay -->
-        <div id="countdownOverlay" class="countdown-overlay hidden">
-            <span id="countdownNumber">3</span>
+    <!-- AUDIO FILES SYSTEM -->
+    <audio id="countdownAudio" src="countdown.mp3" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" preload="auto" loop></audio>
+
+    <!-- MAIN INTERACTIVE CONTAINER -->
+    <div class="container">
+
+        <!-- STEP 1 & 2: GIFT BOX SECTION WRAPPED IN DIRECT LINK -->
+        <div id="giftSection">
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper">
+                <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
+                <p class="tap-text">Tap on the Gift Box to Open! ✨</p>
+            </a>
         </div>
 
-        <!-- 1. Gift Box Section -->
-        <div id="giftBoxSection" class="gift-box-wrapper" onclick="startSurpriseSequence()">
-            <div class="gift-image-container" id="giftBoxContainer">
-                <img src="gift.png" alt="Special Gift Box" class="gift-img">
-            </div>
-            <div class="tap-instruction">
-                <span>Tap on the Gift Box to Open! ✨</span>
-            </div>
+        <!-- STEP 3: COUNTDOWN TIMER SCREEN -->
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">3</div>
         </div>
 
-        <!-- 2. Birthday Template Section -->
-        <div id="templateSection" class="media-container hidden">
-            <div class="template-card">
-                <img src="birthday-template.png" alt="Birthday Wish Template" class="wish-template-img">
-            </div>
+        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
+        <div id="bdayGreetingScreen" class="hidden">
+            <h1 class="bday-text">HAPPY BIRTHDAY</h1>
         </div>
 
-        <!-- 3. Full Letter Box Section -->
-        <div id="messageSection" class="message-container hidden">
-            <div class="letter-background">
-
-                <!-- Rose Icon -->
-                <div class="corner-rose">🌹</div>
-
-                <!-- Watermark Sketch (Spread on Whole Page) -->
-                <div class="sketch-watermark">
-                    <img src="sketch.png" alt="Sketch Watermark">
-                </div>
-
-                <!-- Typewriter Letter Content -->
-                <div id="typewriterText" class="letter-content"></div>
-            </div>
+        <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
         </div>
 
-    </main>
+        <!-- STEP 6: PURE CSS NOTEBOOK LETTER BOX -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div id="typewriterText" class="letter-text"></div>
+        </div>
 
+    </div>
+
+    <!-- Main Logic Script Engine -->
     <script src="script.js"></script>
 </body>
 </html>
