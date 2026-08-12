@@ -75,7 +75,7 @@ body {
     50% { opacity: 1; }
 }
 
-/* Layout */
+/* Layout Container */
 .main-content-hidden {
     display: none;
     opacity: 0;
@@ -87,9 +87,9 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 10;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
-    max-width: 480px;
+    max-width: 450px;
 }
 
 /* Gift Box */
@@ -102,8 +102,8 @@ body {
 }
 
 .gift-image-container {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
     margin: 0 auto 20px auto;
     border-radius: 20px;
     overflow: hidden;
@@ -136,7 +136,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Glow Countdown */
+/* Countdown */
 .countdown-overlay {
     position: fixed;
     top: 50%;
@@ -149,7 +149,7 @@ body {
 }
 
 #countdownNumber {
-    font-size: 5rem;
+    font-size: 5.5rem;
     font-weight: 700;
     color: #ff3366;
     text-shadow: 0 0 20px #ff3366, 0 0 40px #ff3366;
@@ -164,7 +164,7 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* Template Section */
+/* Template */
 .media-container {
     width: 100%;
     margin-bottom: 20px;
@@ -183,11 +183,11 @@ body {
 }
 
 .fade-in-slow {
-    animation: fadeInSlow 1.2s ease-out forwards;
+    animation: fadeInSlow 1s ease-out forwards;
 }
 
 .fade-out-slow {
-    animation: fadeOutSlow 1.2s ease-in forwards;
+    animation: fadeOutSlow 1s ease-in forwards;
 }
 
 @keyframes fadeInSlow {
@@ -200,52 +200,52 @@ body {
     to { opacity: 0; transform: translateY(-10px); }
 }
 
-/* Letter Card Style */
+/* Full Letter Page Layout */
 .hidden {
     display: none !important;
 }
 
 .message-container {
     width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
-    border-radius: 28px;
+    margin: 0 auto;
 }
 
 .letter-background {
     background: #fbf0ea;
     color: #8c3232;
-    padding: 35px 25px;
-    border-radius: 28px;
-    border: 12px solid #f2cfc9;
+    padding: 30px 20px;
+    border-radius: 24px;
+    border: 8px solid #f2cfc9;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
+    min-height: 520px;
 }
 
 .corner-rose {
     position: absolute;
-    top: 15px;
-    left: 20px;
-    font-size: 2.2rem;
+    top: 12px;
+    left: 15px;
+    font-size: 2rem;
     z-index: 10;
 }
 
-/* Center Sketch Watermark */
+/* Sketch Spread Across Whole Page */
 .sketch-watermark {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    opacity: 0.18;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.16;
     pointer-events: none;
     z-index: 2;
 }
 
 .sketch-watermark img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
 }
 
 .letter-content {
@@ -255,22 +255,22 @@ body {
 
 .letter-content h3 {
     color: #aa2e2e;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
-    margin-top: 35px;
-    margin-bottom: 25px;
+    margin-top: 30px;
+    margin-bottom: 20px;
     border-bottom: 1px dotted #e2a8a8;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .letter-content p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-bottom: 20px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
     color: #4a1f1f;
     border-bottom: 1px dotted #e2a8a8;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .letter-content p:last-child {
@@ -290,17 +290,17 @@ body {
     color: #722222 !important;
 }
 
-/* Heart Cursor ♥️ */
+/* Typewriter Heart Cursor ♥️ */
 .heart-cursor {
     display: inline-block;
     color: #e84393;
     font-size: 1rem;
     margin-left: 2px;
-    animation: blink 0.5s infinite alternate;
+    animation: blink 0.4s infinite alternate;
 }
 
 @keyframes blink {
     from { opacity: 1; }
     to { opacity: 0; }
-    }
-    
+}
+
