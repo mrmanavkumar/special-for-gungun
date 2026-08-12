@@ -1,306 +1,351 @@
+/* ==========================================================================
+   1. RESET & BASIC SETUP
+   ========================================================================== */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background: #0d0914;
-    color: #ffffff;
+    background-color: #0f0c1b;
     font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-    position: relative;
-}
-
-/* Rain Effect Overlay */
-.effects-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
+    color: #fff;
+    overflow: hidden;
     height: 100vh;
-    pointer-events: none !important;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.floating-element {
-    position: absolute;
-    user-select: none;
-    pointer-events: none !important;
-    animation: floatDown linear infinite;
-}
-
-@keyframes floatDown {
-    0% {
-        transform: translateY(-10vh) scale(0.8) rotate(0deg);
-        opacity: 0;
-    }
-    15% { opacity: 0.8; }
-    85% { opacity: 0.8; }
-    100% {
-        transform: translateY(110vh) scale(1.1) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Preloader */
-.balloon-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0d0914;
-    z-index: 999;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-
-.loader-text {
-    font-size: 1.1rem;
-    color: #ffd1dc;
-    letter-spacing: 1px;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* Layout Container */
-.main-content-hidden {
-    display: none;
-    opacity: 0;
-}
-
-.main-content-visible {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    padding: 10px;
-    width: 100%;
-    max-width: 450px;
-}
-
-/* Gift Box */
-.gift-box-wrapper {
-    cursor: pointer !important;
     text-align: center;
-    user-select: none;
     position: relative;
-    z-index: 50;
 }
 
-.gift-image-container {
-    width: 260px;
-    height: 260px;
-    margin: 0 auto 20px auto;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
-
-.gift-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.shake-box {
-    animation: boxShake 0.6s ease-in-out infinite !important;
-}
-
-@keyframes boxShake {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    20% { transform: rotate(-6deg) scale(1.02); }
-    40% { transform: rotate(6deg) scale(1.02); }
-    60% { transform: rotate(-4deg) scale(1.02); }
-    80% { transform: rotate(4deg) scale(1.02); }
-}
-
-.tap-instruction {
-    color: #e84393;
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-/* Countdown */
-.countdown-overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 200;
-    pointer-events: none;
-    text-align: center;
-    width: 100%;
-}
-
-#countdownNumber {
-    font-size: 5.5rem;
-    font-weight: 700;
-    color: #ff3366;
-    text-shadow: 0 0 20px #ff3366, 0 0 40px #ff3366;
-    letter-spacing: 2px;
-    animation: popNum 0.8s ease-out infinite;
-    display: inline-block;
-}
-
-@keyframes popNum {
-    0% { transform: scale(0.4); opacity: 0; }
-    50% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* Template */
-.media-container {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.template-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 18px;
-}
-
-.wish-template-img {
-    width: 100%;
-    border-radius: 12px;
-    display: block;
-}
-
-.fade-in-slow {
-    animation: fadeInSlow 1s ease-out forwards;
-}
-
-.fade-out-slow {
-    animation: fadeOutSlow 1s ease-in forwards;
-}
-
-@keyframes fadeInSlow {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeOutSlow {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-10px); }
-}
-
-/* Full Letter Page Layout */
 .hidden {
     display: none !important;
 }
 
-.message-container {
-    width: 100%;
-    margin: 0 auto;
-}
-
-.letter-background {
-    background: #fbf0ea;
-    color: #8c3232;
-    padding: 30px 20px;
-    border-radius: 24px;
-    border: 8px solid #f2cfc9;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    min-height: 520px;
-}
-
-.corner-rose {
-    position: absolute;
-    top: 12px;
-    left: 15px;
-    font-size: 2rem;
-    z-index: 10;
-}
-
-/* Sketch Spread Across Whole Page */
-.sketch-watermark {
-    position: absolute;
+/* ==========================================================================
+   2. INITIAL LOADING SCREEN
+   ========================================================================== */
+#loadingScreen {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.16;
-    pointer-events: none;
-    z-index: 2;
+    background-color: #0f0c1b;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-out, visibility 1s ease-out;
 }
 
-.sketch-watermark img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
-.letter-content {
-    position: relative;
-    z-index: 4;
-}
-
-.letter-content h3 {
-    color: #aa2e2e;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-top: 30px;
+.heart-spinner {
+    font-size: 50px;
+    animation: pulseHeart 1s infinite alternate;
     margin-bottom: 20px;
-    border-bottom: 1px dotted #e2a8a8;
-    padding-bottom: 10px;
 }
 
-.letter-content p {
-    font-size: 0.92rem;
-    line-height: 1.6;
-    margin-bottom: 16px;
-    color: #4a1f1f;
-    border-bottom: 1px dotted #e2a8a8;
-    padding-bottom: 10px;
-}
-
-.letter-content p:last-child {
-    border-bottom: none;
-}
-
-.italic-line {
-    font-style: italic;
-    text-align: right;
-    margin-top: 10px;
-    color: #8c3232 !important;
-}
-
-.signature {
-    text-align: right;
+.loading-text {
+    font-size: 20px;
     font-weight: 600;
-    color: #722222 !important;
+    color: #ff4d6d;
+    text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
 }
 
-/* Typewriter Heart Cursor ♥️ */
-.heart-cursor {
-    display: inline-block;
-    color: #e84393;
-    font-size: 1rem;
-    margin-left: 2px;
-    animation: blink 0.4s infinite alternate;
+.progress-bar {
+    width: 220px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-@keyframes blink {
-    from { opacity: 1; }
-    to { opacity: 0; }
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
+    border-radius: 10px;
+    animation: fillProgress 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+@keyframes pulseHeart {
+    0% { transform: scale(0.9); }
+    100% { transform: scale(1.2); }
+}
+
+@keyframes fillProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Background Effects */
+.stars {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#effectCanvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+}
+
+/* ==========================================================================
+   3. GIFT BOX SECTION & LINK CLICK FIX
+   ========================================================================== */
+#giftSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 20;
+}
+
+.gift-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gift-img {
+    width: 80%;
+    max-width: 250px; 
+    height: auto;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+.gift-img.shake-active {
+    animation: intenseShake 0.5s infinite ease-in-out;
+}
+
+.tap-text {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #ff4d6d;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
+    pointer-events: none;
+}
+
+@keyframes intenseShake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-10px) rotate(-6deg) scale(1.05); }
+    30% { transform: translateY(5px) rotate(5deg); }
+    45% { transform: translateY(-6px) rotate(-4deg); }
+    60% { transform: translateY(3px) rotate(3deg); }
+    75% { transform: translateY(-4px) rotate(-2deg); }
+    90% { transform: translateY(1px) rotate(1deg); }
+}
+
+/* ==========================================================================
+   4. TRANSITIONS & SCREEN COMPONENTS
+   ========================================================================== */
+#countdownScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#countdownNumber {
+    font-size: 90px;
+    font-weight: 800;
+    color: #ff4d6d;
+    text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
+    animation: zoomPulse 1s infinite alternate;
+}
+
+#bdayGreetingScreen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(15, 12, 27, 0.95);
+    z-index: 100;
+}
+
+.bday-text {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+    animation: zoomInBday 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    width: 90%;
+    text-align: center;
+}
+
+.template-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 1.5s ease, transform 1.5s ease; 
+}
+
+.template-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.template-img {
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+}
+
+/* ==========================================================================
+   5. NOTEBOOK PAGE WITH SKETCH WATERMARK & CORNER ITEMS
+   ========================================================================== */
+.scroll-letter { 
+    position: relative;
+    width: 100%;          
+    max-width: 350px;
+    height: 520px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    scroll-behavior: smooth; 
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    margin: 0 auto;
+    background-color: #fbf0ea !important; 
+    border: 8px solid #f7d6d0; 
+    outline: 2px solid #e1b4ad; 
+}
+
+.scroll-letter.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* SKETCH WATERMARK LAYER (Centered behind text) */
+.scroll-letter::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('sketch.png') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.18; 
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* CORNER DECORATIONS */
+.scroll-letter::after {
+    content: "🌹";
+    position: absolute;
+    top: 15px; left: 15px;
+    font-size: 32px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(-10deg);
+}
+
+.letter-text::after {
+    content: "🎈";
+    position: absolute;
+    bottom: 15px; right: 15px;
+    font-size: 32px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(10deg);
+}
+
+/* TEXT AREA STYLING */
+.letter-text { 
+    position: relative; 
+    z-index: 5; 
+    text-align: left; 
+    padding: 50px 25px 50px 25px; 
+    font-family: 'Playfair Display', serif;
+    width: 100%;
+}
+
+.letter-text h3 { 
+    color: #b33939 !important; 
+    font-size: 16px; 
+    font-weight: 800; 
+    text-align: center !important; 
+    margin-bottom: 26px; 
+    line-height: 1.2;
+    border-bottom: 2px dashed #f5c2bb;
+    padding-bottom: 10px;
+}
+
+.letter-text p {
+    font-size: 14.5px;
+    line-height: 26px; 
+    margin: 0;
+    margin-bottom: 26px; 
+    color: #4a2c2a !important;
+    font-weight: 500;
+    word-wrap: break-word;
+    background-image: linear-gradient(to right, #f5c2bb 50%, rgba(255,255,255,0) 0%);
+    background-position: bottom;
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+}
+
+.highlight-bday { color: #b33939 !important; font-weight: 700; }
+.signature { font-weight: 700; color: #7f8c8d !important; font-style: italic; text-align: right; display: block; margin-top: 13px; }
+.heart-cursor { display: inline-block; color: #ff4d6d; font-size: 13px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
+
+/* ==========================================================================
+   6. EFFECTS & ANIMATIONS
+   ========================================================================== */
+#rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+.rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
+
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+.scroll-letter::-webkit-scrollbar { width: 3px; }
+.scroll-letter::-webkit-scrollbar-track { background: transparent; }
+.scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
+    
