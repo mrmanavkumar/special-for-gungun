@@ -1,31 +1,73 @@
-// 🎈 1. Balloon Loader Animation Logic (5 second wait)
+// 🎈 1. Background Rain Balloons & Sparkles Generator
+function createBackgroundEffects() {
+    const container = document.getElementById("effects-container");
+    if (!container) return;
+
+    const elements = ["🎈", "✨", "⭐", "🌸", "💖", "💫"];
+    const totalCount = 35;
+
+    for (let i = 0; i < totalCount; i++) {
+        const span = document.createElement("span");
+        span.classList.add("floating-element");
+
+        const randomSymbol = elements[Math.floor(Math.random() * elements.length)];
+        span.innerText = randomSymbol;
+
+        const leftPos = Math.random() * 100;
+        const duration = 5 + Math.random() * 7;
+        const delay = Math.random() * 5;
+        const fontSize = 14 + Math.random() * 18;
+
+        span.style.left = `${leftPos}vw`;
+        span.style.animationDuration = `${duration}s`;
+        span.style.animationDelay = `${delay}s`;
+        span.style.fontSize = `${fontSize}px`;
+
+        container.appendChild(span);
+    }
+}
+
+// ⏳ 2. Preloader & Initialize
 window.addEventListener("DOMContentLoaded", () => {
+    createBackgroundEffects();
+
     setTimeout(() => {
-        const balloonLoader = document.getElementById("balloonLoader");
+        const loader = document.getElementById("balloonLoader");
         const mainContainer = document.getElementById("mainWishContainer");
 
-        if (balloonLoader) {
-            balloonLoader.style.display = "none";
+        if (loader) {
+            loader.style.opacity = "0";
+            setTimeout(() => loader.style.display = "none", 1000);
         }
+
         if (mainContainer) {
             mainContainer.classList.remove("main-content-hidden");
             mainContainer.classList.add("main-content-visible");
         }
-    }, 4500); // 4.5 seconds tak balloons upar jaayenge
+    }, 3000);
 });
 
-// 🎁 2. Box Click Handler
+// 🎁 3. Gift Box Open Event Trigger
 function openBox() {
     const giftBox = document.getElementById("giftBoxSection");
+    const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
+    const music = document.getElementById("bgMusic");
 
+    // Hide Gift Box, Reveal Template, Sketch & Message
     if (giftBox) giftBox.classList.add("hidden");
+    if (templateSection) templateSection.classList.remove("hidden");
     if (messageSection) messageSection.classList.remove("hidden");
+
+    // Play countdown.mp3
+    if (music) {
+        music.play().catch(err => console.log("Audio play prevented:", err));
+    }
 
     typeWriterEffect();
 }
 
-// ✍️ 3. Typewriter Engine (Exact Updated Letter)
+// ✍️ 4. Typewriter Letter Engine
 async function typeWriterEffect() {
     const targetDiv = document.getElementById("typewriterText");
     const scrollBox = document.getElementById("messageSection");
@@ -53,7 +95,7 @@ async function typeWriterEffect() {
             if (oldCursor) oldCursor.remove();
 
             element.innerHTML += rawText.charAt(i);
-            element.innerHTML += '<span class="heart-cursor">❤️</span>';
+            element.innerHTML += '<span class="heart-cursor">✨</span>';
 
             if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
             await new Promise(res => setTimeout(res, 45)); 
