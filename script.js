@@ -128,7 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Rain Particle Generator
     function startMagicalRain() {
-        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
+        const items = ['✨', '🦋', '💫', '🌟', '🎈', '🎊', '🎉'];
+        
         setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
