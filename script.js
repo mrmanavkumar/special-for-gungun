@@ -140,10 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!targetDiv) return;
 
         const letterData = [
-            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN! 🦋' },
-            { type: 'p', text: 'Tumhara ye birthday bohot special ho! Life me tum jo bhi achieve karna chahti ho, wo sab tumhe mile.' },
-            { type: 'p', text: 'Aise hi mehnat karti raho, aur apne sapno ko pura karke ek bahtareen Doctor bano 🩺👩‍⚕️✨' },
-            { type: 'p', text: 'Humesha khush raho aur birthday achhe se celebrate karo! 🎊🎉' },
+            { type: 'h3', text: 'Special wishes for Gungun🦋' },
+            { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush raho.Tumhare chehre ki muskan kabhi naa ho kyuki tum schme her ek khushi deserve kerti ho.' },
+            { type: 'p', text: 'Humehsa aise hi muskurati rehna,aur apne sapno ko pura kerna or life me bohot aage badte rehna🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'once again Happy Birthday 🎊🎉' },
+              { type: 'p', text: 'Take care of yourself✨', className: 'signature' },
             { type: 'p', text: '- MANAV', className: 'signature' }
         ];
 
