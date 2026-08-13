@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+     document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const loadingScreen = document.getElementById("loadingScreen");
     const giftSection = document.getElementById("giftSection");
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadingScreen.style.visibility = "hidden";
             setTimeout(() => {
                 loadingScreen.classList.add("hidden");
-                startMagicalRain(); // 🌸 Gift Box aate hi Rain Effect Shuru
+                startMagicalRain(); // Gift Box visible hote hi Rain Start
             }, 1000);
         }
     }, 5000); // 5 Seconds Delay
@@ -126,10 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rain Particle Generator
+    // Celebration Rain Particle Generator
     function startMagicalRain() {
         const items = ['✨', '🦋', '💫', '🌟', '🎈', '🎊', '🎉'];
-        
         setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
@@ -145,18 +144,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 250); 
     }
 
-    // Typewriter Engine
+    // Typewriter Engine with Heart Cursor (❤️)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
-            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
-            { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
-            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Once again happy birthday 🎊✨' },
-            { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
+            { type: 'h3', text: 'HAPPY BIRTHDAY GUNGUN! 🦋' },
+            { type: 'p', text: 'Tumhara ye birthday bohot special ho! Life me tum jo bhi achieve karna chahti ho, wo sab tumhe mile.' },
+            { type: 'p', text: 'Aise hi mehnat karti raho, aur apne sapno ko pura karke ek bahtareen Doctor bano 🩺👩‍⚕️✨' },
+            { type: 'p', text: 'Humesha khush raho aur birthday achhe se celebrate karo! 🎊🎉' },
             { type: 'p', text: '- MANAV', className: 'signature' }
         ];
 
@@ -226,5 +224,3 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                            
-            
