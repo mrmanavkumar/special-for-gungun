@@ -26,7 +26,7 @@
     transform: scale(1);
 }
 
-/* Sketch Watermark Layer - Exact Image Ki Tarah Pure Page Per Cover Hoga */
+/* Sketch Watermark Layer - Zoom & Full Cover */
 .scroll-letter::before {
     content: "";
     position: absolute;
@@ -35,13 +35,15 @@
     width: 100%; 
     height: 100%;
     background-image: url('sketch.png') !important;
-    background-size: 100% 100% !important; /* Pure frame par perfectly stretch kar dega */
-    background-position: center !important;
+    background-size: cover !important;
+    background-position: center 30% !important; /* Face ko thoda upper align rakhega */
     background-repeat: no-repeat !important;
-    opacity: 0.22; /* Halka watermark look dene ke liye */
+    transform: scale(1.35); /* Sketch image ko 35% bada zoom kar dega */
+    opacity: 0.28; /* Thoda sa dark taaki aur clear dikhe */
     z-index: 1;
     pointer-events: none;
 }
+
 
 /* SIRF TEXT SCROLL HOGA */
 #letterContent {
