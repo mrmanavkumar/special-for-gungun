@@ -1,5 +1,4 @@
-     document.addEventListener("DOMContentLoaded", () => {
-    // DOM Elements
+document.addEventListener("DOMContentLoaded", () => {
     const loadingScreen = document.getElementById("loadingScreen");
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -9,6 +8,7 @@
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
+    const letterContent = document.getElementById("letterContent");
     const bgMusic = document.getElementById("bgMusic");
     const countdownAudio = document.getElementById("countdownAudio");
     const rainContainer = document.getElementById("rainContainer");
@@ -23,18 +23,16 @@
             loadingScreen.style.visibility = "hidden";
             setTimeout(() => {
                 loadingScreen.classList.add("hidden");
-                startMagicalRain(); // Gift Box visible hote hi Rain Start
+                startMagicalRain(); 
             }, 1000);
         }
-    }, 5000); // 5 Seconds Delay
+    }, 5000); 
 
-    // Direct Link / Tap Click Handler
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Audio unlock for Mobile & Web browsers
         if (bgMusic) {
             bgMusic.play().then(() => {
                 bgMusic.pause(); 
@@ -42,10 +40,8 @@
             }).catch(err => console.log("Audio unlock:", err));
         }
 
-        // Trigger Shake Animation on Box Image
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Transition to Countdown after Shake
         setTimeout(() => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
@@ -57,12 +53,10 @@
         }, 1500);
     }
 
-    // Bind event to the link wrapper
     if (mainLink) {
         mainLink.addEventListener("click", handleLinkClick);
     }
 
-    // STEP 3: Countdown Timer (3, 2, 1)
     function startCountdownTimer() {
         if (countdownAudio) {
             countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
@@ -83,7 +77,6 @@
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + Music Starts
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
@@ -115,7 +108,6 @@
         }, 3000);
     }
 
-    // STEP 6: Notebook Letter Screen Arrival
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -126,7 +118,6 @@
         }
     }
 
-    // Celebration Rain Particle Generator
     function startMagicalRain() {
         const items = ['✨', '🦋', '💫', '🌟', '🎈', '🎊', '🎉'];
         setInterval(() => {
@@ -144,10 +135,8 @@
         }, 250); 
     }
 
-    // Typewriter Engine with Heart Cursor (❤️)
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
@@ -173,7 +162,7 @@
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
 
-                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
+                if (letterContent) letterContent.scrollTop = letterContent.scrollHeight;
                 await new Promise(res => setTimeout(res, 50)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
@@ -182,7 +171,6 @@
         }
     }
 
-    // Confetti System
     function initConfetti() {
         if (!effectCanvas) return;
         const ctx = effectCanvas.getContext("2d");
@@ -224,3 +212,4 @@
         draw();
     }
 });
+                           
