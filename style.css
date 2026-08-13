@@ -1,5 +1,5 @@
 /* ==========================================================================
-   5. NOTEBOOK PAGE WITH FIXED BACKGROUND & SKETCH WATERMARK
+   5. NOTEBOOK PAGE WITH COMBINED PAGE.PNG (SKETCH + FRAME MERGED)
    ========================================================================== */
 .scroll-letter { 
     position: relative;
@@ -13,12 +13,12 @@
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
 
-    /* Background page.png FIXED rahega (Scroll nahi hoga) */
+    /* Background page.png (Frame + Sketch Merged Image) */
     background-image: url('page.png') !important;
     background-size: 100% 100% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    overflow: hidden !important; 
+    overflow: hidden !important; /* Main page card scroll nahi hoga */
 }
 
 .scroll-letter.active {
@@ -26,26 +26,13 @@
     transform: scale(1);
 }
 
-/* Sketch Watermark Layer - Zoom & Full Cover */
-.scroll-letter::before {
-    content: "";
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background-image: url('sketch.png') !important;
-    background-size: cover !important;
-    background-position: center 30% !important; /* Face ko thoda upper align rakhega */
-    background-repeat: no-repeat !important;
-    transform: scale(1.35); /* Sketch image ko 35% bada zoom kar dega */
-    opacity: 0.28; /* Thoda sa dark taaki aur clear dikhe */
-    z-index: 1;
-    pointer-events: none;
+/* Purane Separate Sketch Overlays Disabled */
+.scroll-letter::before,
+.scroll-letter::after {
+    display: none !important;
 }
 
-
-/* SIRF TEXT SCROLL HOGA */
+/* INNER TEXT SCROLL CONTAINER (Balloons se door rakha hai) */
 #letterContent {
     position: relative;
     z-index: 5;
@@ -54,7 +41,7 @@
     overflow-y: auto; 
     overflow-x: hidden;
     scroll-behavior: smooth;
-    padding: 85px 25px 75px 25px; /* Top padding balloon ke niche rakhi hai */
+    padding: 95px 22px 70px 22px; /* Top 95px: Heading balloons ke kafi niche rahegi */
 }
 
 .letter-text { 
@@ -63,7 +50,7 @@
     width: 100%;
 }
 
-/* Heading with dashed border */
+/* Heading - Clean & Below Balloons */
 .letter-text h3 { 
     color: #b33939 !important; 
     font-size: 15px; 
@@ -75,7 +62,7 @@
     padding-bottom: 8px;
 }
 
-/* Paragraph lines */
+/* Notebook Dashed Line Below Each Sentence */
 .letter-text p {
     font-size: 14px;
     line-height: 26px; 
@@ -113,3 +100,4 @@
 #letterContent::-webkit-scrollbar { width: 3px; }
 #letterContent::-webkit-scrollbar-track { background: transparent; }
 #letterContent::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.2); border-radius: 10px; }
+
