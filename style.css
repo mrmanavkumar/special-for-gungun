@@ -36,19 +36,19 @@ body {
     background-color: #0f0c1b;
     z-index: 9999;
     display: flex;
-    justify-content: flex-start; /* Left side align */
-    align-items: flex-end;       /* Bottom side align */
+    justify-content: flex-start; /* Completely Left align */
+    align-items: flex-end;       /* Completely Bottom align */
     transition: opacity 1.5s ease-out, visibility 1.5s ease-out;
 }
 
 .loading-text {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
     color: #ff4d6d;
     text-shadow: 0 0 15px rgba(255, 77, 109, 0.8);
     animation: zoomPulse 1.2s infinite alternate;
-    margin-left: 25px;      /* Left edge gap */
-    margin-bottom: 60px;    /* Bottom se thoda upper position */
+    margin-left: 20px;      /* Left side se halka gap */
+    margin-bottom: 35px;    /* Niche se halka upar (Exact Bottom-Left Position) */
     letter-spacing: 0.5px;
     text-align: left;
 }
@@ -64,6 +64,7 @@ body {
     50% { opacity: 1; }
     100% { opacity: 0.2; }
 }
+
 
 /* Background Effects */
 .stars {
