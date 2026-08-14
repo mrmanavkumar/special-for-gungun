@@ -25,7 +25,7 @@ body {
 }
 
 /* ==========================================================================
-   2. SIMPLE LOADING TEXT SCREEN
+   2. SIMPLE LOADING TEXT SCREEN (Bottom-Left Positioned)
    ========================================================================== */
 #loadingScreen {
     position: fixed;
@@ -36,19 +36,33 @@ body {
     background-color: #0f0c1b;
     z-index: 9999;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1s ease-out, visibility 1s ease-out;
+    justify-content: flex-start; /* Left side align */
+    align-items: flex-end;       /* Bottom side align */
+    transition: opacity 1.5s ease-out, visibility 1.5s ease-out;
 }
 
 .loading-text {
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 600;
     color: #ff4d6d;
     text-shadow: 0 0 15px rgba(255, 77, 109, 0.8);
     animation: zoomPulse 1.2s infinite alternate;
-    padding: 20px;
+    margin-left: 25px;      /* Left edge gap */
+    margin-bottom: 60px;    /* Bottom se thoda upper position */
     letter-spacing: 0.5px;
+    text-align: left;
+}
+
+/* Dots Blinking Animation */
+.dots {
+    display: inline-block;
+    animation: blinkDots 1.4s infinite;
+}
+
+@keyframes blinkDots {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
 }
 
 /* Background Effects */
@@ -209,7 +223,6 @@ body {
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
     margin: 0 auto;
 
-    /* Background page.png */
     background-image: url('page.png') !important;
     background-size: 100% 100% !important;
     background-position: center !important;
@@ -222,7 +235,7 @@ body {
     transform: scale(1);
 }
 
-/* INNER TEXT SCROLL CONTAINER (Balloons se door spacing) */
+/* INNER TEXT SCROLL CONTAINER */
 #letterContent {
     position: relative;
     z-index: 5;
@@ -309,10 +322,11 @@ body {
     100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
-@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes zoomPulse { from { transform: scale(0.95); } to { transform: scale(1.05); } }
 @keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
 
 #letterContent::-webkit-scrollbar { width: 3px; }
 #letterContent::-webkit-scrollbar-track { background: transparent; }
 #letterContent::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.2); border-radius: 10px; }
+   
