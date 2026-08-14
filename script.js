@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startMagicalRain() {
-        const items = ['✨', '🦋', '💫', '🌟', '🎈', '🎊', '🎉'];
+        const items = ['✨', '🎈', '✨', '🌟', '🎈', '🌟', '🎈'];
         setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
