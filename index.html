@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio id="tikTokAudio" src="tik tok.m4a"></audio>
-    <audio id="bgMusic" src="bg-music.mp3" loop></audio>
-    <audio id="hbAudio" src="HB.m4a"></audio>
+    <audio id="tikTokAudio" src="tik tok.m4a" preload="auto"></audio>
+    <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
+    <audio id="hbAudio" src="HB.m4a" preload="auto"></audio>
 
-    <!-- Canvas for Balloons & Sparkles Rain -->
+    <!-- Canvas Background Rain -->
     <canvas id="rainCanvas"></canvas>
 
     <!-- Screen 1: Loading (5 Sec) -->
@@ -19,30 +19,29 @@
         <h2 class="loading-text">Something is loading for Gungun......</h2>
     </div>
 
-    <!-- Screen 2: Interactive Gift Box -->
+    <!-- Screen 2: Gift Box Screen -->
     <div id="gift-screen" class="screen">
-        <h2 class="instruction-text">Tap the Gift Box! 🎁</h2>
         <div id="giftBox" class="gift-box">
             <img src="gift.png" alt="Gift Box">
         </div>
     </div>
 
-    <!-- Screen 3: Timer Screen -->
+    <!-- Screen 3: Countdown Timer (11:59:50 to 12:00:00) -->
     <div id="timer-screen" class="screen">
         <h1 id="timer">11:59:50</h1>
     </div>
 
-    <!-- Screen 4: Happy Birthday Wishes -->
+    <!-- Screen 4: Center Happy Birthday Wish -->
     <div id="wish-screen" class="screen">
-        <h1 class="hb-fade-text">Happy Birthday Gungun! 🎉✨</h1>
+        <h1 class="hb-center-text">Happy Birthday</h1>
     </div>
 
-    <!-- Screen 5: Template Image (Shows for 15s) -->
+    <!-- Screen 5: Template Image (15 Seconds) -->
     <div id="template-screen" class="screen">
         <img src="birthday-template.png" alt="Birthday Template" class="template-img">
     </div>
 
-    <!-- Screen 6: Letter Page -->
+    <!-- Screen 6: Letter Screen -->
     <div id="letter-screen" class="screen">
         <div class="letter-container">
             <div id="typewriter" class="ruled-letter"></div>
