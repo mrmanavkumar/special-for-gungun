@@ -7,12 +7,13 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #0d0d1a;
-    color: #fff;
+    color: #333;
     min-height: 100vh;
     overflow: hidden;
     position: relative;
 }
 
+/* Rain Canvas strictly behind all content */
 #rainCanvas {
     position: fixed;
     top: 0;
@@ -20,7 +21,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 100;
+    z-index: 0;
 }
 
 .screen {
@@ -34,7 +35,8 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 1.2s ease-in-out;
+    z-index: 1;
 }
 
 .screen.active {
@@ -56,7 +58,6 @@ body {
 .gift-box {
     width: 180px;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
 .gift-box img {
@@ -82,11 +83,11 @@ body {
     letter-spacing: 2px;
 }
 
-.hb-fade-text {
-    font-size: 2.5rem;
+.hb-center-text {
+    font-size: 3rem;
     color: #ff758c;
-    text-shadow: 0 0 15px rgba(255, 117, 140, 0.8);
-    animation: fadeIn 2s ease-in;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 117, 140, 0.9);
 }
 
 #template-screen {
@@ -99,37 +100,35 @@ body {
     border-radius: 15px;
 }
 
-/* Letter Screen Styling */
+/* Original Transparent Parchment Letter Look */
 #letter-screen {
     background: url('page.png') no-repeat center center/cover;
-    justify-content: flex-end; /* Ballon thoda side hone ki vajah se right side push */
 }
 
 .letter-container {
-    width: 85%;
-    max-width: 500px;
+    width: 88%;
+    max-width: 450px;
     height: 70vh;
-    margin-right: 5%; /* Side placement */
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    border-radius: 12px;
-    padding: 20px;
+    background: rgba(255, 243, 238, 0.88); /* Photo 1 jesa light parchment transparent background */
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
     overflow-y: auto;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    border: 1.5px solid rgba(230, 190, 190, 0.6);
 }
 
 .ruled-letter {
-    font-size: 1.1rem;
-    line-height: 2.2rem; /* Line spacing match */
-    color: #fff;
+    font-size: 1.05rem;
+    line-height: 2.2rem;
+    color: #4a3525; /* Original dark readable brown text */
     white-space: pre-wrap;
-    /* Line effect under every line */
-    background: linear-gradient(transparent 95%, rgba(255, 255, 255, 0.4) 100%);
+    background: linear-gradient(transparent 95%, rgba(200, 150, 150, 0.3) 100%);
     background-size: 100% 2.2rem;
 }
 
 .cursor {
     color: #ff4d6d;
+    font-weight: bold;
     animation: blinkCursor 0.8s infinite;
 }
 
@@ -137,4 +136,3 @@ body {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
-
