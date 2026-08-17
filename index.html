@@ -3,51 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for Gungun ❤️</title>
+    <title>specially for Gungun💖</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio id="tikTokAudio" src="tik tok.m4a" preload="auto"></audio>
-    <audio id="bgMusic" src="bg-music.mp3" loop preload="auto"></audio>
-    <audio id="hbAudio" src="HB.m4a" preload="auto"></audio>
 
-    <!-- Canvas Background Rain -->
-    <canvas id="rainCanvas"></canvas>
+    <!-- BACKGROUND STARS EFFECT & CANVAS SYSTEM -->
+    <div class="stars"></div>
+    <canvas id="effectCanvas"></canvas>
+    <div id="rainContainer"></div>
 
-    <!-- Screen 1: Loading (5 Sec) -->
-    <div id="loading-screen" class="screen active">
-        <h2 class="loading-text">Something is loading for Gungun......</h2>
-    </div>
+    <!-- AUDIO FILES SYSTEM -->
+    <audio id="countdownAudio" src="tik tok.m4a" preload="auto"></audio>
+    <audio id="bgMusic" src="HB.m4a" preload="auto" loop></audio>
 
-    <!-- Screen 2: Gift Box Screen -->
-    <div id="gift-screen" class="screen">
-        <div id="giftBox" class="gift-box">
-            <img src="gift.png" alt="Gift Box">
+    <!-- MAIN INTERACTIVE CONTAINER -->
+    <div class="container">
+
+        <!-- STEP 1 & 2: GIFT BOX SECTION WRAPPED IN DIRECT LINK -->
+        <div id="giftSection">
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper">
+                <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
+                <p class="tap-text">Tap on the Gift Box to Open! ✨</p>
+            </a>
         </div>
-    </div>
 
-    <!-- Screen 3: Countdown Timer (11:59:50 to 12:00:00) -->
-    <div id="timer-screen" class="screen">
-        <h1 id="timer">11:59:50</h1>
-    </div>
-
-    <!-- Screen 4: Center Happy Birthday Wish -->
-    <div id="wish-screen" class="screen">
-        <h1 class="hb-center-text">Happy Birthday</h1>
-    </div>
-
-    <!-- Screen 5: Template Image (15 Seconds) -->
-    <div id="template-screen" class="screen">
-        <img src="birthday-template.png" alt="Birthday Template" class="template-img">
-    </div>
-
-    <!-- Screen 6: Letter Screen -->
-    <div id="letter-screen" class="screen">
-        <div class="letter-container">
-            <div id="typewriter" class="ruled-letter"></div>
+        <!-- STEP 3: COUNTDOWN TIMER SCREEN (11:59:50 -> 12:00:00) -->
+        <div id="countdownScreen" class="hidden">
+            <div id="countdownNumber">11:59:50</div>
         </div>
+
+        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
+        <div id="bdayGreetingScreen" class="hidden">
+            <h1 class="bday-text">HAPPY BIRTHDAY</h1>
+        </div>
+
+        <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
+        <div id="templateSection" class="hidden template-wrapper">
+            <img class="template-img" src="birthday-template.png" alt="Birthday Special Memory">
+        </div>
+
+        <!-- STEP 6: NOTEBOOK LETTER BOX (PAGE.PNG BACKGROUND) -->
+        <div id="messageSection" class="hidden scroll-letter">
+            <div id="typewriterText" class="letter-text"></div>
+        </div>
+
     </div>
 
+    <!-- Main Logic Script Engine -->
     <script src="script.js"></script>
 </body>
 </html>
