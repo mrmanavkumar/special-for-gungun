@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Canvas Rain System
+    // Canvas Rain Setup
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -36,12 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animateRain);
     }
 
-    // Audio Controls
+    // Audio & HTML Handles
     const tikTokAudio = document.getElementById('tikTokAudio');
     const bgMusic = document.getElementById('bgMusic');
     const hbAudio = document.getElementById('hbAudio');
 
-    // Screens
     const loadingScreen = document.getElementById('loading-screen');
     const giftScreen = document.getElementById('gift-screen');
     const giftBox = document.getElementById('giftBox');
@@ -52,17 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const letterScreen = document.getElementById('letter-screen');
     const typewriterElement = document.getElementById('typewriter');
 
-    // Letter Content (Aap yahan apna real message likh sakte hain)
-    const letterText = `Dear Gungun,\n\nHappy Birthday! ❤️\nAaj ke din tumhare face par humesha smile honi chahiye.\nTum mere liye bohot special ho, and I wish tumko duniya ki saari khushiyan mile.\nAlways stay happy and keep glowing! ✨`;
+    // Exact Text from Screenshot 1
+    const letterText = `🌹 SPECIAL WISHES FOR GUNGUN 🦋\n\nGungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.\n\nHumehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺\n\nOnce again happy birthday 🎊✨\n\nTake care of yourself. 🌸✨\n\n- MANAV`;
 
-    // Step 1: 5-Second Loading Screen
+    // 1. Loading Screen (5 sec)
     setTimeout(() => {
         switchScreen(loadingScreen, giftScreen);
         createRain();
         animateRain();
     }, 5000);
 
-    // Step 2: Gift Box Click -> Shake & Start Timer Sequence
+    // 2. Gift Box Shake & Transition
     giftBox.addEventListener('click', () => {
         giftBox.classList.add('shake');
         setTimeout(() => {
@@ -71,11 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 600);
     });
 
-    // Step 3: Timer 11:59:50 to 12:00:00
+    // 3. Timer Sequence (Only 1 Single Run from 11:59:50 to 12:00:00)
     function startTimerSequence() {
         let seconds = 50;
         const interval = setInterval(() => {
-            // Sound play on every tick
             tikTokAudio.currentTime = 0;
             tikTokAudio.play().catch(() => {});
 
@@ -85,8 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 timerText.innerText = `12:00:00`;
                 clearInterval(interval);
-                
-                // 1.5 sec delay after 12:00:00
+                tikTokAudio.pause(); // Stop Tik Tok sound permanently
+
+                // 1.5 Sec delay after 12:00:00
                 setTimeout(() => {
                     switchScreen(timerScreen, wishScreen);
                     playBirthdayWishes();
@@ -95,14 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // Step 4 & 5: Wish Screen & Audio + Template 15-sec logic
+    // 4. Voice Audio, BG Music & Screen Transitions
     function playBirthdayWishes() {
-        // Voice & Background Music Play
         hbAudio.play().catch(() => {});
         bgMusic.volume = 0.4;
         bgMusic.play().catch(() => {});
 
-        // Show Template Screen after 3 seconds of HB Text
+        // 3 sec baad Birthday Template display hoga
         setTimeout(() => {
             switchScreen(wishScreen, templateScreen);
             
@@ -115,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Step 6: Typewriter Effect for Letter
+    // 5. Typewriter Effect for Letter
     function startTypewriter() {
         let i = 0;
         typewriterElement.innerHTML = '';
@@ -123,17 +121,17 @@ document.addEventListener('DOMContentLoaded', () => {
         function type() {
             if (i < letterText.length) {
                 let char = letterText.charAt(i);
-                if(char === '\n') {
+                if (char === '\n') {
                     typewriterElement.innerHTML += '<br>';
                 } else {
                     typewriterElement.innerHTML += char;
                 }
                 i++;
-                // Keep scroll at bottom automatically
                 let container = document.querySelector('.letter-container');
-                container.scrollTop = container.scrollHeight;
-                
-                setTimeout(type, 60);
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+                setTimeout(type, 50);
             } else {
                 typewriterElement.innerHTML += '<span class="cursor">♥️</span>';
             }
@@ -141,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         type();
     }
 
-    // Helper Function to Switch Screens smoothly
+    // Helper for Smooth Screen Fade
     function switchScreen(fromScreen, toScreen) {
         fromScreen.style.opacity = '0';
         setTimeout(() => {
@@ -150,6 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 toScreen.style.opacity = '1';
             }, 50);
-        }, 1500);
+        }, 1200);
     }
 });
