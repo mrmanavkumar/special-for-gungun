@@ -1,4 +1,171 @@
 /* ==========================================================================
+   1. RESET & BASIC SETUP
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f0c1b;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+/* Fix for hiding non-active screens */
+.hidden {
+    display: none !important;
+}
+
+/* Background Effects */
+.stars {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#effectCanvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+}
+
+/* ==========================================================================
+   2. GIFT BOX SECTION
+   ========================================================================== */
+#giftSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 20;
+}
+
+.gift-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gift-img {
+    width: 80%;
+    max-width: 250px; 
+    height: auto;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+.gift-img.shake-active {
+    animation: intenseShake 0.5s infinite ease-in-out;
+}
+
+.tap-text {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #ff4d6d;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
+    pointer-events: none;
+}
+
+@keyframes intenseShake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-10px) rotate(-6deg) scale(1.05); }
+    30% { transform: translateY(5px) rotate(5deg); }
+    45% { transform: translateY(-6px) rotate(-4deg); }
+    60% { transform: translateY(3px) rotate(3deg); }
+    75% { transform: translateY(-4px) rotate(-2deg); }
+    90% { transform: translateY(1px) rotate(1deg); }
+}
+
+/* ==========================================================================
+   3. TRANSITIONS & SCREEN COMPONENT
+   ========================================================================== */
+#countdownScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#countdownNumber {
+    font-size: 60px;
+    font-weight: 800;
+    color: #ff4d6d;
+    text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
+    animation: zoomPulse 1s infinite alternate;
+}
+
+#bdayGreetingScreen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(15, 12, 27, 0.95);
+    z-index: 100;
+}
+
+.bday-text {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+    animation: zoomInBday 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    width: 90%;
+    text-align: center;
+}
+
+.template-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 2s ease, transform 2s ease; 
+}
+
+.template-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.template-img {
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+}
+
+/* ==========================================================================
    4. NOTEBOOK PAGE WITH PAGE.PNG BACKGROUND
    ========================================================================== */
 .scroll-letter { 
@@ -23,7 +190,6 @@
     transform: scale(1);
 }
 
-/* PAGE.PNG BACKGROUND LAYER */
 .scroll-letter::before {
     content: "";
     position: absolute;
@@ -37,7 +203,6 @@
     border-radius: 24px;
 }
 
-/* CORNER DECORATIONS */
 .scroll-letter::after {
     content: "🌹";
     position: absolute;
@@ -58,7 +223,6 @@
     transform: rotate(10deg);
 }
 
-/* TEXT AREA STYLING OVER PAGE.PNG */
 .letter-text { 
     position: relative; 
     z-index: 5; 
@@ -92,3 +256,22 @@
 .highlight-bday { color: #b33939 !important; font-weight: 700; }
 .signature { font-weight: 700; color: #555 !important; font-style: italic; text-align: right; display: block; margin-top: 13px; }
 .heart-cursor { display: inline-block; color: #ff4d6d; font-size: 14px; margin-left: 2px; animation: heartPulse 0.6s infinite alternate; vertical-align: middle; }
+
+/* ==========================================================================
+   5. EFFECTS & ANIMATIONS
+   ========================================================================== */
+#rainContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+.rain-item { position: absolute; top: -50px; pointer-events: none; animation: fallDown 7s linear infinite; }
+
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
+@keyframes zoomInBday { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+.scroll-letter::-webkit-scrollbar { width: 3px; }
+.scroll-letter::-webkit-scrollbar-track { background: transparent; }
+.scroll-letter::-webkit-scrollbar-thumb { background: rgba(179, 57, 57, 0.15); border-radius: 10px; }
