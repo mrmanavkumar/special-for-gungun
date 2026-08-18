@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (countdownNumber) countdownNumber.textContent = "11:59:50";
 
         const timer = setInterval(() => {
-            // Tick sound plays every second
             if (countdownAudio) {
                 countdownAudio.currentTime = 0;
                 countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
@@ -69,10 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
                 }
             } else {
-                // Exact 12:00:00 Point Reached
                 clearInterval(timer);
                 
-                // Tick Sound Stop
                 if (countdownAudio) {
                     countdownAudio.pause();
                     countdownAudio.currentTime = 0;
@@ -80,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (countdownScreen) countdownScreen.classList.add("hidden");
                 
-                // Happy Birthday Screen & Music Start
                 showBirthdayGreeting();
             }
         }, 1000);
@@ -229,4 +225,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-    
+                
