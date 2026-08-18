@@ -6,7 +6,6 @@
     <title>specially for Gungun💖</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,500;0,700;0,800;1,500&family=Poppins:wght=400;600;800&display=swap" rel="stylesheet">
-    <!-- Main Style Sheet Fix -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -18,16 +17,21 @@
 
     <!-- AUDIO FILES SYSTEM -->
     <audio id="countdownAudio" src="tik tok.m4a" preload="auto"></audio>
-    <audio id="bgMusic" src="HB.m4a" preload="auto" loop></audio>
+    <audio id="hbdVoice" src="HB.m4a" preload="auto"></audio> <!-- ONLY FOR HAPPY BIRTHDAY VOICE -->
+    <audio id="bgMusic" src="bg-music.mp3" preload="auto" loop></audio> <!-- MAIN BACKGROUND MUSIC -->
 
     <!-- MAIN INTERACTIVE CONTAINER -->
     <div class="container">
 
         <!-- STEP 1 & 2: GIFT BOX SECTION -->
         <div id="giftSection">
-            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper">
+            <div id="loadingBox" class="loading-center">
+                Something is loading for Gungun... ✨
+            </div>
+            
+            <a href="javascript:void(0)" id="mainLink" class="gift-link-wrapper gift-fade-init hidden">
                 <img id="giftBox" class="gift-img" src="gift.png" alt="Special Gift for You">
-                <p class="tap-text">Tap on the Gift Box to Open! ✨</p>
+                <p id="tapText" class="tap-text">Tap on the Gift Box to Open! ✨</p>
             </a>
         </div>
 
@@ -36,9 +40,9 @@
             <div id="countdownNumber">11:59:50</div>
         </div>
 
-        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN -->
+        <!-- STEP 4: ZOOM IN HAPPY BIRTHDAY GREETING SCREEN WITH FADE -->
         <div id="bdayGreetingScreen" class="hidden">
-            <h1 class="bday-text">HAPPY BIRTHDAY</h1>
+            <h1 class="bday-text fade-in-out">HAPPY BIRTHDAY</h1>
         </div>
 
         <!-- STEP 5: TEMPLATE TRANSITION IMAGE -->
