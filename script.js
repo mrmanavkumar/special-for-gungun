@@ -3,17 +3,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
     const giftBox = document.getElementById("giftBox");
+    const loadingBox = document.getElementById("loadingBox");
     const countdownScreen = document.getElementById("countdownScreen");
     const countdownNumber = document.getElementById("countdownNumber");
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
     const bgMusic = document.getElementById("bgMusic");
+    const hbdVoice = document.getElementById("hbdVoice");
     const countdownAudio = document.getElementById("countdownAudio");
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
     let isTriggered = false;
+
+    // STEP 1: 5 SECONDS LOADING LOGIC -> Then Fade-In Gift Box
+    setTimeout(() => {
+        if (loadingBox) loadingBox.classList.add("hidden");
+        
+        if (mainLink) {
+            mainLink.classList.remove("hidden");
+            setTimeout(() => {
+                mainLink.classList.add("show-fade");
+            }, 50);
+        }
+    }, 5000);
 
     // Direct Link Click Handler
     function handleLinkClick(e) {
@@ -21,18 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isTriggered) return;
         isTriggered = true;
 
-        // Audio unlock for Mobile & Web browsers
+        // Unlock audio context for mobile browsers
         if (bgMusic) {
             bgMusic.play().then(() => {
-                bgMusic.pause(); 
-                bgMusic.currentTime = 0; 
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
             }).catch(err => console.log("Audio unlock:", err));
         }
 
-        // Trigger Shake Animation on Box Image
         if (giftBox) giftBox.classList.add("shake-active");
 
-        // Transition to Countdown
         setTimeout(() => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
@@ -44,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     }
 
-    // Bind event to the link wrapper
     if (mainLink) {
         mainLink.addEventListener("click", handleLinkClick);
     }
@@ -52,20 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
         let seconds = 50;
-
         if (countdownNumber) countdownNumber.textContent = "11:59:50";
 
         const timer = setInterval(() => {
-            if (countdownAudio) {
-                countdownAudio.currentTime = 0;
-                countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
-            }
-
-            seconds++;
-
             if (seconds < 60) {
-                if (countdownNumber) {
-                    countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
+                if (countdownAudio) {
+                    countdownAudio.currentTime = 0;
+                    countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
+                }
+                
+                seconds++;
+                
+                if (seconds === 60) {
+                    if (countdownNumber) countdownNumber.textContent = "12:00:00";
+                } else {
+                    if (countdownNumber) countdownNumber.textContent = `11:59:${seconds.toString().padStart(2, '0')}`;
                 }
             } else {
                 clearInterval(timer);
@@ -75,17 +87,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     countdownAudio.currentTime = 0;
                 }
 
-                if (countdownScreen) countdownScreen.classList.add("hidden");
-                
-                showBirthdayGreeting();
+                setTimeout(() => {
+                    if (countdownScreen) countdownScreen.classList.add("hidden");
+                    showBirthdayGreeting();
+                }, 1000);
             }
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + Music Starts
+    // STEP 4: Happy Birthday Screen + HB.m4a (1 time Voice) + bg-music.mp3 (Background)
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
 
+        // Play HB.m4a (Voice Wish) ONLY ONCE
+        if (hbdVoice) {
+            hbdVoice.currentTime = 0;
+            hbdVoice.play().catch(err => console.log("Voice play failed:", err));
+        }
+
+        // Start Continuous Background Music (bg-music.mp3)
         if (bgMusic) {
             bgMusic.play().catch(err => console.log("Music play failed:", err));
         }
@@ -112,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 showLetterPage();
             }
-        }, 3000);
+        }, 3500);
     }
 
     // STEP 6: Notebook Letter Screen Arrival
@@ -225,4 +245,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+                    
