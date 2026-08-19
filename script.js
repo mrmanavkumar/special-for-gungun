@@ -1,59 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Helper function to safely get element
-    const getEl = (id) => document.getElementById(id);
-
-    const giftSection = getEl("giftSection");
-    const mainLink = getEl("mainLink");
-    const giftBox = getEl("giftBox");
-    const loadingBox = getEl("loadingBox");
-    const countdownScreen = getEl("countdownScreen");
-    const countdownNumber = getEl("countdownNumber");
-    const bdayGreetingScreen = getEl("bdayGreetingScreen");
-    const templateSection = getEl("templateSection");
-    const messageSection = getEl("messageSection");
-    const bgMusic = getEl("bgMusic");
-    const hbdVoice = getEl("hbdVoice");
-    const countdownAudio = getEl("countdownAudio");
-    const rainContainer = getEl("rainContainer");
-    const effectCanvas = getEl("effectCanvas");
+    // DOM Elements
+    const giftSection = document.getElementById("giftSection");
+    const mainLink = document.getElementById("mainLink");
+    const giftBox = document.getElementById("giftBox");
+    const loadingBox = document.getElementById("loadingBox");
+    const countdownScreen = document.getElementById("countdownScreen");
+    const countdownNumber = document.getElementById("countdownNumber");
+    const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
+    const templateSection = document.getElementById("templateSection");
+    const messageSection = document.getElementById("messageSection");
+    const bgMusic = document.getElementById("bgMusic");
+    const hbdVoice = document.getElementById("hbdVoice");
+    const countdownAudio = document.getElementById("countdownAudio");
+    const rainContainer = document.getElementById("rainContainer");
+    const effectCanvas = document.getElementById("effectCanvas");
 
     let isTriggered = false;
 
     // STEP 1: 5 SECONDS LOADING LOGIC
     setTimeout(() => {
         if (loadingBox) loadingBox.style.display = "none";
-        
         if (mainLink) {
             mainLink.classList.remove("hidden");
             mainLink.style.display = "flex";
-            setTimeout(() => {
-                mainLink.classList.add("show-fade");
-            }, 50);
-        } else if (giftBox) {
-            giftBox.classList.remove("hidden");
-            giftBox.style.display = "block";
+            setTimeout(() => mainLink.classList.add("show-fade"), 50);
         }
     }, 5000);
 
-    // Direct Click Handler (Gift Box Click)
+    // Direct Link / Gift Box Click Handler
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Unlock audio for mobile / Insta browsers
+        // Unlock audio context for mobile browsers
         if (bgMusic) {
             bgMusic.play().then(() => {
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
-            }).catch(err => console.log("BgMusic unlock:", err));
+            }).catch(err => console.log("BgMusic unlock err:", err));
         }
 
         if (hbdVoice) {
             hbdVoice.play().then(() => {
                 hbdVoice.pause();
                 hbdVoice.currentTime = 0;
-            }).catch(err => console.log("HbdVoice unlock:", err));
+            }).catch(err => console.log("HbdVoice unlock err:", err));
         }
 
         if (giftBox) giftBox.classList.add("shake-active");
@@ -70,26 +62,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     }
 
-    if (mainLink) {
-        mainLink.addEventListener("click", handleLinkClick);
-    } else if (giftBox) {
-        giftBox.addEventListener("click", handleLinkClick);
-    }
+    if (mainLink) mainLink.addEventListener("click", handleLinkClick);
+    if (giftBox) giftBox.addEventListener("click", handleLinkClick);
 
-    // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
-        function startCountdownTimer() {
+    // STEP 3: Countdown Timer (Smooth Audio Sync)
+    function startCountdownTimer() {
         let seconds = 50;
         if (countdownNumber) countdownNumber.textContent = "11:59:50";
 
-        // Sound ko alag se ek baar chalaya hai taaki loop me ruk-ruk kar na baje
-        const timerSound = new Audio("tik tok.m4a");
-        timerSound.loop = true;
-        timerSound.play().catch(err => console.log("Sound play error:", err));
+        if (countdownAudio) {
+            try {
+                countdownAudio.currentTime = 0;
+                countdownAudio.loop = true;
+                countdownAudio.play().catch(e => console.log("Sound block:", e));
+            } catch(e) {}
+        }
 
         const timer = setInterval(() => {
             if (seconds < 60) {
                 seconds++;
-                
                 if (seconds === 60) {
                     if (countdownNumber) countdownNumber.textContent = "12:00:00";
                 } else {
@@ -98,9 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 
-                // Countdown khatam hone par sound stop
-                timerSound.pause();
-                timerSound.currentTime = 0;
+                if (countdownAudio) {
+                    try {
+                        countdownAudio.pause();
+                        countdownAudio.loop = false;
+                        countdownAudio.currentTime = 0;
+                    } catch(e) {}
+                }
 
                 setTimeout(() => {
                     if (countdownScreen) countdownScreen.classList.add("hidden");
@@ -108,12 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 1000);
             }
         }, 1000);
-        }
-    
-        }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + Audios
+    // STEP 4: Happy Birthday Screen
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
@@ -124,13 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 hbdVoice.currentTime = 0;
                 hbdVoice.play().catch(e => {});
-            } catch(e){}
+            } catch(e) {}
         }
 
         if (bgMusic) {
             try {
                 bgMusic.play().catch(e => {});
-            } catch(e){}
+            } catch(e) {}
         }
 
         initConfetti();
@@ -142,11 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (templateSection) {
                 templateSection.classList.remove("hidden");
                 templateSection.style.display = "flex";
-                setTimeout(() => { templateSection.classList.add("active"); }, 100);
+                setTimeout(() => templateSection.classList.add("active"), 100);
                 
                 setTimeout(() => {
                     templateSection.classList.remove("active");
-                    
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
@@ -159,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-    // STEP 6: Notebook Letter Screen
+    // STEP 6: Letter Screen
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -192,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Typewriter Engine
     async function typeWriterEffect() {
-        const targetDiv = getEl("typewriterText");
+        const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) return;
 
         const letterData = [
@@ -270,4 +261,3 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
