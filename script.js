@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Rain Particle Generator
     function startMagicalRain() {
-        const items = ['🌸', '❤️', '🌹', '💕', '✨', '💝'];
+        const items = ['🌸', '❤️', '🎈', '🌸', '🎈', '♥️','✨','✨'];
         setInterval(() => {
             const element = document.createElement('div');
             element.classList.add('rain-item');
@@ -193,8 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
-
-                if (scrollBox) scrollBox.scrollTop = scrollBox.scrollHeight;
+if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
+                
                 await new Promise(res => setTimeout(res, 50)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
