@@ -1,4 +1,4 @@
-Document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -251,3 +251,4 @@ Document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
+                            
