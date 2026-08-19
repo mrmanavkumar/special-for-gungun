@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -29,18 +29,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 5000);
 
-    // Direct Link Click Handler
+    // Direct Link Click Handler (Audio Context Unlock for Mobile/Insta Browsers)
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Unlock audio context for mobile browsers
+        // Unlock all audio files on user tap (Essential for In-App Browsers)
         if (bgMusic) {
             bgMusic.play().then(() => {
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
-            }).catch(err => console.log("Audio unlock:", err));
+            }).catch(err => console.log("BgMusic unlock err:", err));
+        }
+
+        if (hbdVoice) {
+            hbdVoice.play().then(() => {
+                hbdVoice.pause();
+                hbdVoice.currentTime = 0;
+            }).catch(err => console.log("HbdVoice unlock err:", err));
         }
 
         if (giftBox) giftBox.classList.add("shake-active");
@@ -167,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Typewriter Engine over page.png
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        const scrollBox = document.getElementById("messageSection");
         if (!targetDiv) return;
 
         const letterData = [
@@ -193,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
-if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
+                if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
                 
                 await new Promise(res => setTimeout(res, 50)); 
             }
@@ -245,4 +251,3 @@ if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
         draw();
     }
 });
-                    
