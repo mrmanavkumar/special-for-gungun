@@ -1,53 +1,59 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM Elements
-    const giftSection = document.getElementById("giftSection");
-    const mainLink = document.getElementById("mainLink");
-    const giftBox = document.getElementById("giftBox");
-    const loadingBox = document.getElementById("loadingBox");
-    const countdownScreen = document.getElementById("countdownScreen");
-    const countdownNumber = document.getElementById("countdownNumber");
-    const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
-    const templateSection = document.getElementById("templateSection");
-    const messageSection = document.getElementById("messageSection");
-    const bgMusic = document.getElementById("bgMusic");
-    const hbdVoice = document.getElementById("hbdVoice");
-    const countdownAudio = document.getElementById("countdownAudio");
-    const rainContainer = document.getElementById("rainContainer");
-    const effectCanvas = document.getElementById("effectCanvas");
+    // Helper function to safely get element
+    const getEl = (id) => document.getElementById(id);
+
+    const giftSection = getEl("giftSection");
+    const mainLink = getEl("mainLink");
+    const giftBox = getEl("giftBox");
+    const loadingBox = getEl("loadingBox");
+    const countdownScreen = getEl("countdownScreen");
+    const countdownNumber = getEl("countdownNumber");
+    const bdayGreetingScreen = getEl("bdayGreetingScreen");
+    const templateSection = getEl("templateSection");
+    const messageSection = getEl("messageSection");
+    const bgMusic = getEl("bgMusic");
+    const hbdVoice = getEl("hbdVoice");
+    const countdownAudio = getEl("countdownAudio");
+    const rainContainer = getEl("rainContainer");
+    const effectCanvas = getEl("effectCanvas");
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC -> Then Fade-In Gift Box
+    // STEP 1: 5 SECONDS LOADING LOGIC
     setTimeout(() => {
-        if (loadingBox) loadingBox.classList.add("hidden");
+        if (loadingBox) loadingBox.style.display = "none";
         
         if (mainLink) {
             mainLink.classList.remove("hidden");
+            mainLink.style.display = "flex";
             setTimeout(() => {
                 mainLink.classList.add("show-fade");
             }, 50);
+        } else if (giftBox) {
+            giftBox.classList.remove("hidden");
+            giftBox.style.display = "block";
         }
     }, 5000);
 
-    // Direct Link Click Handler (Audio Context Unlock for Mobile/Insta Browsers)
+    // Direct Click Handler (Gift Box Click)
     function handleLinkClick(e) {
         if (e) e.preventDefault();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Unlock all audio files on user tap (Essential for In-App Browsers)
+        // Unlock audio for mobile / Insta browsers
         if (bgMusic) {
             bgMusic.play().then(() => {
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
-            }).catch(err => console.log("BgMusic unlock err:", err));
+            }).catch(err => console.log("BgMusic unlock:", err));
         }
 
         if (hbdVoice) {
             hbdVoice.play().then(() => {
                 hbdVoice.pause();
                 hbdVoice.currentTime = 0;
-            }).catch(err => console.log("HbdVoice unlock err:", err));
+            }).catch(err => console.log("HbdVoice unlock:", err));
         }
 
         if (giftBox) giftBox.classList.add("shake-active");
@@ -56,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (giftSection) giftSection.classList.add("hidden");
             if (countdownScreen) {
                 countdownScreen.classList.remove("hidden");
+                countdownScreen.style.display = "flex";
                 startCountdownTimer(); 
             } else {
                 showBirthdayGreeting();
@@ -65,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mainLink) {
         mainLink.addEventListener("click", handleLinkClick);
+    } else if (giftBox) {
+        giftBox.addEventListener("click", handleLinkClick);
     }
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
@@ -75,8 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const timer = setInterval(() => {
             if (seconds < 60) {
                 if (countdownAudio) {
-                    countdownAudio.currentTime = 0;
-                    countdownAudio.play().catch(err => console.log("Countdown sound blocked:", err));
+                    try {
+                        countdownAudio.currentTime = 0;
+                        countdownAudio.play().catch(e => {});
+                    } catch(e){}
                 }
                 
                 seconds++;
@@ -90,8 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearInterval(timer);
                 
                 if (countdownAudio) {
-                    countdownAudio.pause();
-                    countdownAudio.currentTime = 0;
+                    try {
+                        countdownAudio.pause();
+                        countdownAudio.currentTime = 0;
+                    } catch(e){}
                 }
 
                 setTimeout(() => {
@@ -102,19 +115,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen + HB.m4a (1 time Voice) + bg-music.mp3 (Background)
+    // STEP 4: Happy Birthday Screen + Audios
     function showBirthdayGreeting() {
-        if (bdayGreetingScreen) bdayGreetingScreen.classList.remove("hidden");
-
-        // Play HB.m4a (Voice Wish) ONLY ONCE
-        if (hbdVoice) {
-            hbdVoice.currentTime = 0;
-            hbdVoice.play().catch(err => console.log("Voice play failed:", err));
+        if (bdayGreetingScreen) {
+            bdayGreetingScreen.classList.remove("hidden");
+            bdayGreetingScreen.style.display = "flex";
         }
 
-        // Start Continuous Background Music (bg-music.mp3)
+        if (hbdVoice) {
+            try {
+                hbdVoice.currentTime = 0;
+                hbdVoice.play().catch(e => {});
+            } catch(e){}
+        }
+
         if (bgMusic) {
-            bgMusic.play().catch(err => console.log("Music play failed:", err));
+            try {
+                bgMusic.play().catch(e => {});
+            } catch(e){}
         }
 
         initConfetti();
@@ -125,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
+                templateSection.style.display = "flex";
                 setTimeout(() => { templateSection.classList.add("active"); }, 100);
                 
                 setTimeout(() => {
@@ -142,10 +161,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-    // STEP 6: Notebook Letter Screen Arrival
+    // STEP 6: Notebook Letter Screen
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
+            messageSection.style.display = "block";
             setTimeout(() => {
                 messageSection.classList.add("active");
                 typeWriterEffect();
@@ -155,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Rain Particle Generator
     function startMagicalRain() {
+        if (!rainContainer) return;
         const items = ['🌸', '❤️', '🎈', '🌸', '🎈', '♥️','✨','✨'];
         setInterval(() => {
             const element = document.createElement('div');
@@ -166,14 +187,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const fallDuration = Math.random() * 5 + 4; 
             element.style.animationDuration = fallDuration + 's';
             
-            if (rainContainer) rainContainer.appendChild(element);
+            rainContainer.appendChild(element);
             setTimeout(() => { element.remove(); }, fallDuration * 1000);
         }, 250); 
     }
 
-    // Typewriter Engine over page.png
+    // Typewriter Engine
     async function typeWriterEffect() {
-        const targetDiv = document.getElementById("typewriterText");
+        const targetDiv = getEl("typewriterText");
         if (!targetDiv) return;
 
         const letterData = [
@@ -251,4 +272,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                            
+                
