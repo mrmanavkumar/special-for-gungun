@@ -77,19 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
-    function startCountdownTimer() {
+        function startCountdownTimer() {
         let seconds = 50;
         if (countdownNumber) countdownNumber.textContent = "11:59:50";
 
+        // Sound ko alag se ek baar chalaya hai taaki loop me ruk-ruk kar na baje
+        const timerSound = new Audio("tik tok.m4a");
+        timerSound.loop = true;
+        timerSound.play().catch(err => console.log("Sound play error:", err));
+
         const timer = setInterval(() => {
             if (seconds < 60) {
-                if (countdownAudio) {
-                    try {
-                        countdownAudio.currentTime = 0;
-                        countdownAudio.play().catch(e => {});
-                    } catch(e){}
-                }
-                
                 seconds++;
                 
                 if (seconds === 60) {
@@ -100,18 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(timer);
                 
-                if (countdownAudio) {
-                    try {
-                        countdownAudio.pause();
-                        countdownAudio.currentTime = 0;
-                    } catch(e){}
-                }
+                // Countdown khatam hone par sound stop
+                timerSound.pause();
+                timerSound.currentTime = 0;
 
                 setTimeout(() => {
                     if (countdownScreen) countdownScreen.classList.add("hidden");
                     showBirthdayGreeting();
                 }, 1000);
             }
+        }, 1000);
+        }
+    
         }, 1000);
     }
 
