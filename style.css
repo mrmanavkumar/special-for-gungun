@@ -251,11 +251,13 @@ body {
     color: #b33939 !important; 
     font-size: 16px; 
     font-weight: 800; 
-    text-align: center !important; 
+    text-align: left !important; 
     margin-bottom: 26px; 
     line-height: 1.2;
     border-bottom: 2px dashed #f5c2bb;
-    padding-bottom: 10px;
+       padding-bottom: 10px;
+    padding-right: 45px;
+   
 }
 
 .letter-text p {
