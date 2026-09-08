@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -9,63 +9,90 @@ document.addEventListener("DOMContentLoaded", () => {
     const bdayGreetingScreen = document.getElementById("bdayGreetingScreen");
     const templateSection = document.getElementById("templateSection");
     const messageSection = document.getElementById("messageSection");
+    const lastMsgScreen = document.getElementById("lastMsgScreen");
+    const posterSection = document.getElementById("posterSection");
+    
+    // Audio Elements
     const bgMusic = document.getElementById("bgMusic");
     const hbdVoice = document.getElementById("hbdVoice");
     const countdownAudio = document.getElementById("countdownAudio");
+    const devaMusic = document.getElementById("devaMusic");
+    
     const rainContainer = document.getElementById("rainContainer");
     const effectCanvas = document.getElementById("effectCanvas");
 
     let isTriggered = false;
 
-    // STEP 1: 5 SECONDS LOADING LOGIC
+    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION
     setTimeout(() => {
-        if (loadingBox) loadingBox.style.display = "none";
-        if (mainLink) {
-            mainLink.classList.remove("hidden");
-            mainLink.style.display = "flex";
-            setTimeout(() => mainLink.classList.add("show-fade"), 50);
+        const loadingText = document.getElementById("loadingText");
+        
+        // 1. Text Fade Out (1.5s)
+        if (loadingText) {
+            loadingText.style.transition = "opacity 1.5s ease";
+            loadingText.style.opacity = "0";
         }
-    }, 5000);
 
-    // Direct Link / Gift Box Click Handler
+        // 2. Exact 2s Pause ke baad Text remove & Gift Box Show
+        setTimeout(() => {
+            if (loadingBox) loadingBox.style.display = "none";
+            
+            if (mainLink) {
+                mainLink.style.display = "flex";
+                mainLink.style.transition = "opacity 2s ease";
+                
+                setTimeout(() => {
+                    mainLink.style.opacity = "1";
+                }, 50);
+            }
+        }, 2000);
+    }, 4000);
+
+    // Audio Unlocker for Mobile
+    function unlockAudio(audioEl) {
+        if (!audioEl) return;
+        audioEl.play().then(() => {
+            audioEl.pause();
+            audioEl.currentTime = 0;
+        }).catch(() => {});
+    }
+
+    // STEP 2: Gift Box Click Handler
     function handleLinkClick(e) {
-        if (e) e.preventDefault();
+        if (e) e.stopPropagation();
         if (isTriggered) return;
         isTriggered = true;
 
-        // Unlock audio context for mobile browsers
-        if (bgMusic) {
-            bgMusic.play().then(() => {
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
-            }).catch(err => console.log("BgMusic unlock err:", err));
-        }
-
-        if (hbdVoice) {
-            hbdVoice.play().then(() => {
-                hbdVoice.pause();
-                hbdVoice.currentTime = 0;
-            }).catch(err => console.log("HbdVoice unlock err:", err));
-        }
+        unlockAudio(bgMusic);
+        unlockAudio(hbdVoice);
+        unlockAudio(devaMusic);
 
         if (giftBox) giftBox.classList.add("shake-active");
 
+        startMagicalRain();
+
+        // Smooth Fade Out of Gift Section
         setTimeout(() => {
-            if (giftSection) giftSection.classList.add("hidden");
-            if (countdownScreen) {
-                countdownScreen.classList.remove("hidden");
-                countdownScreen.style.display = "flex";
-                startCountdownTimer(); 
-            } else {
-                showBirthdayGreeting();
+            if (giftSection) {
+                giftSection.style.transition = "opacity 1s ease";
+                giftSection.style.opacity = "0";
+                setTimeout(() => {
+                    giftSection.style.display = "none";
+                    if (countdownScreen) {
+                        countdownScreen.classList.remove("hidden");
+                        startCountdownTimer(); 
+                    } else {
+                        showBirthdayGreeting();
+                    }
+                }, 1000);
             }
-        }, 1500);
+        }, 1200);
     }
 
     if (mainLink) mainLink.addEventListener("click", handleLinkClick);
     if (giftBox) giftBox.addEventListener("click", handleLinkClick);
 
-    // STEP 3: Countdown Timer (Smooth Audio Sync)
+    // STEP 3: Countdown Timer (11:59:50 -> 12:00:00)
     function startCountdownTimer() {
         let seconds = 50;
         if (countdownNumber) countdownNumber.textContent = "11:59:50";
@@ -73,14 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (countdownAudio) {
             try {
                 countdownAudio.currentTime = 0;
-                countdownAudio.loop = true;
-                countdownAudio.play().catch(e => console.log("Sound block:", e));
+                countdownAudio.play().catch(() => {});
             } catch(e) {}
         }
 
         const timer = setInterval(() => {
             if (seconds < 60) {
                 seconds++;
+                if (countdownAudio) {
+                    try {
+                        countdownAudio.currentTime = 0;
+                        countdownAudio.play().catch(() => {});
+                    } catch(e) {}
+                }
                 if (seconds === 60) {
                     if (countdownNumber) countdownNumber.textContent = "12:00:00";
                 } else {
@@ -92,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (countdownAudio) {
                     try {
                         countdownAudio.pause();
-                        countdownAudio.loop = false;
                         countdownAudio.currentTime = 0;
                     } catch(e) {}
                 }
@@ -109,31 +140,29 @@ document.addEventListener("DOMContentLoaded", () => {
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
-            bdayGreetingScreen.style.display = "flex";
         }
 
         if (hbdVoice) {
             try {
                 hbdVoice.currentTime = 0;
-                hbdVoice.play().catch(e => {});
+                hbdVoice.play().catch(() => {});
             } catch(e) {}
         }
 
         if (bgMusic) {
             try {
-                bgMusic.play().catch(e => {});
+                bgMusic.currentTime = 0;
+                bgMusic.play().catch(() => {});
             } catch(e) {}
         }
 
         initConfetti();
-        startMagicalRain();
 
         setTimeout(() => {
             if (bdayGreetingScreen) bdayGreetingScreen.classList.add("hidden");
             
             if (templateSection) {
                 templateSection.classList.remove("hidden");
-                templateSection.style.display = "flex";
                 setTimeout(() => templateSection.classList.add("active"), 100);
                 
                 setTimeout(() => {
@@ -141,20 +170,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
-                    }, 2000); 
+                    }, 1500); 
                 }, 15000); 
-                
             } else {
                 showLetterPage();
             }
         }, 3500);
     }
 
-    // STEP 6: Letter Screen
+    // STEP 5: Notebook Letter Page (Updated: Removed Birthday Line)
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
-            messageSection.style.display = "block";
             setTimeout(() => {
                 messageSection.classList.add("active");
                 typeWriterEffect();
@@ -162,44 +189,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rain Particle Generator
-    function startMagicalRain() {
-        if (!rainContainer) return;
-        const items = ['🌸', '❤️', '🎈', '🌸', '🎈', '♥️','✨','✨'];
-        setInterval(() => {
-            const element = document.createElement('div');
-            element.classList.add('rain-item');
-            element.innerHTML = items[Math.floor(Math.random() * items.length)];
-            element.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 18 + 12; 
-            element.style.fontSize = size + 'px';
-            const fallDuration = Math.random() * 5 + 4; 
-            element.style.animationDuration = fallDuration + 's';
-            
-            rainContainer.appendChild(element);
-            setTimeout(() => { element.remove(); }, fallDuration * 1000);
-        }, 250); 
-    }
-
     // Typewriter Engine
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
-        if (!targetDiv) return;
+        if (!targetDiv) {
+            handleMusicEndTransition();
+            return;
+        }
 
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
             { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
             { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Once again happy birthday 🎊✨' },
-            { type: 'p', text: 'Take care of yourself. 🌸✨', className: 'signature' },
-            { type: 'p', text: '- MANAV', className: 'signature' }
+            { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
+            { type: 'p', text: '- MANAV', alignRight: true }
         ];
 
         targetDiv.innerHTML = ""; 
 
         for (const data of letterData) {
             const element = document.createElement(data.type);
-            if (data.className) element.classList.add(data.className);
+            if (data.alignRight) {
+                element.style.textAlign = "right";
+                element.style.marginTop = "10px";
+            }
             targetDiv.appendChild(element);
 
             let rawText = data.text;
@@ -211,12 +224,163 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
                 if (targetDiv) targetDiv.scrollTop = targetDiv.scrollHeight;
                 
-                await new Promise(res => setTimeout(res, 50)); 
+                await new Promise(res => setTimeout(res, 45)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
-            await new Promise(res => setTimeout(res, 400));
+            await new Promise(res => setTimeout(res, 350));
         }
+
+        handleMusicEndTransition();
+    }
+
+    // STEP 6: Music End Transition
+    function handleMusicEndTransition() {
+        let hasTransitioned = false;
+
+        const triggerNext = () => {
+            if (hasTransitioned) return;
+            hasTransitioned = true;
+            setTimeout(() => {
+                if (messageSection) messageSection.classList.remove("active");
+                setTimeout(() => {
+                    if (messageSection) messageSection.classList.add("hidden");
+                    showLastMessageScreen();
+                }, 1500);
+            }, 4000);
+        };
+
+        if (bgMusic && !bgMusic.paused) {
+            bgMusic.onended = triggerNext;
+        } else {
+            setTimeout(triggerNext, 4000);
+        }
+    }
+
+    // STEP 7: Last Message Screen & Deva Music
+    function showLastMessageScreen() {
+        if (lastMsgScreen) {
+            lastMsgScreen.classList.remove("hidden");
+            setTimeout(() => lastMsgScreen.classList.add("active"), 100);
+        }
+
+        if (devaMusic) {
+            try {
+                devaMusic.currentTime = 0;
+                devaMusic.play().catch(() => {});
+            } catch(e) {}
+        }
+
+        setTimeout(() => {
+            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+            setTimeout(() => {
+                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                showFinalPoster();
+            }, 1500);
+        }, 8000);
+    }
+
+    // STEP 8: Final Poster Screen (mg.png)
+    function showFinalPoster() {
+        if (posterSection) {
+            posterSection.classList.remove("hidden");
+            setTimeout(() => posterSection.classList.add("active"), 100);
+
+            setTimeout(() => {
+                posterSection.classList.remove("active");
+                setTimeout(() => {
+                    posterSection.classList.add("hidden");
+                    showCreditsSequence();
+                }, 2500);
+            }, 140000); 
+        } else {
+            showCreditsSequence();
+        }
+    }
+
+    // STEP 9: Updated Cinematic Fade Sequence (4s Delay -> HBD Wish 6s -> Credits 5s -> THE END)
+    function showCreditsSequence() {
+        const creditsContainer = document.createElement("div");
+        creditsContainer.id = "creditsSequence";
+        creditsContainer.style.position = "fixed";
+        creditsContainer.style.top = "0";
+        creditsContainer.style.left = "0";
+        creditsContainer.style.width = "100vw";
+        creditsContainer.style.height = "100vh";
+        creditsContainer.style.display = "flex";
+        creditsContainer.style.flexDirection = "column";
+        creditsContainer.style.justifyContent = "center";
+        creditsContainer.style.alignItems = "center";
+        creditsContainer.style.zIndex = "9999";
+        creditsContainer.style.color = "#ffffff";
+        creditsContainer.style.textAlign = "center";
+        creditsContainer.style.fontFamily = "'Georgia', serif";
+        creditsContainer.style.opacity = "0";
+        creditsContainer.style.transition = "opacity 2s ease";
+        creditsContainer.style.backgroundColor = "rgba(0, 0, 0, 0.95)";
+        creditsContainer.style.padding = "20px";
+
+        document.body.appendChild(creditsContainer);
+
+        // 1. Poster hide hone ke 4 second baad pehli wish aayegi
+        setTimeout(() => {
+            // STEP A: Wish Line Fade In (6 Seconds)
+            creditsContainer.innerHTML = `
+                <h1 style="font-size: 1.8rem; line-height: 1.5; color: #d4af37; letter-spacing: 1.5px; font-weight: normal;">
+                    Once again, a very Happy Birthday to you! ✨
+                </h1>
+            `;
+            creditsContainer.style.opacity = "1";
+
+            setTimeout(() => {
+                creditsContainer.style.opacity = "0"; // Fade Out
+
+                // STEP B: Created By Credits (5 Seconds)
+                setTimeout(() => {
+                    creditsContainer.innerHTML = `
+                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">IMAGINED AND CREATED BY</h2>
+                        <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #d4af37; letter-spacing: 4px;">MANAV</h1>
+                        <p style="font-size: 1.2rem; color: #ffffff; font-style: italic; letter-spacing: 1px;">SPECIALLY FOR GUNGUN</p>
+                    `;
+                    creditsContainer.style.opacity = "1";
+
+                    setTimeout(() => {
+                        creditsContainer.style.opacity = "0"; // Fade Out
+
+                        // STEP C: Final "THE END" Screen
+                        setTimeout(() => {
+                            creditsContainer.innerHTML = `
+                                <h1 style="font-size: 2.5rem; letter-spacing: 6px; color: #ffffff; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); font-weight: 300;">— THE END —</h1>
+                            `;
+                            creditsContainer.style.opacity = "1";
+                        }, 2000);
+
+                    }, 5000); // 5 seconds display for Credits
+
+                }, 2000); // 2 seconds transition pause
+
+            }, 6000); // 6 seconds display for Wish
+
+        }, 4000); // 4 seconds delay after poster
+    }
+
+    // Rain Particle Generator
+    function startMagicalRain() {
+        if (!rainContainer) return;
+        const items = ['✨', '♥️', '✨','♥️','🎈','🌟', '🌟','🎈'];
+        setInterval(() => {
+            const element = document.createElement('div');
+            element.classList.add('rain-item');
+            element.innerText = items[Math.floor(Math.random() * items.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 14 + 16; 
+            element.style.fontSize = size + 'px';
+            const fallDuration = Math.random() * 3 + 4; 
+            element.style.animationDuration = fallDuration + 's';
+            
+            rainContainer.appendChild(element);
+            setTimeout(() => { element.remove(); }, fallDuration * 1000);
+        }, 250); 
     }
 
     // Confetti System
@@ -261,3 +425,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
+    
