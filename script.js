@@ -23,17 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION (FIXED)
+    // STEP 1: EXACT 4 SECOND LOADING -> SMOOTH FADE OUT -> DHERE-DHERE GIFT BOX REVEAL
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
         
-        // 1. Text Fade Out
+        // 1. Loading Text Dhere-Dhere Fade Out (1.8 Seconds)
         if (loadingText) {
-            loadingText.style.transition = "opacity 1.5s ease";
+            loadingText.style.transition = "opacity 1.8s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Exact 2s Pause ke baad Loading Box hide & Gift Box Show
+        // 2. Loading text hide hone ke baad Gift Box dhere-dhere reveal hoga (2.5 Seconds)
         setTimeout(() => {
             if (loadingBox) {
                 loadingBox.style.display = "none";
@@ -41,13 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (mainLink) {
                 mainLink.style.display = "flex";
-                // Forced Reflow to ensure CSS animation triggers
+                mainLink.style.opacity = "0";
+                
+                // Force Browser Reflow
                 void mainLink.offsetWidth; 
-                mainLink.style.transition = "opacity 2s ease";
+                
+                // Smooth Dhere-Dhere Reveal (2.5s)
+                mainLink.style.transition = "opacity 2.5s ease-in-out";
                 mainLink.style.opacity = "1";
             }
-        }, 1500);
-    }, 3000);
+        }, 1800);
+    }, 4000); // Exact 4 Seconds Wait Time
 
     // Audio Unlocker for Mobile Browsers
     function unlockAudio(audioEl) {
@@ -299,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Cinematic Fade Sequence (4s Delay -> HBD Wish 6s -> Credits 5s -> THE END)
+    // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -422,4 +426,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                
