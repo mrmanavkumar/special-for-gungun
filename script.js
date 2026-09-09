@@ -1,4 +1,4 @@
-Document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -23,32 +23,33 @@ Document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION
+    // STEP 1: LOADING TEXT TO GIFT BOX TRANSITION (FIXED)
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
         
-        // 1. Text Fade Out (1.5s)
+        // 1. Text Fade Out
         if (loadingText) {
             loadingText.style.transition = "opacity 1.5s ease";
             loadingText.style.opacity = "0";
         }
 
-        // 2. Exact 2s Pause ke baad Text remove & Gift Box Show
+        // 2. Exact 2s Pause ke baad Loading Box hide & Gift Box Show
         setTimeout(() => {
-            if (loadingBox) loadingBox.style.display = "none";
+            if (loadingBox) {
+                loadingBox.style.display = "none";
+            }
             
             if (mainLink) {
                 mainLink.style.display = "flex";
+                // Forced Reflow to ensure CSS animation triggers
+                void mainLink.offsetWidth; 
                 mainLink.style.transition = "opacity 2s ease";
-                
-                setTimeout(() => {
-                    mainLink.style.opacity = "1";
-                }, 50);
+                mainLink.style.opacity = "1";
             }
-        }, 2000);
-    }, 4000);
+        }, 1500);
+    }, 3000);
 
-    // Audio Unlocker for Mobile
+    // Audio Unlocker for Mobile Browsers
     function unlockAudio(audioEl) {
         if (!audioEl) return;
         audioEl.play().then(() => {
@@ -178,7 +179,7 @@ Document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-    // STEP 5: Notebook Letter Page (Updated: Removed Birthday Line)
+    // STEP 5: Notebook Letter Page
     function showLetterPage() {
         if (messageSection) {
             messageSection.classList.remove("hidden");
@@ -298,7 +299,7 @@ Document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // STEP 9: Updated Cinematic Fade Sequence (4s Delay -> HBD Wish 6s -> Credits 5s -> THE END)
+    // STEP 9: Cinematic Fade Sequence (4s Delay -> HBD Wish 6s -> Credits 5s -> THE END)
     function showCreditsSequence() {
         const creditsContainer = document.createElement("div");
         creditsContainer.id = "creditsSequence";
@@ -322,9 +323,7 @@ Document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(creditsContainer);
 
-        // 1. Poster hide hone ke 4 second baad pehli wish aayegi
         setTimeout(() => {
-            // STEP A: Wish Line Fade In (6 Seconds)
             creditsContainer.innerHTML = `
                 <h1 style="font-size: 1.8rem; line-height: 1.5; color: #d4af37; letter-spacing: 1.5px; font-weight: normal;">
                     Once again, a very Happy Birthday to you! ✨
@@ -333,9 +332,8 @@ Document.addEventListener("DOMContentLoaded", () => {
             creditsContainer.style.opacity = "1";
 
             setTimeout(() => {
-                creditsContainer.style.opacity = "0"; // Fade Out
+                creditsContainer.style.opacity = "0";
 
-                // STEP B: Created By Credits (5 Seconds)
                 setTimeout(() => {
                     creditsContainer.innerHTML = `
                         <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">IMAGINED AND CREATED BY</h2>
@@ -345,9 +343,8 @@ Document.addEventListener("DOMContentLoaded", () => {
                     creditsContainer.style.opacity = "1";
 
                     setTimeout(() => {
-                        creditsContainer.style.opacity = "0"; // Fade Out
+                        creditsContainer.style.opacity = "0";
 
-                        // STEP C: Final "THE END" Screen
                         setTimeout(() => {
                             creditsContainer.innerHTML = `
                                 <h1 style="font-size: 2.5rem; letter-spacing: 6px; color: #ffffff; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); font-weight: 300;">— THE END —</h1>
@@ -355,13 +352,13 @@ Document.addEventListener("DOMContentLoaded", () => {
                             creditsContainer.style.opacity = "1";
                         }, 2000);
 
-                    }, 5000); // 5 seconds display for Credits
+                    }, 5000);
 
-                }, 2000); // 2 seconds transition pause
+                }, 2000);
 
-            }, 6000); // 6 seconds display for Wish
+            }, 6000);
 
-        }, 4000); // 4 seconds delay after poster
+        }, 4000);
     }
 
     // Rain Particle Generator
@@ -425,4 +422,4 @@ Document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-    
+            
