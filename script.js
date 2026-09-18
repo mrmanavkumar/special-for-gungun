@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+Document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
     const giftSection = document.getElementById("giftSection");
     const mainLink = document.getElementById("mainLink");
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine
+    // Typewriter Engine for Letter
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) {
@@ -239,36 +239,48 @@ document.addEventListener("DOMContentLoaded", () => {
         handleMusicEndTransition();
     }
 
-    // STEP 6: Music End Transition
+    // STEP 6: Letter End -> Stop BG Music -> 5 Sec Blank Delay
     function handleMusicEndTransition() {
         let hasTransitioned = false;
 
         const triggerNext = () => {
             if (hasTransitioned) return;
             hasTransitioned = true;
+            
+            // Letter active class remove karo aur bgMusic pause/reset karo
+            if (messageSection) messageSection.classList.remove("active");
+            if (bgMusic) {
+                try {
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                } catch(e) {}
+            }
+
             setTimeout(() => {
-                if (messageSection) messageSection.classList.remove("active");
+                if (messageSection) messageSection.classList.add("hidden");
+                
+                // EXACT 5 SECONDS BLANK SCREEN DELAY
                 setTimeout(() => {
-                    if (messageSection) messageSection.classList.add("hidden");
                     showLastMessageScreen();
-                }, 1500);
-            }, 4000);
+                }, 5000);
+            }, 1500);
         };
 
         if (bgMusic && !bgMusic.paused) {
             bgMusic.onended = triggerNext;
         } else {
-            setTimeout(triggerNext, 4000);
+            setTimeout(triggerNext, 2000);
         }
     }
 
-    // STEP 7: Last Message Screen & Deva Music
+    // STEP 7: Transition Message Screen with Heart Cursor & Deva Music Play
     function showLastMessageScreen() {
         if (lastMsgScreen) {
             lastMsgScreen.classList.remove("hidden");
             setTimeout(() => lastMsgScreen.classList.add("active"), 100);
         }
 
+        // Start devaMusic right when writing starts
         if (devaMusic) {
             try {
                 devaMusic.currentTime = 0;
@@ -276,13 +288,63 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch(e) {}
         }
 
-        setTimeout(() => {
-            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+        // Target H2 or container inside lastMsgScreen
+        let targetEl = document.querySelector(".last-msg-text");
+        if (!targetEl && lastMsgScreen) {
+            targetEl = lastMsgScreen;
+        }
+
+        const textToType = "In my eyes, who you truly are…\nlet me show you.";
+
+        // Typewriter Engine with Heart Cursor ♥️
+        typewriterWithHeart(targetEl, textToType, () => {
+            // Typing completion -> HOLD FOR EXACT 8 SECONDS
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
-                showFinalPoster();
-            }, 1500);
-        }, 8000);
+                if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+                
+                setTimeout(() => {
+                    if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                    
+                    // 3 SECONDS PAUSE BEFORE POSTER REVEAL
+                    setTimeout(() => {
+                        showFinalPoster();
+                    }, 3000);
+                }, 1500);
+            }, 8000);
+        });
+    }
+
+    // Typewriter Engine with Heart Cursor ♥️
+    function typewriterWithHeart(element, text, callback) {
+        if (!element) {
+            if (callback) callback();
+            return;
+        }
+        element.innerHTML = "";
+        let index = 0;
+
+        const cursor = document.createElement("span");
+        cursor.className = "heart-cursor";
+        cursor.innerHTML = "♥️";
+        element.appendChild(cursor);
+
+        function type() {
+            if (index < text.length) {
+                let char = text.charAt(index);
+                if (char === "\n") {
+                    element.insertBefore(document.createElement("br"), cursor);
+                } else {
+                    let charNode = document.createTextNode(char);
+                    element.insertBefore(charNode, cursor);
+                }
+                index++;
+                setTimeout(type, 85);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        type();
     }
 
     // STEP 8: Final Poster Screen (mg.png)
@@ -426,4 +488,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                
+                                  
