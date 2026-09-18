@@ -289,11 +289,15 @@ body {
 }
 
 .last-msg-text {
-    font-size: 22px;
+    font-size: 1.05rem;
     font-weight: 600;
     color: #ff758f;
     text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
 }
+
 
 .poster-wrapper {
     position: relative;
