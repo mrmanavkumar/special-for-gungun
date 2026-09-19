@@ -23,35 +23,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: EXACT 4 SECOND LOADING -> SMOOTH FADE OUT -> DHERE-DHERE GIFT BOX REVEAL
+    // STEP 1: 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT TO GIFT BOX
     setTimeout(() => {
         const loadingText = document.getElementById("loadingText");
         
-        // 1. Loading Text Dhere-Dhere Fade Out (1.8 Seconds)
         if (loadingText) {
-            loadingText.style.transition = "opacity 1.8s ease";
-            loadingText.style.opacity = "0";
-        }
-
-        // 2. Loading text hide hone ke baad Gift Box dhere-dhere reveal hoga (2.5 Seconds)
-        setTimeout(() => {
-            if (loadingBox) {
-                loadingBox.style.display = "none";
-            }
+            loadingText.style.opacity = "1";
+            const loadingTextStr = "Somthing is loading for Gungun...";
             
-            if (mainLink) {
-                mainLink.style.display = "flex";
-                mainLink.style.opacity = "0";
+            // Typewriter effect with Heart Cursor
+            typewriterWithHeart(loadingText, loadingTextStr, () => {
                 
-                // Force Browser Reflow
-                void mainLink.offsetWidth; 
-                
-                // Smooth Dhere-Dhere Reveal (2.5s)
-                mainLink.style.transition = "opacity 2.5s ease-in-out";
-                mainLink.style.opacity = "1";
-            }
-        }, 1800);
-    }, 4000); // Exact 4 Seconds Wait Time
+                // Typing complete hone ke baad 6 SECONDS HOLD
+                setTimeout(() => {
+                    // Dhere-dhere Fade Out (1.8s)
+                    loadingText.style.transition = "opacity 1.8s ease";
+                    loadingText.style.opacity = "0";
+
+                    setTimeout(() => {
+                        if (loadingBox) loadingBox.style.display = "none";
+                        
+                        if (mainLink) {
+                            mainLink.style.display = "flex";
+                            mainLink.style.opacity = "0";
+                            void mainLink.offsetWidth; // Force Reflow
+                            
+                            // Smooth Gift Box Reveal (2.5s)
+                            mainLink.style.transition = "opacity 2.5s ease-in-out";
+                            mainLink.style.opacity = "1";
+                        }
+                    }, 1800);
+                }, 6000); // 6 Seconds Hold Time
+            });
+        }
+    }, 4500); // 4.5 Seconds Wait Before Typing Starts
 
     // Audio Unlocker for Mobile Browsers
     function unlockAudio(audioEl) {
@@ -247,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (hasTransitioned) return;
             hasTransitioned = true;
             
-            // Letter active class remove karo aur bgMusic pause/reset karo
             if (messageSection) messageSection.classList.remove("active");
             if (bgMusic) {
                 try {
@@ -280,7 +284,6 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => lastMsgScreen.classList.add("active"), 100);
         }
 
-        // Start devaMusic right when writing starts
         if (devaMusic) {
             try {
                 devaMusic.currentTime = 0;
@@ -288,7 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch(e) {}
         }
 
-        // Target H2 or container inside lastMsgScreen
         let targetEl = document.querySelector(".last-msg-text");
         if (!targetEl && lastMsgScreen) {
             targetEl = lastMsgScreen;
@@ -488,4 +490,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-    
+                                                          
