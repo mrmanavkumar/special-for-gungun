@@ -23,22 +23,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isTriggered = false;
 
-    // STEP 1: 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT TO GIFT BOX
+    // STEP 1: INITIAL CLEANUP -> 4.5 SEC BLANK DELAY -> TYPEWRITER LOADING -> 6 SEC HOLD -> FADE OUT
+    const initialLoadingText = document.getElementById("loadingText");
+    if (initialLoadingText) {
+        initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
+        initialLoadingText.style.color = "#ffffff"; // Force White Color
+        initialLoadingText.style.opacity = "0"; // Blank setup
+    }
+
     setTimeout(() => {
-        const loadingText = document.getElementById("loadingText");
-        
-        if (loadingText) {
-            loadingText.style.opacity = "1";
+        if (initialLoadingText) {
+            initialLoadingText.style.opacity = "1";
             const loadingTextStr = "Somthing is loading for Gungun...";
             
             // Typewriter effect with Heart Cursor
-            typewriterWithHeart(loadingText, loadingTextStr, () => {
+            typewriterWithHeart(initialLoadingText, loadingTextStr, () => {
                 
                 // Typing complete hone ke baad 6 SECONDS HOLD
                 setTimeout(() => {
                     // Dhere-dhere Fade Out (1.8s)
-                    loadingText.style.transition = "opacity 1.8s ease";
-                    loadingText.style.opacity = "0";
+                    initialLoadingText.style.transition = "opacity 1.8s ease";
+                    initialLoadingText.style.opacity = "0";
 
                     setTimeout(() => {
                         if (loadingBox) loadingBox.style.display = "none";
@@ -296,6 +301,10 @@ document.addEventListener("DOMContentLoaded", () => {
             targetEl = lastMsgScreen;
         }
 
+        if (targetEl) {
+            targetEl.style.color = "#ffffff"; // Force White Color
+        }
+
         const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
         // Typewriter Engine with Heart Cursor ♥️
@@ -490,4 +499,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-                                                          
+            
