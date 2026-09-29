@@ -214,8 +214,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const letterData = [
             { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
-            { type: 'p', text: 'Gungun, main bas yehi dua kerta hu ki tum humesha khush rho. Tumhare chahre ki muskan kabhi kam naa ho kyuki tum sachme her ek khushi deserve kerti ho.' },
-            { type: 'p', text: 'Humehsa aise hi muskurati rehna, aur apne sapno ko pura kerna or life me aage badhte rehna 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },{ type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
+            { type: 'p', text: 'Apne sapno ko poora karna aur life mein hamesha aage badhti rehna. 🩺👩‍⚕️🩺' },
+            { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },{ type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho.' },
             { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
             { type: 'p', text: '- MANAV', alignRight: true }
         ];
