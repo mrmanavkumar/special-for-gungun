@@ -212,12 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Enable scrolling dynamically for letter container
+        // Enable scrolling dynamically for letter body container
         targetDiv.style.overflowY = "auto";
         targetDiv.style.webkitOverflowScrolling = "touch";
 
         const letterData = [
-            { type: 'h3', text: 'SPECIAL WISHES FOR GUNGUN 🦋' },
             { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
             { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
             { type: 'p', text: 'Apne sapno ko poora karna aur life mein hamesha aage badhti rehna. 🩺👩‍⚕️🩺' },
@@ -245,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
                 
-                // Continuous Auto-scroll as text renders
+                // Continuous Auto-scroll inside letter-body as text renders
                 targetDiv.scrollTop = targetDiv.scrollHeight;
                 
                 await new Promise(res => setTimeout(res, 45)); 
@@ -508,4 +507,4 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 });
-            
+                                                        
