@@ -194,70 +194,77 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-    // STEP 5: Notebook Letter Page
-    function showLetterPage() {
-        if (messageSection) {
-            messageSection.classList.remove("hidden");
-            setTimeout(() => {
-                messageSection.classList.add("active");
-                typeWriterEffect();
-            }, 100);
-        }
+// STEP 5: Notebook Letter Page (1 Minute Total Hold)
+function showLetterPage() {
+    if (messageSection) {
+        messageSection.classList.remove("hidden");
+        setTimeout(() => {
+            messageSection.classList.add("active");
+            typeWriterEffect();
+        }, 100);
     }
+}
 
-    // Typewriter Engine for Letter
-    async function typeWriterEffect() {
-        const targetDiv = document.getElementById("typewriterText");
-        if (!targetDiv) {
-            handleMusicEndTransition();
-            return;
-        }
-
-        targetDiv.style.overflowY = "auto";
-        targetDiv.style.webkitOverflowScrolling = "touch";
-
-        const letterData = [
-            { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
-            { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
-            { type: 'p', text: 'Apne sapno ko poora karna aur life mein hamesha aage badhti rehna. 🩺👩‍⚕️🩺' },
-            { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
-            { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho.' },
-            { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
-            { type: 'p', text: '- MANAV', alignRight: true }
-        ];
-
-        targetDiv.innerHTML = ""; 
-
-        for (const data of letterData) {
-            const element = document.createElement(data.type);
-            if (data.alignRight) {
-                element.style.textAlign = "right";
-                element.style.marginTop = "10px";
-            }
-            targetDiv.appendChild(element);
-
-            let rawText = data.text;
-            for (let i = 0; i < rawText.length; i++) {
-                const oldCursor = element.querySelector('.heart-cursor');
-                if (oldCursor) oldCursor.remove();
-
-                element.innerHTML += rawText.charAt(i);
-                element.innerHTML += '<span class="heart-cursor">❤️</span>';
-                
-                targetDiv.scrollTop = targetDiv.scrollHeight;
-                
-                // CHANGE 2: SPEED UP (35ms)
-                await new Promise(res => setTimeout(res, 35)); 
-            }
-            const finalCursor = element.querySelector('.heart-cursor');
-            if (finalCursor) finalCursor.remove();
-            
-            // CHANGE 3: PAUSE REDUCED (200ms)
-            await new Promise(res => setTimeout(res, 200));
-        }
-
+// Typewriter Engine for Letter
+async function typeWriterEffect() {
+    const targetDiv = document.getElementById("typewriterText");
+    if (!targetDiv) {
         handleMusicEndTransition();
+        return;
     }
+
+    targetDiv.style.overflowY = "auto";
+    targetDiv.style.webkitOverflowScrolling = "touch";
+
+    const letterData = [
+        { type: 'p', text: 'Gungun, tumhare birthday par main dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
+        { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
+        { type: 'p', text: 'Apne sapno ko poora karna aur life mein hamesha aage badhti rehna. 🩺👩‍⚕️🩺' },
+        { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
+        { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho.' },
+        { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
+        { type: 'p', text: '- MANAV', alignRight: true }
+    ];
+
+    targetDiv.innerHTML = ""; 
+
+    const startTime = Date.now(); // Screen start time capture
+
+    for (const data of letterData) {
+        const element = document.createElement(data.type);
+        if (data.alignRight) {
+            element.style.textAlign = "right";
+            element.style.marginTop = "10px";
+        }
+        targetDiv.appendChild(element);
+
+        let rawText = data.text;
+        for (let i = 0; i < rawText.length; i++) {
+            const oldCursor = element.querySelector('.heart-cursor');
+            if (oldCursor) oldCursor.remove();
+
+            element.innerHTML += rawText.charAt(i);
+            element.innerHTML += '<span class="heart-cursor">❤️</span>';
+            
+            targetDiv.scrollTop = targetDiv.scrollHeight;
+            
+            await new Promise(res => setTimeout(res, 45)); // Comfortable reading speed
+        }
+        const finalCursor = element.querySelector('.heart-cursor');
+        if (finalCursor) finalCursor.remove();
+        
+        await new Promise(res => setTimeout(res, 300));
+    }
+
+    // Exact 1 Minute (60000 ms) Hold Calculation
+    const elapsedTime = Date.now() - startTime;
+    const remainingTime = Math.max(0, 60000 - elapsedTime); 
+
+    setTimeout(() => {
+        handleMusicEndTransition();
+    }, remainingTime);
+                }
+    
     // STEP 6: Letter End -> Stop BG Music -> 5 Sec Blank Delay
     function handleMusicEndTransition() {
         let hasTransitioned = false;
