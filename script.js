@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
-    // STEP 4: Happy Birthday Screen
+        // STEP 4: Happy Birthday Screen
     function showBirthdayGreeting() {
         if (bdayGreetingScreen) {
             bdayGreetingScreen.classList.remove("hidden");
@@ -180,13 +180,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 templateSection.classList.remove("hidden");
                 setTimeout(() => templateSection.classList.add("active"), 100);
                 
+                // CHANGE 1: 20 SECONDS FOR TEMPLATE
                 setTimeout(() => {
                     templateSection.classList.remove("active");
                     setTimeout(() => {
                         templateSection.classList.add("hidden");
                         showLetterPage();
                     }, 1500); 
-                }, 15000); 
+                }, 20000); 
             } else {
                 showLetterPage();
             }
@@ -204,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Typewriter Engine for Letter (With Auto & Touch Scroll Support)
+    // Typewriter Engine for Letter
     async function typeWriterEffect() {
         const targetDiv = document.getElementById("typewriterText");
         if (!targetDiv) {
@@ -212,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Enable scrolling dynamically for letter body container
         targetDiv.style.overflowY = "auto";
         targetDiv.style.webkitOverflowScrolling = "touch";
 
@@ -244,19 +244,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.innerHTML += rawText.charAt(i);
                 element.innerHTML += '<span class="heart-cursor">❤️</span>';
                 
-                // Continuous Auto-scroll inside letter-body as text renders
                 targetDiv.scrollTop = targetDiv.scrollHeight;
                 
-                await new Promise(res => setTimeout(res, 45)); 
+                // CHANGE 2: SPEED UP (35ms)
+                await new Promise(res => setTimeout(res, 35)); 
             }
             const finalCursor = element.querySelector('.heart-cursor');
             if (finalCursor) finalCursor.remove();
-            await new Promise(res => setTimeout(res, 350));
+            
+            // CHANGE 3: PAUSE REDUCED (200ms)
+            await new Promise(res => setTimeout(res, 200));
         }
 
         handleMusicEndTransition();
     }
-
     // STEP 6: Letter End -> Stop BG Music -> 5 Sec Blank Delay
     function handleMusicEndTransition() {
         let hasTransitioned = false;
