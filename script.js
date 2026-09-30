@@ -221,7 +221,7 @@ async function typeWriterEffect() {
         { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
         { type: 'p', text: 'Tumne jo bhi sapne dekhe hain, woh saare sach ho, aur tum life mein hamesha aage badhti raho🩺👩‍⚕️🩺' },
         { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
-        { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho.' },
+        { type: 'p', text: 'Bas itni si dua hai meri—tum jahan bhi raho, hamesha khush raho😊' },
         { type: 'p', text: 'Take care of yourself. 🌸✨', alignRight: true },
         { type: 'p', text: '- MANAV', alignRight: true }
     ];
