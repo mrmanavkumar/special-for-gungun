@@ -374,10 +374,24 @@ async function typeWriterEffect() {
         type();
     }
 
-    // STEP 8: Final Poster Screen (mg.png)
+        // STEP 8: Final Poster Screen (mg.png)
     function showFinalPoster() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
+            
+            // 1. Cloud animation trigger (Left-Right split)
+            const cloudContainer = posterSection.querySelector('.cloud-container');
+            if (cloudContainer) {
+                cloudContainer.classList.remove("clouds-fly-away"); // Reset state
+            }
+
+            setTimeout(() => {
+                if (cloudContainer) {
+                    cloudContainer.classList.add("clouds-fly-away"); // Clouds hatenge
+                }
+            }, 1200);
+
+            // 2. Poster active state & timing
             setTimeout(() => posterSection.classList.add("active"), 100);
 
             setTimeout(() => {
@@ -391,6 +405,7 @@ async function typeWriterEffect() {
             showCreditsSequence();
         }
     }
+    
 
     // STEP 9: Cinematic Fade Sequence (4s Delay -> Wish 6s -> Credits 5s -> THE END)
     function showCreditsSequence() {
