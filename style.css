@@ -373,18 +373,18 @@ body {
 .cloud-7 { bottom: -15px; left: 15%; }
 
 /* Active State: Left & Right Split Transition */
-.poster-wrapper.active .cloud-1,
-.poster-wrapper.active .cloud-3,
-.poster-wrapper.active .cloud-5,
-.poster-wrapper.active .cloud-7 {
-    transform: translateX(-160%) scale(1.2); /* Move Left */
+.cloud-container.clouds-fly-away .cloud-1,
+.cloud-container.clouds-fly-away .cloud-3,
+.cloud-container.clouds-fly-away .cloud-5,
+.cloud-container.clouds-fly-away .cloud-7 {
+    transform: translateX(-160%) scale(1.2);
     opacity: 0;
 }
 
-.poster-wrapper.active .cloud-2,
-.poster-wrapper.active .cloud-4,
-.poster-wrapper.active .cloud-6 {
-    transform: translateX(160%) scale(1.2); /* Move Right */
+.cloud-container.clouds-fly-away .cloud-2,
+.cloud-container.clouds-fly-away .cloud-4,
+.cloud-container.clouds-fly-away .cloud-6 {
+    transform: translateX(160%) scale(1.2);
     opacity: 0;
 }
 
