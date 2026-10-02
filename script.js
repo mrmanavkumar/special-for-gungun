@@ -256,9 +256,9 @@ async function typeWriterEffect() {
         await new Promise(res => setTimeout(res, 300));
     }
 
-    // Exact 45 second ( 45000 ms) Hold Calculation
+    // Exact 30 second ( 30000 ms) Hold Calculation
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 45000 - elapsedTime); 
+    const remainingTime = Math.max(0, 30000 - elapsedTime); 
 
     setTimeout(() => {
         handleMusicEndTransition();
@@ -379,17 +379,6 @@ async function typeWriterEffect() {
         if (posterSection) {
             posterSection.classList.remove("hidden");
             
-            // 1. Cloud animation trigger (Left-Right split)
-            const cloudContainer = posterSection.querySelector('.cloud-container');
-            if (cloudContainer) {
-                cloudContainer.classList.remove("clouds-fly-away"); // Reset state
-            }
-
-            setTimeout(() => {
-                if (cloudContainer) {
-                    cloudContainer.classList.add("clouds-fly-away"); // Clouds hatenge
-                }
-            }, 1200);
 
             // 2. Poster active state & timing
             setTimeout(() => posterSection.classList.add("active"), 100);
