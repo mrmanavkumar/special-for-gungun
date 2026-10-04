@@ -366,6 +366,12 @@ body {
     z-index: 5; /* Background rain: Poster (10) se neeche rahegi */
     overflow: hidden; 
 }
+body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
+body:has(#lastMsgScreen.active) #rainContainer {
+    opacity: 0.18 !important;
+    transition: opacity 0.8s ease;
+}
+
 
 .rain-item { 
     position: absolute; 
@@ -375,11 +381,10 @@ body {
 }
 
 @keyframes fallDown {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.9; }
-    90% { opacity: 0.9; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
 }
+
 
 @keyframes zoomPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
 @keyframes heartPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
