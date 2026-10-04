@@ -310,12 +310,13 @@ body {
 .last-msg-text {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #ff758f;
-    text-shadow: 0 0 15px rgba(255, 117, 143, 0.6);
+    color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
     white-space: nowrap;
     text-align: center;
     width: 100%;
 }
+
 
 /* Poster Wrapper setup */
 .poster-wrapper {
