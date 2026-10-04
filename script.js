@@ -433,7 +433,7 @@ async function typeWriterEffect() {
 
                 setTimeout(() => {
                     creditsContainer.innerHTML = `
-                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">IMAGINED AND CREATED BY</h2>
+                        <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 3px; color: #cccccc; font-weight: 300;">CONCEPT, DESIGN & CREATION BY</h2>
                         <h1 style="font-size: 2.2rem; margin-bottom: 12px; color: #d4af37; letter-spacing: 4px;">MANAV</h1>
                         <p style="font-size: 1.2rem; color: #ffffff; font-style: italic; letter-spacing: 1px;">SPECIALLY FOR GUNGUN</p>
                     `;
