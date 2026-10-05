@@ -301,6 +301,8 @@ body {
     min-height: 200px;
     opacity: 0;
     transition: opacity 1.5s ease;
+   position: relative;
+   z-index: 20;
 }
 
 #lastMsgScreen.active {
@@ -368,10 +370,15 @@ body {
     overflow: hidden; 
 }
 body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
-body:has(#lastMsgScreen.active) #rainContainer {
-    opacity: 0.18 !important;
+body:has(#lastMsgScreen.active) #rainContainer,
+body:has(#lastMsgScreen:not(.hidden)) .stars-container,
+body:has(#lastMsgScreen.active) .stars-container,
+body:has(#lastMsgScreen:not(.hidden)) canvas {
+    opacity: 0.10 !important;
+    z-index: 1 !important;
     transition: opacity 0.8s ease;
 }
+
 
 
 .rain-item { 
