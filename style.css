@@ -407,15 +407,13 @@ canvas {
     transition: opacity 3.5s ease-in-out !important;
 }
 
-/* Final Poster (mg.png) Ultra-Smooth Fade-In & Fade-Out */
-.poster-container,
+/* Final Poster Smooth Fade-In Transition */
 #finalPoster,
 .final-poster-screen,
-img[src*="mg.png"] {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 3.5s ease-in-out, visibility 3.5s ease-in-out, transform 3.5s ease-in-out !important;
+.poster-container {
+    transition: opacity 3.5s ease-in-out, visibility 3.5s ease-in-out !important;
 }
+
 
 /* Active State for Poster Reveal */
 .poster-container.active,
