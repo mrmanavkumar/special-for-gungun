@@ -298,11 +298,16 @@ async function typeWriterEffect() {
         }
     }
 
-// STEP 7: Transition Message Screen with Smooth Background & Rain Dimming
+// STEP 7: Transition Message Screen with Ultra-Smooth Background & Dimming
 function showLastMessageScreen() {
+    // 1. Body me dark class lagao aur screen smooth fade-in karo
+    document.body.classList.add("dark-mode-active");
     if (lastMsgScreen) {
         lastMsgScreen.classList.remove("hidden");
-        setTimeout(() => lastMsgScreen.classList.add("active"), 100);
+        // Frame delay for smooth CSS transition trigger
+        requestAnimationFrame(() => {
+            lastMsgScreen.classList.add("active");
+        });
     }
 
     if (devaMusic) {
@@ -323,12 +328,15 @@ function showLastMessageScreen() {
 
     const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
-    // Typewriter Engine with Heart Cursor ♥️️
+    // Typewriter Engine with Heart Cursor ♥
     typewriterWithHeart(targetEl, textToType, () => {
         // Typing complete hone ke baad 8 SECONDS HOLD
         setTimeout(() => {
+            // 2. Smoothly fade out the screen and restore elements dhere-dhere
             if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+            document.body.classList.remove("dark-mode-active");
 
+            // Wait 2.5s (matching transition duration) before setting hidden
             setTimeout(() => {
                 if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
                 
@@ -336,7 +344,7 @@ function showLastMessageScreen() {
                 setTimeout(() => {
                     showFinalPoster();
                 }, 3000);
-            }, 2500); // 2.5s for smooth fade back
+            }, 2500); 
         }, 8000);
     });
 }
