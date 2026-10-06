@@ -300,12 +300,10 @@ async function typeWriterEffect() {
 
 // STEP 7: Ultra-Smooth Slow Darkening, Slow Text Dissolve & Slow Poster Reveal
 function showLastMessageScreen() {
-    // 1. Unhide element from DOM first
     if (lastMsgScreen) {
         lastMsgScreen.classList.remove("hidden");
     }
 
-    // Micro-delay so browser triggers 3.5s smooth dark transition instead of instant jump
     setTimeout(() => {
         document.body.classList.add("dark-mode-active");
         if (lastMsgScreen) {
@@ -334,20 +332,18 @@ function showLastMessageScreen() {
 
     // Typewriter Engine with Heart Cursor ♥
     typewriterWithHeart(targetEl, textToType, () => {
-        // Hold typed text on screen for 6 seconds
         setTimeout(() => {
-            // 2. Text dhere-dhere (2.5 seconds leke) fade-out / dissolve hoga
+            // 1. Text dhere-dhere (2.5s leke) dissolve hoga
             if (targetEl) targetEl.classList.add("fade-out-text");
 
             setTimeout(() => {
-                // 3. PARALLEL REVEAL: Background dhere-dhere light hoga + Rain restore hogi + Poster (mg.png) fade-in hoga
+                // 2. Background normal hoga + Rain restore hogi
                 if (lastMsgScreen) lastMsgScreen.classList.remove("active");
                 document.body.classList.remove("dark-mode-active");
 
-                // Poster ko ek sath dhere-dhere fade-in reveal karana
+                // 3. Immediately Final Poster (mg.png) smooth reveal trigger hoga
                 showFinalPoster();
 
-                // Cleanup screen state after 3.5s transition completes
                 setTimeout(() => {
                     if (lastMsgScreen) {
                         lastMsgScreen.classList.add("hidden");
@@ -358,6 +354,7 @@ function showLastMessageScreen() {
         }, 6000);
     });
 }
+    
     
     
     
