@@ -298,16 +298,20 @@ async function typeWriterEffect() {
         }
     }
 
-// STEP 7: Transition Message Screen with Soft Dimming & Visible Rain
+// STEP 7: Ultra-Smooth Slow Darkening, Slow Text Dissolve & Slow Poster Reveal
 function showLastMessageScreen() {
-    // 1. Softly dim background and show screen
-    document.body.classList.add("dark-mode-active");
+    // 1. Unhide element from DOM first
     if (lastMsgScreen) {
         lastMsgScreen.classList.remove("hidden");
-        requestAnimationFrame(() => {
-            lastMsgScreen.classList.add("active");
-        });
     }
+
+    // Micro-delay so browser triggers 3.5s smooth dark transition instead of instant jump
+    setTimeout(() => {
+        document.body.classList.add("dark-mode-active");
+        if (lastMsgScreen) {
+            lastMsgScreen.classList.add("active");
+        }
+    }, 50);
 
     if (devaMusic) {
         try {
@@ -330,32 +334,31 @@ function showLastMessageScreen() {
 
     // Typewriter Engine with Heart Cursor ♥
     typewriterWithHeart(targetEl, textToType, () => {
-        // Typing finish hone ke baad 6 Seconds hold
+        // Hold typed text on screen for 6 seconds
         setTimeout(() => {
-            // 2. First smoothly fade out text
+            // 2. Text dhere-dhere (2.5 seconds leke) fade-out / dissolve hoga
             if (targetEl) targetEl.classList.add("fade-out-text");
 
-            // 3. 2 Seconds baad dhere-dhere background screen aur rain normal karo
             setTimeout(() => {
+                // 3. PARALLEL REVEAL: Background dhere-dhere light hoga + Rain restore hogi + Poster (mg.png) fade-in hoga
                 if (lastMsgScreen) lastMsgScreen.classList.remove("active");
                 document.body.classList.remove("dark-mode-active");
 
-                // Wait 3s (matching transition time) then hide screen completely
+                // Poster ko ek sath dhere-dhere fade-in reveal karana
+                showFinalPoster();
+
+                // Cleanup screen state after 3.5s transition completes
                 setTimeout(() => {
                     if (lastMsgScreen) {
                         lastMsgScreen.classList.add("hidden");
                         if (targetEl) targetEl.classList.remove("fade-out-text");
                     }
-                    
-                    // Pause before final poster
-                    setTimeout(() => {
-                        showFinalPoster();
-                    }, 2500);
-                }, 3000);
-            }, 2000);
+                }, 3500);
+            }, 2500);
         }, 6000);
     });
 }
+    
     
     
 
