@@ -143,10 +143,11 @@ body {
 #countdownNumber {
     font-size: 55px;
     font-weight: 800;
-    color: #ff4d6d;
-    text-shadow: 0 0 25px rgba(255, 77, 109, 0.9);
-    animation: zoomPulse 1s infinite alternate;
+    color: #ffffff; /* White Color */
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.4); /* Subtle White Glow */
+    font-variant-numeric: tabular-nums; /* Digits ko fixed jagah par rakhne ke liye */
 }
+
 
 #bdayGreetingScreen {
     position: fixed;
