@@ -369,24 +369,41 @@ body {
     z-index: 5; /* Background rain: Poster (10) se neeche rahegi */
     overflow: hidden; 
 }
-/* 1. Smooth Sparkle Fade Transition */
-#rainContainer {
-    transition: opacity 2.5s ease-in-out !important;
+/* Smooth Transition Base for All Effects & Background */
+body, 
+#rainContainer, 
+.stars, 
+.stars-container, 
+#effectCanvas, 
+canvas {
+    transition: opacity 2.5s ease-in-out, background 2.5s ease-in-out !important;
 }
 
-/* 2. Force Smooth Dimming Rule */
+/* When "In my eyes..." screen is active: Smooth Deep Black Background & Soft Rain */
+body:has(#lastMsgScreen:not(.hidden)),
+body:has(#lastMsgScreen.active) {
+    background: #050203 !important;
+}
+
 body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
-body:has(#lastMsgScreen.active) #rainContainer {
-    transition: opacity 2.5s ease-in-out !important;
+body:has(#lastMsgScreen.active) #rainContainer,
+body:has(#lastMsgScreen:not(.hidden)) .stars,
+body:has(#lastMsgScreen.active) .stars,
+body:has(#lastMsgScreen:not(.hidden)) #effectCanvas,
+body:has(#lastMsgScreen.active) #effectCanvas,
+body:has(#lastMsgScreen:not(.hidden)) canvas,
+body:has(#lastMsgScreen.active) canvas {
+    opacity: 0.18 !important;
 }
 
-/* 3. Golden Yellow Text & Heart Cursor Styling */
+/* Golden Yellow Text & Heart Cursor Styling */
 .last-msg-text, 
 #lastMsgScreen, 
 #lastMsgScreen * {
-    color: #ffd700 !important; /* Pure Golden Yellow */
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4) !important; /* Golden Glow Effect */
+    color: #ffd700 !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.5) !important;
 }
+
 
 
 
