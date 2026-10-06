@@ -369,15 +369,25 @@ body {
     z-index: 5; /* Background rain: Poster (10) se neeche rahegi */
     overflow: hidden; 
 }
-body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
-body:has(#lastMsgScreen.active) #rainContainer,
-body:has(#lastMsgScreen:not(.hidden)) .stars-container,
-body:has(#lastMsgScreen.active) .stars-container,
-body:has(#lastMsgScreen:not(.hidden)) canvas {
-    opacity: 0.10 !important;
-    z-index: 1 !important;
-    transition: opacity 0.8s ease;
+/* 1. Smooth Sparkle Fade Transition */
+#rainContainer {
+    transition: opacity 2.5s ease-in-out !important;
 }
+
+/* 2. Force Smooth Dimming Rule */
+body:has(#lastMsgScreen:not(.hidden)) #rainContainer,
+body:has(#lastMsgScreen.active) #rainContainer {
+    transition: opacity 2.5s ease-in-out !important;
+}
+
+/* 3. Golden Yellow Text & Heart Cursor Styling */
+.last-msg-text, 
+#lastMsgScreen, 
+#lastMsgScreen * {
+    color: #ffd700 !important; /* Pure Golden Yellow */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4) !important; /* Golden Glow Effect */
+}
+
 
 
 
