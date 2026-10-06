@@ -298,13 +298,12 @@ async function typeWriterEffect() {
         }
     }
 
-// STEP 7: Transition Message Screen with Ultra-Smooth Background & Dimming
+// STEP 7: Transition Message Screen with Soft Dimming & Visible Rain
 function showLastMessageScreen() {
-    // 1. Body me dark class lagao aur screen smooth fade-in karo
+    // 1. Softly dim background and show screen
     document.body.classList.add("dark-mode-active");
     if (lastMsgScreen) {
         lastMsgScreen.classList.remove("hidden");
-        // Frame delay for smooth CSS transition trigger
         requestAnimationFrame(() => {
             lastMsgScreen.classList.add("active");
         });
@@ -323,6 +322,7 @@ function showLastMessageScreen() {
     }
 
     if (targetEl) {
+        targetEl.classList.remove("fade-out-text");
         targetEl.style.setProperty("color", "#ffd700", "important");
     }
 
@@ -330,24 +330,33 @@ function showLastMessageScreen() {
 
     // Typewriter Engine with Heart Cursor ♥
     typewriterWithHeart(targetEl, textToType, () => {
-        // Typing complete hone ke baad 8 SECONDS HOLD
+        // Typing finish hone ke baad 6 Seconds hold
         setTimeout(() => {
-            // 2. Smoothly fade out the screen and restore elements dhere-dhere
-            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
-            document.body.classList.remove("dark-mode-active");
+            // 2. First smoothly fade out text
+            if (targetEl) targetEl.classList.add("fade-out-text");
 
-            // Wait 2.5s (matching transition duration) before setting hidden
+            // 3. 2 Seconds baad dhere-dhere background screen aur rain normal karo
             setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
-                
-                // 3 Seconds Pause Before Poster Reveal
+                if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+                document.body.classList.remove("dark-mode-active");
+
+                // Wait 3s (matching transition time) then hide screen completely
                 setTimeout(() => {
-                    showFinalPoster();
+                    if (lastMsgScreen) {
+                        lastMsgScreen.classList.add("hidden");
+                        if (targetEl) targetEl.classList.remove("fade-out-text");
+                    }
+                    
+                    // Pause before final poster
+                    setTimeout(() => {
+                        showFinalPoster();
+                    }, 2500);
                 }, 3000);
-            }, 2500); 
-        }, 8000);
+            }, 2000);
+        }, 6000);
     });
 }
+    
     
 
 // Typewriter Engine with Golden Yellow Force Style
