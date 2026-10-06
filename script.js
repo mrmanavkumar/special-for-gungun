@@ -298,81 +298,95 @@ async function typeWriterEffect() {
         }
     }
 
-    // STEP 7: Transition Message Screen with Heart Cursor & Deva Music Play
-    function showLastMessageScreen() {
-        if (lastMsgScreen) {
-            lastMsgScreen.classList.remove("hidden");
-            setTimeout(() => lastMsgScreen.classList.add("active"), 100);
-        }
-
-        if (devaMusic) {
-            try {
-                devaMusic.currentTime = 0;
-                devaMusic.play().catch(() => {});
-            } catch(e) {}
-        }
-
-        let targetEl = document.querySelector(".last-msg-text");
-        if (!targetEl && lastMsgScreen) {
-            targetEl = lastMsgScreen;
-        }
-
-        if (targetEl) {
-            targetEl.style.color = "#ffffff"; // Force White Color
-        }
-
-        const textToType = "In my eyes, who you truly are…\nlet me show you.";
-
-        // Typewriter Engine with Heart Cursor ♥️
-        typewriterWithHeart(targetEl, textToType, () => {
-            // Typing completion -> HOLD FOR EXACT 8 SECONDS
-            setTimeout(() => {
-                if (lastMsgScreen) lastMsgScreen.classList.remove("active");
-                
-                setTimeout(() => {
-                    if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
-                    
-                    // 3 SECONDS PAUSE BEFORE POSTER REVEAL
-                    setTimeout(() => {
-                        showFinalPoster();
-                    }, 3000);
-                }, 1500);
-            }, 8000);
-        });
+// STEP 7: Transition Message Screen with Golden Yellow Text
+function showLastMessageScreen() {
+    if (lastMsgScreen) {
+        lastMsgScreen.classList.remove("hidden");
+        setTimeout(() => lastMsgScreen.classList.add("active"), 100);
     }
+
+    // Background Sparkles ko Dhere-Dhere Dim Karo
+    if (rainContainer) {
+        rainContainer.style.opacity = "0.25";
+    }
+
+    if (devaMusic) {
+        try {
+            devaMusic.currentTime = 0;
+            devaMusic.play().catch(() => {});
+        } catch(e) {}
+    }
+
+    let targetEl = document.querySelector(".last-msg-text");
+    if (!targetEl && lastMsgScreen) {
+        targetEl = lastMsgScreen;
+    }
+
+    // Force Golden Yellow Color via Inline Style
+    if (targetEl) {
+        targetEl.style.setProperty("color", "#ffd700", "important");
+    }
+
+    const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
     // Typewriter Engine with Heart Cursor ♥️
-    function typewriterWithHeart(element, text, callback) {
-        if (!element) {
-            if (callback) callback();
-            return;
-        }
-        element.innerHTML = "";
-        let index = 0;
-
-        const cursor = document.createElement("span");
-        cursor.className = "heart-cursor";
-        cursor.innerHTML = "♥️";
-        element.appendChild(cursor);
-
-        function type() {
-            if (index < text.length) {
-                let char = text.charAt(index);
-                if (char === "\n") {
-                    element.insertBefore(document.createElement("br"), cursor);
-                } else {
-                    let charNode = document.createTextNode(char);
-                    element.insertBefore(charNode, cursor);
-                }
-                index++;
-                setTimeout(type, 85);
-            } else {
-                if (callback) callback();
+    typewriterWithHeart(targetEl, textToType, () => {
+        // Typing complete hone ke baad 8 SECONDS HOLD
+        setTimeout(() => {
+            if (lastMsgScreen) lastMsgScreen.classList.remove("active");
+            
+            // Sparkles ko WAPAS Normal karo
+            if (rainContainer) {
+                rainContainer.style.opacity = "1";
             }
-        }
 
-        type();
+            setTimeout(() => {
+                if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
+                
+                // 3 Seconds Pause Before Poster Reveal
+                setTimeout(() => {
+                    showFinalPoster();
+                }, 3000);
+            }, 1500);
+        }, 8000);
+    });
+}
+
+// Typewriter Engine with Golden Yellow Force Style
+function typewriterWithHeart(element, text, callback) {
+    if (!element) {
+        if (callback) callback();
+        return;
     }
+    element.innerHTML = "";
+    element.style.setProperty("color", "#ffd700", "important"); // Golden Yellow Color
+    let index = 0;
+
+    const cursor = document.createElement("span");
+    cursor.className = "heart-cursor";
+    cursor.innerHTML = "♥️";
+    cursor.style.setProperty("color", "#ffd700", "important");
+    element.appendChild(cursor);
+
+    function type() {
+        if (index < text.length) {
+            let char = text.charAt(index);
+            if (char === "\n") {
+                element.insertBefore(document.createElement("br"), cursor);
+            } else {
+                let charNode = document.createTextNode(char);
+                element.insertBefore(charNode, cursor);
+            }
+            index++;
+            setTimeout(type, 85);
+        } else {
+            if (callback) callback();
+        }
+    }
+
+    type();
+}
+    
 
         // STEP 8: Final Poster Screen (mg.png)
     function showFinalPoster() {
