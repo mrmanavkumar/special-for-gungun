@@ -298,16 +298,11 @@ async function typeWriterEffect() {
         }
     }
 
-// STEP 7: Transition Message Screen with Golden Yellow Text
+// STEP 7: Transition Message Screen with Smooth Background & Rain Dimming
 function showLastMessageScreen() {
     if (lastMsgScreen) {
         lastMsgScreen.classList.remove("hidden");
         setTimeout(() => lastMsgScreen.classList.add("active"), 100);
-    }
-
-    // Background Sparkles ko Dhere-Dhere Dim Karo
-    if (rainContainer) {
-        rainContainer.style.opacity = "0.25";
     }
 
     if (devaMusic) {
@@ -322,23 +317,17 @@ function showLastMessageScreen() {
         targetEl = lastMsgScreen;
     }
 
-    // Force Golden Yellow Color via Inline Style
     if (targetEl) {
         targetEl.style.setProperty("color", "#ffd700", "important");
     }
 
     const textToType = "In my eyes, who you truly are…\nlet me show you.";
 
-    // Typewriter Engine with Heart Cursor ♥️
+    // Typewriter Engine with Heart Cursor ♥️️
     typewriterWithHeart(targetEl, textToType, () => {
         // Typing complete hone ke baad 8 SECONDS HOLD
         setTimeout(() => {
             if (lastMsgScreen) lastMsgScreen.classList.remove("active");
-            
-            // Sparkles ko WAPAS Normal karo
-            if (rainContainer) {
-                rainContainer.style.opacity = "1";
-            }
 
             setTimeout(() => {
                 if (lastMsgScreen) lastMsgScreen.classList.add("hidden");
@@ -347,10 +336,11 @@ function showLastMessageScreen() {
                 setTimeout(() => {
                     showFinalPoster();
                 }, 3000);
-            }, 1500);
+            }, 2500); // 2.5s for smooth fade back
         }, 8000);
     });
 }
+    
 
 // Typewriter Engine with Golden Yellow Force Style
 function typewriterWithHeart(element, text, callback) {
