@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialLoadingText = document.getElementById("loadingText");
     if (initialLoadingText) {
         initialLoadingText.innerHTML = ""; // Initial HTML Text clear (Blank Screen Keep-up)
-        initialLoadingText.style.color = "#ffffff"; // Force White Color
+        initialLoadingText.style.setProperty("color", "#ffffff", "important");
+        
         initialLoadingText.style.opacity = "0"; // Blank setup
     }
 
