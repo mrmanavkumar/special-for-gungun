@@ -360,20 +360,19 @@ function showLastMessageScreen() {
     
     
 
-// Typewriter Engine with Golden Yellow Force Style
-function typewriterWithHeart(element, text, callback) {
+function typewriterWithHeart(element, text, callback, customColor = "#ffffff") {
     if (!element) {
         if (callback) callback();
         return;
     }
     element.innerHTML = "";
-    element.style.setProperty("color", "#ffd700", "important"); // Golden Yellow Color
+    element.style.setProperty("color", customColor, "important");
     let index = 0;
 
     const cursor = document.createElement("span");
     cursor.className = "heart-cursor";
     cursor.innerHTML = "♥️";
-    cursor.style.setProperty("color", "#ffd700", "important");
+    cursor.style.setProperty("color", customColor, "important");
     element.appendChild(cursor);
 
     function type() {
@@ -394,6 +393,7 @@ function typewriterWithHeart(element, text, callback) {
 
     type();
 }
+    
     
 
         // STEP 8: Final Poster Screen (mg.png)
