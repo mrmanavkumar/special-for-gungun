@@ -67,8 +67,8 @@ body {
 .loading-center {
     font-size: 18px;
     font-weight: 600;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     background: transparent;
     border: none;
     padding: 0;
