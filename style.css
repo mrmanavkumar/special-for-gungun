@@ -201,13 +201,23 @@ body {
     transform: scale(1);
 }
 
-.template-img {
-    width: 90%;
-    max-width: 320px;
-    height: auto;
-    border-radius: 20px;
+@keyframes entranceGlow {
+  0% {
+    box-shadow: 0 0 50px rgba(255, 105, 180, 0.9);
+  }
+  100% {
     box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+  }
 }
+
+.template-img {
+  width: 90%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 20px;
+  animation: entranceGlow 1.5s ease-out forwards;
+}
+
 
 /* ==========================================================================
    4. NOTEBOOK PAGE WITH PAGE.PNG BACKGROUND & FIXED HEADING
