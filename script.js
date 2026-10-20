@@ -218,7 +218,7 @@ async function typeWriterEffect() {
     targetDiv.style.webkitOverflowScrolling = "touch";
 
     const letterData = [
-        { type: 'p', text: 'Gungun, tumhare birthday par main bholenath se dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
+        { type: 'p', text: 'Gungun, tumhare janamdin par main bholenath se dil se dua karta hoon ki tumhari zindagi hamesha khushiyon se bhari rahe.' },
         { type: 'p', text: 'Tum hamesha muskurati raho, aur tumhare chehre ki ye muskaan kabhi kam na ho, kyunki tum sach mein har ek khushi deserve karti ho.' },
         { type: 'p', text: 'Tumne jo bhi sapne dekhe hain, woh saare sach ho, aur tum life mein hamesha aage badhti raho🩺👩‍⚕️🩺' },
         { type: 'p', text: 'Tumhe zindagi mein woh sab mile jo tum dil se chahti ho.' },
